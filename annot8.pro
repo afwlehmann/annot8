@@ -1,9 +1,11 @@
 CONFIG += qt thread
 QT += sql gui
 
-SOURCES = main.cpp DBController.cpp
+SOURCES = main.cpp DBController.cpp MainWindow.cpp
 
-HEADERS = DBController.h
+HEADERS = DBController.h MainWindow.h
+
+FORMS = MainWindow.ui
 
 CONFIG(debug, debug|release) {
     IMDIR = build/debug

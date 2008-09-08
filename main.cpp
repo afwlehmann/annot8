@@ -5,6 +5,7 @@
 
 
 #include "DBController.h"
+#include "MainWindow.h"
 #include <iostream>
 #include <QApplication>
 
@@ -15,7 +16,7 @@ using namespace HiWi;
 
 int main(int argc, char *argv[])
 {
-    // Attempt a connection to the database.
+    // Attempt to connect to the database.
     if (!DBController::instance()->connect("experiment.sql")) {
         cerr << "Couldn't open the database!" << endl;
         return 1;
@@ -25,6 +26,8 @@ int main(int argc, char *argv[])
 
     try {
         QApplication app(argc, argv);
+        MainWindow mw;
+        mw.show();
         app.exec();
     } catch (std::exception &ex) {
         cerr << "An error occurred:" << endl
