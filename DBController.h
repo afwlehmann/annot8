@@ -42,6 +42,20 @@ public:
     void disconnect();
 
 
+protected:
+    /**
+     * Sets up the database by creating the neccessary tables.
+     */
+    void setupTables();
+
+
+    /**
+     * Sets up the database by creating the neccessary triggers. This method
+     * does a little bit of `magic' and is thus very dependent on SQLite.
+     */
+    void setupTriggers();
+
+
 private:
     // Forbid default constructor due to DBController being a singleton.
     DBController();
