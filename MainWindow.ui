@@ -5,26 +5,315 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>800</width>
-    <height>600</height>
+    <width>878</width>
+    <height>747</height>
    </rect>
   </property>
   <property name="windowTitle" >
-   <string>MainWindow</string>
+   <string>annot8</string>
   </property>
-  <widget class="QWidget" name="centralwidget" />
+  <widget class="QWidget" name="centralwidget" >
+   <property name="geometry" >
+    <rect>
+     <x>0</x>
+     <y>22</y>
+     <width>878</width>
+     <height>703</height>
+    </rect>
+   </property>
+   <layout class="QGridLayout" >
+    <item rowspan="2" row="0" column="0" >
+     <widget class="QTabWidget" name="twMovies" >
+      <property name="sizePolicy" >
+       <sizepolicy vsizetype="Expanding" hsizetype="Expanding" >
+        <horstretch>1</horstretch>
+        <verstretch>1</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="currentIndex" >
+       <number>0</number>
+      </property>
+      <widget class="QWidget" name="tab" >
+       <property name="geometry" >
+        <rect>
+         <x>0</x>
+         <y>0</y>
+         <width>546</width>
+         <height>479</height>
+        </rect>
+       </property>
+       <attribute name="title" >
+        <string>Tab 1</string>
+       </attribute>
+      </widget>
+     </widget>
+    </item>
+    <item row="0" column="1" >
+     <widget class="QGroupBox" name="groupBox_2" >
+      <property name="sizePolicy" >
+       <sizepolicy vsizetype="Fixed" hsizetype="Preferred" >
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="title" >
+       <string>Participant</string>
+      </property>
+      <layout class="QGridLayout" >
+       <item row="0" column="0" >
+        <widget class="QLabel" name="label" >
+         <property name="text" >
+          <string>Name:</string>
+         </property>
+         <property name="alignment" >
+          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="1" >
+        <widget class="QLineEdit" name="leName" >
+         <property name="readOnly" >
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="0" >
+        <widget class="QLabel" name="label_2" >
+         <property name="text" >
+          <string>First name:</string>
+         </property>
+         <property name="alignment" >
+          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="1" >
+        <widget class="QLineEdit" name="leFirstName" >
+         <property name="readOnly" >
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="0" >
+        <widget class="QLabel" name="label_3" >
+         <property name="text" >
+          <string>#:</string>
+         </property>
+         <property name="alignment" >
+          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="1" >
+        <widget class="QLineEdit" name="leNumber" >
+         <property name="readOnly" >
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </item>
+    <item rowspan="3" row="1" column="1" >
+     <widget class="QGroupBox" name="groupBox" >
+      <property name="title" >
+       <string>Receivers</string>
+      </property>
+      <layout class="QHBoxLayout" >
+       <item>
+        <widget class="QListWidget" name="lwReceivers" >
+         <property name="sizePolicy" >
+          <sizepolicy vsizetype="Expanding" hsizetype="Expanding" >
+           <horstretch>0</horstretch>
+           <verstretch>1</verstretch>
+          </sizepolicy>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </item>
+    <item row="2" column="0" >
+     <layout class="QHBoxLayout" >
+      <item>
+       <widget class="QToolButton" name="tbSynchronize" >
+        <property name="text" >
+         <string>...</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QToolButton" name="tbPrev" >
+        <property name="text" >
+         <string>...</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QSlider" name="hsCurrentFrame" >
+        <property name="orientation" >
+         <enum>Qt::Horizontal</enum>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QToolButton" name="tbNext" >
+        <property name="text" >
+         <string>...</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLCDNumber" name="lcdCurrentFrame" >
+        <property name="segmentStyle" >
+         <enum>QLCDNumber::Flat</enum>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="Line" name="line" >
+        <property name="orientation" >
+         <enum>Qt::Vertical</enum>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="pbFlipbook" >
+        <property name="text" >
+         <string>Flipbook</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
+    <item rowspan="3" row="3" column="0" >
+     <widget class="QGroupBox" name="groupBox_4" >
+      <property name="title" >
+       <string>Sound</string>
+      </property>
+      <layout class="QHBoxLayout" >
+       <item>
+        <widget class="hiwi::SamplesPreviewWidget" native="1" name="widget" />
+       </item>
+      </layout>
+     </widget>
+    </item>
+    <item row="4" column="1" >
+     <widget class="QGroupBox" name="groupBox_3" >
+      <property name="sizePolicy" >
+       <sizepolicy vsizetype="Fixed" hsizetype="Preferred" >
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="title" >
+       <string>Additional information</string>
+      </property>
+      <layout class="QVBoxLayout" >
+       <item>
+        <widget class="QCheckBox" name="cbLaughing" >
+         <property name="text" >
+          <string>Laughing</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </item>
+    <item row="5" column="1" >
+     <layout class="QHBoxLayout" >
+      <item>
+       <spacer>
+        <property name="orientation" >
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeHint" stdset="0" >
+         <size>
+          <width>40</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item>
+       <widget class="QPushButton" name="pbSaveAndContinue" >
+        <property name="text" >
+         <string>Save and continue</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
+   </layout>
+  </widget>
   <widget class="QMenuBar" name="menubar" >
    <property name="geometry" >
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>800</width>
+     <width>878</width>
+     <height>22</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menuAnnot8" >
+    <property name="title" >
+     <string>annot8</string>
+    </property>
+    <addaction name="actionAbout" />
+    <addaction name="separator" />
+    <addaction name="actionPreferences" />
+    <addaction name="separator" />
+    <addaction name="actionQuit" />
+   </widget>
+   <addaction name="menuAnnot8" />
+  </widget>
+  <widget class="QStatusBar" name="statusbar" >
+   <property name="geometry" >
+    <rect>
+     <x>0</x>
+     <y>725</y>
+     <width>878</width>
      <height>22</height>
     </rect>
    </property>
   </widget>
-  <widget class="QStatusBar" name="statusbar" />
+  <action name="actionQuit" >
+   <property name="text" >
+    <string>Quit</string>
+   </property>
+  </action>
+  <action name="actionAbout" >
+   <property name="text" >
+    <string>About annot8</string>
+   </property>
+  </action>
+  <action name="actionPreferences" >
+   <property name="text" >
+    <string>Preferences</string>
+   </property>
+  </action>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>hiwi::SamplesPreviewWidget</class>
+   <extends>QWidget</extends>
+   <header>SamplesPreviewWidget.h</header>
+  </customwidget>
+ </customwidgets>
+ <tabstops>
+  <tabstop>twMovies</tabstop>
+  <tabstop>tbSynchronize</tabstop>
+  <tabstop>tbPrev</tabstop>
+  <tabstop>hsCurrentFrame</tabstop>
+  <tabstop>tbNext</tabstop>
+  <tabstop>pbFlipbook</tabstop>
+  <tabstop>leName</tabstop>
+  <tabstop>leFirstName</tabstop>
+  <tabstop>leNumber</tabstop>
+  <tabstop>lwReceivers</tabstop>
+  <tabstop>cbLaughing</tabstop>
+  <tabstop>pbSaveAndContinue</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>

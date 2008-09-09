@@ -11,7 +11,7 @@
 #include "ui_MainWindow.h"
 
 
-namespace HiWi
+namespace hiwi
 {
 
 
@@ -24,12 +24,31 @@ public:
     virtual ~MainWindow();
 
 
+protected slots:
+    /*
+     * Event-handler for the "About" menu-item.
+     */
+    void on_actionAbout_triggered();
+
+
+    /*
+     * Event-handler for the "Preferences" menu-item.
+     */
+    void on_actionPreferences_triggered();
+
+
+    /*
+     * Event-handler for the "Quit" menu-item.
+     */
+    void on_actionQuit_triggered();
+
+
 private:
     Ui::MainWindow  _ui;
 };
 
 
-} // namespace HiWi
+} // namespace hiwi
 
 
 #endif

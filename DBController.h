@@ -11,7 +11,7 @@
 #include <string>
 
 
-namespace HiWi
+namespace hiwi
 {
 
 
@@ -57,15 +57,17 @@ protected:
 
 
 private:
-    // Forbid default constructor due to DBController being a singleton.
+    // Forbid default constructor etc. due to DBController being a singleton.
     DBController();
+    DBController(const DBController&);
+    DBController& operator=(const DBController&);
 
 
     static DBController    *_instance;
 };
 
 
-} // namespace HiWi
+} // namespace hiwi
 
 
 #endif

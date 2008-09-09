@@ -5,9 +5,10 @@
 
 
 #include "MainWindow.h"
+#include <QMessageBox>
 
 
-namespace HiWi {
+namespace hiwi {
 
 
 MainWindow::MainWindow()
@@ -21,4 +22,22 @@ MainWindow::~MainWindow()
 }
 
 
-} // namespace HiWi
+void MainWindow::on_actionAbout_triggered()
+{
+    QMessageBox::information(this, tr("Unavailable"), tr("Not yet implemented."));
+}
+
+
+void MainWindow::on_actionPreferences_triggered()
+{
+    QMessageBox::information(this, tr("Unavailable"), tr("Not yet implemented."));
+}
+
+
+void MainWindow::on_actionQuit_triggered()
+{
+    close();
+}
+
+
+} // namespace hiwi

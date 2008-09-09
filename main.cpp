@@ -11,7 +11,7 @@
 
 
 using namespace std;
-using namespace HiWi;
+using namespace hiwi;
 
 
 int main(int argc, char *argv[])

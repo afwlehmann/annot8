@@ -13,7 +13,7 @@
 using namespace std;
 
 
-namespace HiWi
+namespace hiwi
 {
 
 
@@ -250,4 +250,4 @@ void DBController::setupTriggers()
 }
 
 
-} // namespace HiWi
+} // namespace hiwi

@@ -1,9 +1,22 @@
 CONFIG += qt thread
 QT += sql gui
 
-SOURCES = main.cpp DBController.cpp MainWindow.cpp
+SOURCES = DBController.cpp \
+          MainWindow.cpp \
+          PlaybackThread.cpp \
+          SamplesPreviewCanvas.cpp \
+          SamplesPreviewWidget.cpp \
+          Sound.cpp \
+          audio.cpp \
+          main.cpp
 
-HEADERS = DBController.h MainWindow.h
+HEADERS = DBController.h \
+          MainWindow.h \
+          PlaybackThread.h \
+          SamplesPreviewCanvas.h \
+          SamplesPreviewWidget.h \
+          Sound.h \
+          audio.h
 
 FORMS = MainWindow.ui
 
@@ -18,11 +31,17 @@ CONFIG(release, debug|release) {
 
 mac {
     CONFIG -= app_bundle
+    INCLUDEPATH += /sw/include
+    LIBS += -L/sw/lib
 }
 
 win32 {
     # Add CONFIG += console for messages on std(out|err).
     CONFIG += windows embed_manifest_exe
+}
+
+unix {
+    LIBS += -lSDL -lSDL_sound
 }
 
 UI_DIR = $$IMDIR
