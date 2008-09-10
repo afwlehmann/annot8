@@ -10,7 +10,7 @@
    </rect>
   </property>
   <property name="windowTitle" >
-   <string>annot8</string>
+   <string>annot8[*]</string>
   </property>
   <widget class="QWidget" name="centralwidget" >
    <property name="geometry" >
@@ -38,8 +38,8 @@
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>546</width>
-         <height>479</height>
+         <width>483</width>
+         <height>482</height>
         </rect>
        </property>
        <attribute name="title" >
@@ -138,14 +138,14 @@
       <item>
        <widget class="QToolButton" name="tbSynchronize" >
         <property name="text" >
-         <string>...</string>
+         <string>Sync</string>
         </property>
        </widget>
       </item>
       <item>
        <widget class="QToolButton" name="tbPrev" >
         <property name="text" >
-         <string>...</string>
+         <string>&lt;</string>
         </property>
        </widget>
       </item>
@@ -159,16 +159,12 @@
       <item>
        <widget class="QToolButton" name="tbNext" >
         <property name="text" >
-         <string>...</string>
+         <string>></string>
         </property>
        </widget>
       </item>
       <item>
-       <widget class="QLCDNumber" name="lcdCurrentFrame" >
-        <property name="segmentStyle" >
-         <enum>QLCDNumber::Flat</enum>
-        </property>
-       </widget>
+       <widget class="QSpinBox" name="spbCurrentFrame" />
       </item>
       <item>
        <widget class="Line" name="line" >
@@ -236,6 +232,20 @@
        </spacer>
       </item>
       <item>
+       <widget class="QPushButton" name="pbReset" >
+        <property name="text" >
+         <string>Reset</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="pbSave" >
+        <property name="text" >
+         <string>Save</string>
+        </property>
+       </widget>
+      </item>
+      <item>
        <widget class="QPushButton" name="pbSaveAndContinue" >
         <property name="text" >
          <string>Save and continue</string>
@@ -257,7 +267,7 @@
    </property>
    <widget class="QMenu" name="menuAnnot8" >
     <property name="title" >
-     <string>annot8</string>
+     <string>File</string>
     </property>
     <addaction name="actionAbout" />
     <addaction name="separator" />
@@ -306,14 +316,50 @@
   <tabstop>tbPrev</tabstop>
   <tabstop>hsCurrentFrame</tabstop>
   <tabstop>tbNext</tabstop>
+  <tabstop>sbpCurrentFrame</tabstop>
   <tabstop>pbFlipbook</tabstop>
   <tabstop>leName</tabstop>
   <tabstop>leFirstName</tabstop>
   <tabstop>leNumber</tabstop>
   <tabstop>lwReceivers</tabstop>
   <tabstop>cbLaughing</tabstop>
+  <tabstop>pbReset</tabstop>
+  <tabstop>pbSave</tabstop>
   <tabstop>pbSaveAndContinue</tabstop>
  </tabstops>
  <resources/>
- <connections/>
+ <connections>
+  <connection>
+   <sender>hsCurrentFrame</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>spbCurrentFrame</receiver>
+   <slot>setValue(int)</slot>
+   <hints>
+    <hint type="sourcelabel" >
+     <x>212</x>
+     <y>571</y>
+    </hint>
+    <hint type="destinationlabel" >
+     <x>358</x>
+     <y>571</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>spbCurrentFrame</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>hsCurrentFrame</receiver>
+   <slot>setValue(int)</slot>
+   <hints>
+    <hint type="sourcelabel" >
+     <x>351</x>
+     <y>562</y>
+    </hint>
+    <hint type="destinationlabel" >
+     <x>142</x>
+     <y>562</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
 </ui>

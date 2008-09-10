@@ -9,10 +9,16 @@
 
 
 #include <string>
+#include <vector>
 
 
 namespace hiwi
 {
+
+
+// Forward declaration
+struct Movie;
+struct Participant;
 
 
 class DBController
@@ -40,6 +46,44 @@ public:
      * Disconnects the database controller from a prior connected database.
      */
     void disconnect();
+
+
+    /**
+     * Returns a list of the available movies.
+     */
+    std::vector<Movie *> getAvailableMovies() const;
+
+
+    /**
+     * Returns a list of all participants.
+     */
+    std::vector<Participant *> getParticipants() const;
+
+
+    /**
+     * Stores the annotation of a frame in terms of the given parameters.
+     * @param  timestamp    the exact moment as a real value within [0,1]
+     * @param  senderID     the unique ID of the sending participant
+     * @param  receiverIDs  a list of the unique IDs of the receivers
+     * @param  laughing     whether the sender's laughing or not
+     */
+    void storeAnnotation(float timestamp, int senderID,
+                         const std::vector<int> &receiverIDs,
+                         bool laughing);
+
+
+    /**
+     * Retrieves the annotation of a frame for the given timestamp and sender.
+     * @param  timestamp    the exact moment as a real value within [0,1]
+     * @param  senderID     the unique ID of the sending participant
+     * @param  receiverIDs  a pointer to a vector that will hold the IDs of
+     *                      of the respective receivers
+     * @param  laughing     a pointer to a bool that will tell whether the
+     *                      sender was laughing or not
+     */
+    void getAnnotation(float timestamp, int senderID,
+                       std::vector<int> *receiverIDs,
+                       bool *laughing);
 
 
 protected:

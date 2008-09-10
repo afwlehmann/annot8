@@ -1,8 +1,10 @@
 CONFIG += qt thread
 QT += sql gui
 
-SOURCES = DBController.cpp \
+SOURCES = ChooseParticipantDlg.cpp \
+          DBController.cpp \
           MainWindow.cpp \
+          MovieWidget.cpp \
           PlaybackThread.cpp \
           SamplesPreviewCanvas.cpp \
           SamplesPreviewWidget.cpp \
@@ -10,15 +12,19 @@ SOURCES = DBController.cpp \
           audio.cpp \
           main.cpp
 
-HEADERS = DBController.h \
+HEADERS = ChooseParticipantDlg.h \
+          DBController.h \
           MainWindow.h \
+          Movie.h \
+          MovieWidget.h \
+          Participant.h \
           PlaybackThread.h \
           SamplesPreviewCanvas.h \
           SamplesPreviewWidget.h \
           Sound.h \
           audio.h
 
-FORMS = MainWindow.ui
+FORMS = ChooseParticipantDlg.ui MainWindow.ui
 
 CONFIG(debug, debug|release) {
     IMDIR = build/debug
