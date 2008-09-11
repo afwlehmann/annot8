@@ -89,7 +89,7 @@ void DBController::setupTables()
 
         query.clear();
         query.prepare(
-                "CREATE TABLE IF NOT EXISTS sounds ("
+                "CREATE TABLE IF NOT EXISTS samples ("
                 "  participant_id   INTEGER NOT NULL REFERENCES participants(id),"
                 "  filename         TEXT NOT NULL"
                 ");"

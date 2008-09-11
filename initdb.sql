@@ -12,10 +12,10 @@ INSERT INTO movies VALUES ('/Users/alex/Desktop/HiWi/Experiment/Einzelbilder/Gro
 INSERT INTO movies VALUES ('/Users/alex/Desktop/HiWi/Experiment/Einzelbilder/Mobile Kamera/Mobile_Kamera_', '.jpg', 1, 7200, 5, 'Mobile Kamera');
 INSERT INTO movies VALUES ('/Users/alex/Desktop/HiWi/Experiment/Einzelbilder/Webcam Georg/Webcam_Georg_', '.jpg', 1, 7200, 5, 'Webcam Georg');
 
-DELETE FROM sounds;
-INSERT INTO sounds (participant_id, filename) VALUES ((SELECT id FROM participants WHERE name LIKE 'Lehmann'), '/Users/alex/Desktop/HiWi/Experiment/Rekorder geschnitten/teiln01_000133_003233.wav');
-INSERT INTO sounds (participant_id, filename) VALUES ((SELECT id FROM participants WHERE name LIKE 'Groh'), '/Users/alex/Desktop/HiWi/Experiment/Rekorder geschnitten/teiln03_000138_003238.wav');
-INSERT INTO sounds (participant_id, filename) VALUES ((SELECT id FROM participants WHERE name LIKE 'Lustig'), '/Users/alex/Desktop/HiWi/Experiment/Rekorder geschnitten/teiln04_000130_003230.wav');
+DELETE FROM samples;
+INSERT INTO samples (participant_id, filename) VALUES ((SELECT id FROM participants WHERE name LIKE 'Lehmann'), '/Users/alex/Desktop/HiWi/Experiment/Rekorder geschnitten/teiln01_000133_003233.wav');
+INSERT INTO samples (participant_id, filename) VALUES ((SELECT id FROM participants WHERE name LIKE 'Groh'), '/Users/alex/Desktop/HiWi/Experiment/Rekorder geschnitten/teiln03_000138_003238.wav');
+INSERT INTO samples (participant_id, filename) VALUES ((SELECT id FROM participants WHERE name LIKE 'Lustig'), '/Users/alex/Desktop/HiWi/Experiment/Rekorder geschnitten/teiln04_000130_003230.wav');
 
 DELETE FROM sender;
 

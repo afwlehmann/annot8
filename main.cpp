@@ -7,11 +7,45 @@
 #include "DBController.h"
 #include "MainWindow.h"
 #include "ChooseParticipantDlg.h"
+
+#include <iostream>
+
 #include <QApplication>
 #include <QMessageBox>
+#include <QFile>
+
+
+#define DB_FILENAME "experiment.sql"
 
 
 using namespace hiwi;
+using namespace std;
+
+
+void parseCmdLine(const QList<QString> &args)
+{
+    foreach (const QString &arg, args) {
+        if (!arg.compare("--initdb", Qt::CaseInsensitive)) {
+            // Delete the old file, then create a new database and eventually
+            // exit.
+            cout << "Removing database " << DB_FILENAME << "." << endl;
+            QFile::remove(DB_FILENAME);
+            cout << "Initializing new database " << DB_FILENAME << "." << endl;
+            DBController::instance()->connect(DB_FILENAME);
+            DBController::instance()->disconnect();
+            cout << "Exiting." << endl;
+            exit(0);
+        } else if (!arg.compare("--help", Qt::CaseInsensitive)) {
+            cout << "Usage: annot8 [options]" << endl
+                 << "  --initdb    Remove the old database file and initialize a new one file." << endl
+                 << "  --help      Display this message." << endl;
+            exit(1);
+        } else {
+            cerr << "Unknown option: " << arg.toStdString() << endl;
+            exit(1);
+        }
+    }
+}
 
 
 int main(int argc, char *argv[])
@@ -19,6 +53,11 @@ int main(int argc, char *argv[])
     QApplication app(argc, argv);
 
     try {
+        // Parse the command-line arguments, but remove the first argument
+        // beforehand because it is only the application's executable name.
+        QList<QString> args = app.arguments();
+        args.pop_front();
+        parseCmdLine(args);
 
         // Attempt to connect to the database.
         if (!DBController::instance()->connect("experiment.sql")) {
@@ -41,7 +80,7 @@ int main(int argc, char *argv[])
         // Let Qt do the main loop.
         app.exec();
 
-    } catch (std::exception &ex) {
+    } catch (exception &ex) {
         QMessageBox::critical(0, QObject::tr("Error"), ex.what());
         return 1;
 
