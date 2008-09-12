@@ -19,7 +19,7 @@ namespace hiwi
 // Forward declaration
 struct Movie;
 struct Participant;
-namespace audio { class Samples; }
+namespace audio { struct Samples; }
 
 
 class DBController

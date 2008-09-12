@@ -1,0 +1,33 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 9.00
+# Visual Studio 2005
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "annot8", "annot8.vcproj", "{3FA847BC-3448-3E4C-9D2F-83095B35E557}"
+	GlobalSection(Qt) = preSolution
+		Integration = True
+	EndGlobalSection
+EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "annot8 Setup", "win32\annot8 Setup\annot8 Setup.vdproj", "{AC567CD2-B76D-42C6-BD20-5A74A6ACF0BC}"
+	GlobalSection(Qt) = preSolution
+		Integration = True
+	EndGlobalSection
+EndProject
+Global
+	GlobalSection(Qt) = preSolution
+		Integration = True
+	EndGlobalSection
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{3FA847BC-3448-3E4C-9D2F-83095B35E557}.Debug|Win32.ActiveCfg = Debug|Win32
+		{3FA847BC-3448-3E4C-9D2F-83095B35E557}.Debug|Win32.Build.0 = Debug|Win32
+		{3FA847BC-3448-3E4C-9D2F-83095B35E557}.Release|Win32.ActiveCfg = Release|Win32
+		{3FA847BC-3448-3E4C-9D2F-83095B35E557}.Release|Win32.Build.0 = Release|Win32
+		{AC567CD2-B76D-42C6-BD20-5A74A6ACF0BC}.Debug|Win32.ActiveCfg = Debug
+		{AC567CD2-B76D-42C6-BD20-5A74A6ACF0BC}.Release|Win32.ActiveCfg = Release
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

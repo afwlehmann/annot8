@@ -20,7 +20,7 @@ struct Movie;
 struct Participant;
 namespace audio {
     class PlaybackThread;
-    class Samples;
+    struct Samples;
 }
 
 

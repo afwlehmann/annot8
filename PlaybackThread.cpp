@@ -6,6 +6,7 @@
 #include "PlaybackThread.h"
 #include "SamplesPreviewCanvas.h"
 #include "audio.h"
+#include <cassert>
 
 
 using std::min;

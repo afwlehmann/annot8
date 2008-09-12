@@ -14,6 +14,7 @@
 
 #include <stdexcept>
 #include <cmath>
+#include <cassert>
 
 #include <QMessageBox>
 #include <QListWidgetItem>

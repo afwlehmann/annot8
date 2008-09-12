@@ -26,7 +26,7 @@ Samples::Samples(const std::string &fileName) :
     ainfo.rate = PlaybackThread::DefaultFrequency;
 
     // Load the samples.
-    ss = Sound_NewSampleFromFile(fileName.c_str(), &ainfo, 4096);
+    ss = Sound_NewSampleFromFile(fileName.c_str(), &ainfo, 16384);
     if (!ss || ss->flags & SOUND_SAMPLEFLAG_ERROR)
         throw std::runtime_error(SDL_GetError());
 

@@ -438,7 +438,11 @@ void DBController::getAnnotation(float timestamp, int senderID,
         else if (query.next()) {
             *laughing = query.value(0).toBool();
         }
+#if QT_VERSION >= 0x040401
         query.finish();
+#else
+        while (query.next()) {}
+#endif
 
         // Finalize the transaction.
         if (!QSqlDatabase::database().commit())

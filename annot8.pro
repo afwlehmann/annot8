@@ -25,15 +25,17 @@ HEADERS = AboutDlg.h \
 
 FORMS = AboutDlg.ui ChooseParticipantDlg.ui MainWindow.ui
 
-RESOURCES = annot8.res
+RESOURCES = annot8.qrc
 
 CONFIG(debug, debug|release) {
     IMDIR = build/debug
     DEFINES += DEBUG
+    win32:DESTDIR = build/debug
 }
 
 CONFIG(release, debug|release) {
     IMDIR = build/release
+    win32:DESTDIR = build/release
 }
 
 mac {
