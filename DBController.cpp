@@ -7,6 +7,7 @@
 #include "DBController.h"
 #include "Movie.h"
 #include "Participant.h"
+#include "Samples.h"
 #include <stdexcept>
 #include <sstream>
 #include <QtSql>
@@ -335,6 +336,19 @@ std::vector<Participant *> DBController::getParticipants() const
 }
 
 
+audio::Samples* DBController::getSamplesForParticipant(Participant *p) const
+{
+    QSqlQuery query;
+    query.prepare("SELECT filename FROM samples WHERE participant_id = ?");
+    query.addBindValue(p->id);
+    if (!query.exec())
+        throw std::runtime_error(query.lastError().text().toStdString());
+
+    return query.next() ?
+        new audio::Samples(query.value(0).toString().toStdString()) : 0;
+}
+
+
 void DBController::storeAnnotation(float timestamp, int senderID,
                                    const std::vector<int> &receiverIDs,
                                    bool laughing)
@@ -394,6 +408,10 @@ void DBController::getAnnotation(float timestamp, int senderID,
                                  bool *laughing)
 {
     QSqlQuery query;
+
+    // Reset the annotations.
+    receiverIDs->clear();
+    *laughing = false;
 
     do {
         QSqlDatabase::database().transaction();

@@ -5,8 +5,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>878</width>
-    <height>747</height>
+    <width>1024</width>
+    <height>768</height>
    </rect>
   </property>
   <property name="windowTitle" >
@@ -17,8 +17,8 @@
     <rect>
      <x>0</x>
      <y>22</y>
-     <width>878</width>
-     <height>703</height>
+     <width>886</width>
+     <height>807</height>
     </rect>
    </property>
    <layout class="QGridLayout" >
@@ -38,8 +38,8 @@
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>483</width>
-         <height>482</height>
+         <width>491</width>
+         <height>512</height>
         </rect>
        </property>
        <attribute name="title" >
@@ -128,6 +128,12 @@
            <verstretch>1</verstretch>
           </sizepolicy>
          </property>
+         <property name="alternatingRowColors" >
+          <bool>true</bool>
+         </property>
+         <property name="sortingEnabled" >
+          <bool>true</bool>
+         </property>
         </widget>
        </item>
       </layout>
@@ -136,7 +142,7 @@
     <item row="2" column="0" >
      <layout class="QHBoxLayout" >
       <item>
-       <widget class="QToolButton" name="tbSynchronize" >
+       <widget class="QToolButton" name="tbSyncMovie" >
         <property name="text" >
          <string>Sync</string>
         </property>
@@ -185,11 +191,70 @@
     <item rowspan="3" row="3" column="0" >
      <widget class="QGroupBox" name="groupBox_4" >
       <property name="title" >
-       <string>Sound</string>
+       <string>Samples</string>
       </property>
-      <layout class="QHBoxLayout" >
+      <layout class="QVBoxLayout" name="verticalLayout" >
        <item>
-        <widget class="hiwi::SamplesPreviewWidget" native="1" name="widget" />
+        <widget class="hiwi::SamplesPreviewCanvas" native="1" name="spvCanvas" >
+         <property name="minimumSize" >
+          <size>
+           <width>0</width>
+           <height>100</height>
+          </size>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayout" >
+         <item>
+          <widget class="QToolButton" name="tbSyncSamples" >
+           <property name="text" >
+            <string>Sync</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QToolButton" name="tbZoomOut" >
+           <property name="text" >
+            <string>-</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QToolButton" name="tbZoomIn" >
+           <property name="text" >
+            <string>+</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QScrollBar" name="hsbSamples" >
+           <property name="sizePolicy" >
+            <sizepolicy vsizetype="Fixed" hsizetype="Minimum" >
+             <horstretch>1</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="orientation" >
+            <enum>Qt::Horizontal</enum>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="pbPlay" >
+           <property name="text" >
+            <string>Play</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="pbPause" >
+           <property name="text" >
+            <string>Pause</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
        </item>
       </layout>
      </widget>
@@ -261,7 +326,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>878</width>
+     <width>886</width>
      <height>22</height>
     </rect>
    </property>
@@ -271,8 +336,6 @@
     </property>
     <addaction name="actionAbout" />
     <addaction name="separator" />
-    <addaction name="actionPreferences" />
-    <addaction name="separator" />
     <addaction name="actionQuit" />
    </widget>
    <addaction name="menuAnnot8" />
@@ -281,15 +344,15 @@
    <property name="geometry" >
     <rect>
      <x>0</x>
-     <y>725</y>
-     <width>878</width>
+     <y>829</y>
+     <width>886</width>
      <height>22</height>
     </rect>
    </property>
   </widget>
   <action name="actionQuit" >
    <property name="text" >
-    <string>Quit</string>
+    <string>Quit annot8</string>
    </property>
   </action>
   <action name="actionAbout" >
@@ -305,19 +368,26 @@
  </widget>
  <customwidgets>
   <customwidget>
-   <class>hiwi::SamplesPreviewWidget</class>
+   <class>hiwi::SamplesPreviewCanvas</class>
    <extends>QWidget</extends>
-   <header>SamplesPreviewWidget.h</header>
+   <header>SamplesPreviewCanvas.h</header>
+   <container>1</container>
   </customwidget>
  </customwidgets>
  <tabstops>
   <tabstop>twMovies</tabstop>
-  <tabstop>tbSynchronize</tabstop>
+  <tabstop>tbSyncMovie</tabstop>
   <tabstop>tbPrev</tabstop>
   <tabstop>hsCurrentFrame</tabstop>
   <tabstop>tbNext</tabstop>
-  <tabstop>sbpCurrentFrame</tabstop>
+  <tabstop>spbCurrentFrame</tabstop>
   <tabstop>pbFlipbook</tabstop>
+  <tabstop>tbSyncSamples</tabstop>
+  <tabstop>tbZoomOut</tabstop>
+  <tabstop>tbZoomIn</tabstop>
+  <tabstop>hsbSamples</tabstop>
+  <tabstop>pbPlay</tabstop>
+  <tabstop>pbPause</tabstop>
   <tabstop>leName</tabstop>
   <tabstop>leFirstName</tabstop>
   <tabstop>leNumber</tabstop>

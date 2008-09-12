@@ -12,8 +12,6 @@
 
 namespace hiwi {
 
-namespace internal {
-
 
 class SamplesPreviewCanvas : public QWidget
 {
@@ -27,16 +25,6 @@ public:
 
 
     /**
-     * Constructs a new SamplesPreviewWidget for the given samples.
-     * @param  samples                  a pointer to the samples
-     * @param  nSamples                 the number of samples
-     * @param  parent                   a pointer to the parent widget
-     */
-    SamplesPreviewCanvas(const double *samples, size_t nSamples,
-                                     QWidget *parent);
-
-
-    /**
      * Destructs an instance of SamplesPreviewCanvas and frees all formerly
      * allocated memory.
      */
@@ -46,10 +34,10 @@ public:
     /**
      * Sets the samples that should be displayed. Makes a local copy of the
      * given samples.
-     * @param  samples                  a pointer to the samples
-     * @param  nSamples                 the number of samples
+     * @param  samples      a pointer to the samples
+     * @param  nSamples     the number of samples
      */
-    void setSamples(const double *samples, size_t nSamples);
+    void setSamples(const float *samples, size_t nSamples);
 
 
     /**
@@ -87,29 +75,29 @@ signals:
 public slots:
     /**
      * Sets the minimum of the displayed area mapped to [0,1].
-     * @param  newMin                   a real value within [0,1]
+     * @param  newMin       a real value within [0,1]
      */
     void setMin(float newMin);
 
 
     /**
      * Sets the maximum of the displayed area mapped to [0,1].
-     * @param  newMax                   a real value within [0,1]
+     * @param  newMax       a real value within [0,1]
      */
     void setMax(float newMax);
 
 
     /**
      * Sets the minimum and maximum of the displayed area mapped to [0,1].
-     * @param  newMin                   a real value within [0,1]
-     * @param  newMax                   a real value within [0,1]
+     * @param  newMin       a real value within [0,1]
+     * @param  newMax       a real value within [0,1]
      */
     void setMinMax(float newMin, float newMax);
 
 
     /**
      * Sets the new marker position.
-     * @param  newPos                   a real value within [0,1]
+     * @param  newPos       a real value within [0,1]
      */
     void setMarkerPos(float newPos);
 
@@ -119,7 +107,7 @@ public slots:
      */
     void setMarkerVisible(bool visible);
 
-    
+
 protected:
     /**
      * Returns a size hint for the layout.
@@ -151,16 +139,14 @@ private:
     SamplesPreviewCanvas& operator=(const SamplesPreviewCanvas&);
 
 
-    double       *_samples;
-    size_t       _nSamples;
-    float        _tMin;
-    float        _tMax;
-    float        _markerPos;
-    bool         _markerVisible;
+    float   *_samples;
+    size_t  _nSamples;
+    float   _tMin;
+    float   _tMax;
+    float   _markerPos;
+    bool    _markerVisible;
 };
 
-
-} // namespace internal
 
 } // namespace hiwi
 

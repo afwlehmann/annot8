@@ -12,8 +12,6 @@
 
 namespace hiwi {
 
-namespace internal {
-
 
 SamplesPreviewCanvas::SamplesPreviewCanvas(QWidget *parent) :
     QWidget(parent),
@@ -31,26 +29,6 @@ SamplesPreviewCanvas::SamplesPreviewCanvas(QWidget *parent) :
 }
 
 
-SamplesPreviewCanvas:: SamplesPreviewCanvas(const double *samples,
-                                            size_t nSamples,
-                                            QWidget *parent) :
-    QWidget(parent),
-    _samples(NULL),
-    _tMin(0),
-    _tMax(1),
-    _markerPos(0),
-    _markerVisible(false)
-{
-    // Copy the samples.
-    setSamples(samples, nSamples);
-    // Background color.
-    setAutoFillBackground(true);
-    QPalette palette;
-    palette.setBrush(QPalette::Window, QBrush(Qt::lightGray));
-    setPalette(palette);
-}
-
-
 SamplesPreviewCanvas::~SamplesPreviewCanvas()
 {
     if (_samples) {
@@ -60,15 +38,15 @@ SamplesPreviewCanvas::~SamplesPreviewCanvas()
 }
 
 
-void SamplesPreviewCanvas::setSamples(const double *samples,
+void SamplesPreviewCanvas::setSamples(const float *samples,
                                             size_t nSamples)
 {
     assert(nSamples > 0);
-    _nSamples = nSamples; 
+    _nSamples = nSamples;
     if (_samples)
         delete _samples;
-    _samples = new double[_nSamples];
-    memcpy(_samples, samples, _nSamples * sizeof(double));
+    _samples = new float[_nSamples];
+    memcpy(_samples, samples, _nSamples * sizeof(float));
     // Schedule a paint-event.
     update();
 }
@@ -123,7 +101,7 @@ void SamplesPreviewCanvas::paintEvent(QPaintEvent *ev)
     // Draw the widget's frame if applicable.
     if (r.intersects(ev->rect()))
         p.drawRect(r);
-    
+
     // Draw the samples.
     if (_samples) {
         // Note: If you change the samplesRect below you also have to adapt the
@@ -144,15 +122,15 @@ void SamplesPreviewCanvas::paintEvent(QPaintEvent *ev)
             // We have to find every interval's absolute maximum in order to get
             // the best visual representation of the signal.
             size_t j = (size_t)(minIndex + i * stepSize);
-            double maximum = _samples[j];
-            double absMaximum = fabs(_samples[j]);
+            float maximum = _samples[j];
+            float absMaximum = fabs(_samples[j]);
             if (i < samplesRect.right()) {
                 // The above check for i < samplesRect.right() is neccessary due
                 // to the fact that the interval [minIndex, maxIndex] is
                 // distributed over the whole width of the samplesRect. Thus the
                 // right edge of the samplesRect already represents the maxIndex.
                 for (++j; j < (size_t)(minIndex + (i + 1) * stepSize); j++) {
-                    double absVal = fabs(_samples[j]);
+                    float absVal = fabs(_samples[j]);
                     if (absVal > absMaximum) {
                         absMaximum = absVal;
                         maximum = _samples[j];
@@ -168,11 +146,11 @@ void SamplesPreviewCanvas::paintEvent(QPaintEvent *ev)
 
         // Draw the marker if applicable.
         if (_markerVisible) {
-            int markerX = samplesRect.left() + 
+            int markerX = samplesRect.left() +
                    (_markerPos - _tMin) * samplesRect.width() / (_tMax - _tMin);
             if (markerX >= ev->rect().left() && markerX <= ev->rect().right()) {
-                QPen darkBluePen(Qt::darkBlue, 0);
-                p.setPen(darkBluePen);
+                QPen redPen(Qt::red, 0);
+                p.setPen(redPen);
                 p.setCompositionMode(QPainter::CompositionMode_SourceOver);
                 p.drawLine(markerX, 0, markerX, samplesRect.bottom());
                 p.setCompositionMode(QPainter::CompositionMode_Source);
@@ -227,12 +205,9 @@ void SamplesPreviewCanvas::updateMarker()
         QRect r(rect().adjusted(1, 1, -1, -1));
         int markerX = r.left() + (_markerPos - _tMin) * r.width() / (_tMax - _tMin);
         if (markerX >= r.left() && markerX <= r.right())
-            update(markerX - 1, 0, 3, r.height()); 
+            update(markerX - 1, 0, 3, r.height());
     }
 }
 
 
-} // namespace internal
-
 } // namespace hiwi
-

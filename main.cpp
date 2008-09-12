@@ -7,6 +7,7 @@
 #include "DBController.h"
 #include "MainWindow.h"
 #include "ChooseParticipantDlg.h"
+#include "audio.h"
 
 #include <iostream>
 
@@ -20,6 +21,15 @@
 
 using namespace hiwi;
 using namespace std;
+
+
+void displayUsageAndExit()
+{
+    cout << "Usage: annot8 [options]" << endl
+         << "  --initdb    Remove the old database file and initialize a new one file." << endl
+         << "  --help      Display this message." << endl;
+    exit(1);
+}
 
 
 void parseCmdLine(const QList<QString> &args)
@@ -36,13 +46,10 @@ void parseCmdLine(const QList<QString> &args)
             cout << "Exiting." << endl;
             exit(0);
         } else if (!arg.compare("--help", Qt::CaseInsensitive)) {
-            cout << "Usage: annot8 [options]" << endl
-                 << "  --initdb    Remove the old database file and initialize a new one file." << endl
-                 << "  --help      Display this message." << endl;
-            exit(1);
+            displayUsageAndExit();
         } else {
-            cerr << "Unknown option: " << arg.toStdString() << endl;
-            exit(1);
+            cerr << "Unknown option: " << arg.toStdString() << endl << endl;
+            displayUsageAndExit();
         }
     }
 }
@@ -51,6 +58,13 @@ void parseCmdLine(const QList<QString> &args)
 int main(int argc, char *argv[])
 {
     QApplication app(argc, argv);
+
+    // Initialize SDL and SDL_sound.
+    if (!audio::initialize()) {
+        QMessageBox::critical(0, QObject::tr("Error"),
+                QObject::tr("Unable to initialize SDL and/or SDL_sound."));
+        exit(1);
+    }
 
     try {
         // Parse the command-line arguments, but remove the first argument
@@ -92,6 +106,9 @@ int main(int argc, char *argv[])
 
     // Disconnect from the database.
     DBController::instance()->disconnect();
+
+    // Perform a clean shutdown of SDL and SDL_sound.
+    audio::shutdown();
 
     return 0;
 }

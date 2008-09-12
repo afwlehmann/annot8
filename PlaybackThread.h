@@ -7,7 +7,7 @@
 #define __PLAYBACKTHREAD_H__
 
 
-#include "Sound.h"
+#include "Samples.h"
 #include <QThread>
 #include <QMutex>
 
@@ -20,23 +20,19 @@ class PlaybackThread : public QThread
     Q_OBJECT
 
 public:
+    typedef enum { Play, Pause } PlaybackState;
+
+
     /**
-     * Constructs an instance of PlaybackThread for the given samples and
-     * sample frequency.
-     * @param  samples          a pointer to the samples
-     * @param  nSamples         the total number of samples
-     * @param  sampleFreq       the sample frequency
-     * @param  previewCanvas    a pointer to a SamplesPreviewCanvas to be able
-     *                          to update the position marker
+     * Constructs an instance of PlaybackThread for the given samples.
+     * @param  samples          a pointer to a Samples object
      * @param  parent           a pointer to the parent object
      */
-    PlaybackThread(const double *samples, size_t nSamples,
-                   unsigned int sampleFreq, QObject *parent = 0);
+    PlaybackThread(audio::Samples *samples, QObject *parent = 0);
 
 
     /**
-     * Destructs an instance of PlaybackThread, thus stopping the playback
-     * and freeing all allocated memory.
+     * Destructs an instance of PlaybackThread, thus stopping the playback.
      */
     virtual ~PlaybackThread();
 
@@ -45,13 +41,19 @@ public:
      * Sets the playback state of this thread to the given state.
      * @param  state            the new playback state
      */
-    void setPlaybackState(audio::Sound::PlaybackState state);
+    void setPlaybackState(PlaybackState state);
 
 
     /**
      * Returns the playback state of this thread.
      */
-    inline audio::Sound::PlaybackState playbackState() const;
+    inline PlaybackState playbackState() const;
+
+
+    /**
+     * Returns the playback position of this thread.
+     */
+    float playbackPos() const;
 
 
     /**
@@ -61,15 +63,10 @@ public:
     void setPlaybackPos(float pos);
 
 
-    /**
-     * Returns the playback position of this thread.
-     */
-    inline float playbackPos() const;
-
-
 signals:
     /**
-     * This signal is emitted every 100ms at best.
+     * This signal is emitted every time the playback position changed.
+     * During playback this happens at a rate of about 100ms at best.
      */
     void playbackPosChanged(float pos);
 
@@ -87,22 +84,19 @@ private:
     PlaybackThread& operator=(const PlaybackThread &);
 
 
-    audio::Sound                   *_sound;
-    QMutex                         _mutex;
+    /**
+     * Callback function for SDL.
+     */
+    static void pbCallback(void *user, Uint8 *buf, int size);
+
+
+    audio::Samples  *_samples;
+
+    QMutex          _mutex;
+    SDL_AudioSpec   *_audioSpec;
+    size_t          _pos;
+    PlaybackState   _state;
 };
-
-
-// Inlines
-audio::Sound::PlaybackState PlaybackThread::playbackState() const
-{
-    return _sound->playbackState();
-}
-
-
-float PlaybackThread::playbackPos() const
-{
-    return _sound->playbackPos();
-}
 
 
 } // namespace hiwi

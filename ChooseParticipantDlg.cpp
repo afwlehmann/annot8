@@ -18,6 +18,8 @@ namespace hiwi {
 ChooseParticipantDlg::ChooseParticipantDlg(QWidget *parent) : QDialog(parent)
 {
     _ui.setupUi(this);
+    connect(_ui.lwParticipants, SIGNAL(itemActivated(QListWidgetItem *)),
+            SLOT(accept()));
 
     // Get the available participants.
     std::vector<Participant *> participants =

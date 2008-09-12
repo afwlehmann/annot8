@@ -40,8 +40,8 @@ MovieWidget::~MovieWidget()
     _images.clear();
     _imagesFifo.clear();
 
-    // Don't forget the movie itself.
-    delete _movie;
+    // The movie ptr ist owned by the MainWindow, so all we do is set
+    // _movie to 0.
     _movie = 0;
 }
 

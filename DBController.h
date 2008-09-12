@@ -19,12 +19,14 @@ namespace hiwi
 // Forward declaration
 struct Movie;
 struct Participant;
+namespace audio { class Samples; }
 
 
 class DBController
 {
 public:
     virtual ~DBController();
+
 
     /**
      * Returns the one and only instance of the database controller. Creates
@@ -58,6 +60,13 @@ public:
      * Returns a list of all participants.
      */
     std::vector<Participant *> getParticipants() const;
+
+
+    /**
+     * Returns the samples associated with the given participant.
+     * @return              a pointer to a newly allocated Samples object or 0
+     */
+    audio::Samples* getSamplesForParticipant(Participant *p) const;
 
 
     /**

@@ -29,7 +29,7 @@ public:
 
 
 private:
-    Ui::ChooseParticipantDlg _ui;
+    Ui::ChooseParticipantDlg    _ui;
 };
 
 

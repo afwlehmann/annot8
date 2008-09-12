@@ -6,9 +6,8 @@ SOURCES = ChooseParticipantDlg.cpp \
           MainWindow.cpp \
           MovieWidget.cpp \
           PlaybackThread.cpp \
+          Samples.cpp \
           SamplesPreviewCanvas.cpp \
-          SamplesPreviewWidget.cpp \
-          Sound.cpp \
           audio.cpp \
           main.cpp
 
@@ -19,9 +18,8 @@ HEADERS = ChooseParticipantDlg.h \
           MovieWidget.h \
           Participant.h \
           PlaybackThread.h \
+          Samples.h \
           SamplesPreviewCanvas.h \
-          SamplesPreviewWidget.h \
-          Sound.h \
           audio.h
 
 FORMS = ChooseParticipantDlg.ui MainWindow.ui
