@@ -10,6 +10,7 @@
 #include "Participant.h"
 #include "PlaybackThread.h"
 #include "Samples.h"
+#include "AboutDlg.h"
 
 #include <stdexcept>
 #include <cmath>
@@ -32,7 +33,8 @@ namespace hiwi {
 
 MainWindow::MainWindow(int participantID) :
     _participant(0),
-    _pbThread(0)
+    _pbThread(0),
+    _flipping(false)
 {
     _ui.setupUi(this);
     _ui.twMovies->removeTab(0);
@@ -166,7 +168,7 @@ void MainWindow::setupSamples()
     progDlg.setValue(1);
 
     // Initialize the samples preview as well as the corresponding slider.
-    _ui.spvCanvas->setSamples(_samples->_samplesAsFloat, _samples->_numSamples);
+    _ui.spvCanvas->setSamples(_samples->samplesAsFloat, _samples->numSamples);
     _ui.spvCanvas->setMarkerVisible(true);
     _ui.hsbSamples->setRange(0, 0);
     _ui.pbPause->setEnabled(false);
@@ -186,8 +188,7 @@ void MainWindow::setupSamples()
 
 void MainWindow::on_actionAbout_triggered()
 {
-    QApplication::aboutQt();
-    //QMessageBox::information(this, tr("Unavailable"), tr("Not yet implemented."));
+    AboutDlg(this).exec();
 }
 
 
@@ -224,21 +225,13 @@ void MainWindow::on_hsCurrentFrame_valueChanged(int value)
     if (!_participant)
         return;
 
-    // Give the user a chance to save his/her data if applicable.
-    if (isWindowModified() && QMessageBox::Yes != QMessageBox::question(this,
-            tr("Attention"), tr("This frame has been modified. If you continue,"
-            " all modifications will be lost. Do you still want to continue?"),
-            QMessageBox::Yes | QMessageBox::No, QMessageBox::No))
-    {
-        return;
-    }
-
     // Set the new movie position according to the slider's value.
     MovieWidget *mw = static_cast<MovieWidget *>(_ui.twMovies->currentWidget());
     mw->setPosition(positionForValue(value));
 
-    // Also adapt the samples position.
-    _pbThread->setPlaybackPos(positionForValue(value));
+    // Also adapt the samples position iff flipping is _not_ currently active.
+    if (!_flipping)
+        _pbThread->setPlaybackPos(positionForValue(value));
 
     // Resetting the windows `modified' flag isn't neccessary at this point
     // as it is done by on_pbReset_clicked instead.
@@ -444,11 +437,22 @@ void MainWindow::on_spvCanvas_posClicked(float pos)
 void MainWindow::xx_on_pbThread_playbackPosChanged(float pos)
 {
     _ui.spvCanvas->setMarkerPos(pos);
+    if (_flipping)
+        _ui.hsCurrentFrame->setValue(pos * _ui.hsCurrentFrame->maximum());
 }
 
 
 void MainWindow::on_tbSyncSamples_clicked()
 {
+    float window = _ui.spvCanvas->max() - _ui.spvCanvas->min();
+    float newMin = max<float>(0.0, _ui.spvCanvas->markerPos() - window / 2.0);
+    float newMax = newMin + window;
+    if (newMax > 1.0) {
+        newMax = 1.0;
+        newMin = newMax - window;
+    }
+    _ui.spvCanvas->setMinMax(newMin, newMax);
+
     _pbThread->setPlaybackPos(positionForValue(_ui.hsCurrentFrame->value()));
 }
 
@@ -459,6 +463,22 @@ void MainWindow::on_tbSyncMovie_clicked()
     _ui.hsCurrentFrame->setValue(
             _pbThread->playbackPos() * _ui.hsCurrentFrame->maximum()
     );
+}
+
+
+void MainWindow::on_pbFlipbook_clicked()
+{
+    if (_flipping) {
+        _ui.pbFlipbook->setText(tr("Flipbook"));
+        on_pbPause_clicked();
+    } else {
+        _ui.pbFlipbook->setText(tr("Still image"));
+        on_pbPlay_clicked();
+        _ui.pbFlipbook->setEnabled(true);
+        _ui.pbPause->setEnabled(false);
+    }
+
+    _flipping = !_flipping;
 }
 
 

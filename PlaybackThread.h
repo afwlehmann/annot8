@@ -14,6 +14,8 @@
 
 namespace hiwi {
 
+namespace audio {
+
 
 class PlaybackThread : public QThread
 {
@@ -21,6 +23,7 @@ class PlaybackThread : public QThread
 
 public:
     typedef enum { Play, Pause } PlaybackState;
+    enum { DefaultFrequency = 22050 };
 
 
     /**
@@ -28,7 +31,7 @@ public:
      * @param  samples          a pointer to a Samples object
      * @param  parent           a pointer to the parent object
      */
-    PlaybackThread(audio::Samples *samples, QObject *parent = 0);
+    PlaybackThread(Samples *samples, QObject *parent = 0);
 
 
     /**
@@ -90,14 +93,16 @@ private:
     static void pbCallback(void *user, Uint8 *buf, int size);
 
 
-    audio::Samples  *_samples;
-
+    Samples         *_samples;
+    // The following mutex is responsible for all the succeeding variables:
     QMutex          _mutex;
     SDL_AudioSpec   *_audioSpec;
     size_t          _pos;
     PlaybackState   _state;
 };
 
+
+} // namespace audio
 
 } // namespace hiwi
 

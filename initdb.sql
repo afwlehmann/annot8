@@ -4,6 +4,11 @@ DELETE FROM participants;
 INSERT INTO participants (name, first_name, number) VALUES ('Lehmann', 'Alexander', 1);
 INSERT INTO participants (name, first_name, number) VALUES ('Groh', 'Georg', 3);
 INSERT INTO participants (name, first_name, number) VALUES ('Lustig', 'Peter', 4);
+INSERT INTO participants (name, first_name, number) VALUES ('Sifredi', 'Rocco', 5);
+INSERT INTO participants (name, first_name, number) VALUES ('North', 'Peter', 6);
+INSERT INTO participants (name, first_name, number) VALUES ('Midwest', 'Melissa', 7);
+INSERT INTO participants (name, first_name, number) VALUES ('Spears', 'Britney', 8);
+INSERT INTO participants (name, first_name, number) VALUES ('Merkel', 'Angela', 9);
 
 DELETE FROM movies;
 INSERT INTO movies VALUES ('/Users/alex/Desktop/HiWi/Experiment/Einzelbilder/Camcorder Alex/Camcorder_Alex_', '.jpg', 1, 7200, 5, 'Camcorder Alex');

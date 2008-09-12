@@ -64,6 +64,12 @@ public:
     inline size_t nrOfSamples() const { return _nSamples; }
 
 
+    /**
+     * Returns the position of the marker.
+     */
+    inline float markerPos() const { return _markerPos; }
+
+
 signals:
     /**
      * This signal is emitted every time the user clicks somewhere in the

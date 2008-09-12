@@ -28,15 +28,15 @@ namespace audio {
 
 struct Samples
 {
-    Sound_Sample    *_ss;
-    float           *_samplesAsFloat;
-    size_t          _numSamples;
-
-
     // SDL supports only a limited range of sample frequencies for playback,
     // hence:
     static const unsigned int MinSampleFreq = 11025;
     static const unsigned int MaxSampleFreq = 44100;
+
+
+    Sound_Sample    *ss;
+    float           *samplesAsFloat;
+    size_t          numSamples;
 
 
     /**

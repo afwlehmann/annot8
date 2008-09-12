@@ -1,4 +1,4 @@
-CONFIG += qt thread
+CONFIG += qt thread resources
 QT += sql gui
 
 SOURCES = ChooseParticipantDlg.cpp \
@@ -11,7 +11,8 @@ SOURCES = ChooseParticipantDlg.cpp \
           audio.cpp \
           main.cpp
 
-HEADERS = ChooseParticipantDlg.h \
+HEADERS = AboutDlg.h \
+          ChooseParticipantDlg.h \
           DBController.h \
           MainWindow.h \
           Movie.h \
@@ -22,7 +23,9 @@ HEADERS = ChooseParticipantDlg.h \
           SamplesPreviewCanvas.h \
           audio.h
 
-FORMS = ChooseParticipantDlg.ui MainWindow.ui
+FORMS = AboutDlg.ui ChooseParticipantDlg.ui MainWindow.ui
+
+RESOURCES = annot8.res
 
 CONFIG(debug, debug|release) {
     IMDIR = build/debug

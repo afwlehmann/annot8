@@ -13,6 +13,8 @@ using std::min;
 
 namespace hiwi {
 
+namespace audio {
+
 
 PlaybackThread::PlaybackThread(audio::Samples *samples, QObject *parent) :
     QThread(parent),
@@ -21,7 +23,7 @@ PlaybackThread::PlaybackThread(audio::Samples *samples, QObject *parent) :
     _pos(0),
     _state(PlaybackThread::Pause)
 {
-};
+}
 
 
 PlaybackThread::~PlaybackThread()
@@ -52,6 +54,7 @@ void PlaybackThread::run()
         _mutex.lock();
         if (_state == Pause || playbackPos() >= 1) {
             _mutex.unlock();
+            SDL_UnlockAudio();
             break;
         }
         emit playbackPosChanged(playbackPos());
@@ -78,7 +81,7 @@ void PlaybackThread::setPlaybackState(PlaybackState state)
         // Open the audio device.
         assert(!_audioSpec);
         _audioSpec = new SDL_AudioSpec;
-        _audioSpec->freq     = 44100;
+        _audioSpec->freq     = PlaybackThread::DefaultFrequency;
         _audioSpec->format   = AUDIO_S16SYS;
         _audioSpec->channels = 1;
         _audioSpec->samples  = 8192;
@@ -111,7 +114,7 @@ void PlaybackThread::setPlaybackState(PlaybackState state)
 
 float PlaybackThread::playbackPos() const
 {
-    return (float)_pos / (float)(_samples->_numSamples - 1);
+    return (float)_pos / (float)(_samples->numSamples - 1);
 }
 
 
@@ -120,9 +123,9 @@ void PlaybackThread::setPlaybackPos(float pos)
     assert(pos >= 0 && pos <= 1);
 
     _mutex.lock();
-    _pos = (size_t)(pos * (_samples->_numSamples - 1));
-    emit playbackPosChanged(pos);
+    _pos = (size_t)(pos * (_samples->numSamples - 1));
     _mutex.unlock();
+    emit playbackPosChanged(pos);
 }
 
 
@@ -134,10 +137,10 @@ void PlaybackThread::pbCallback(void *user, Uint8 *buf, int size)
     // We must pay attention to the fact that our samples are stored as 16-bit
     // signed shorts whereas the callback function's buffer deals with bytes.
     size_t bytesToCopy =
-        min<size_t>((pbt->_samples->_numSamples - pbt->_pos) * sizeof(short),
+        min<size_t>((pbt->_samples->numSamples - pbt->_pos) * sizeof(short),
                     size);
     if (bytesToCopy) {
-        memcpy(buf, (short *)pbt->_samples->_ss->buffer + pbt->_pos, bytesToCopy);
+        memcpy(buf, (short *)pbt->_samples->ss->buffer + pbt->_pos, bytesToCopy);
         pbt->_pos += bytesToCopy / sizeof(short);
     }
 
@@ -148,5 +151,7 @@ void PlaybackThread::pbCallback(void *user, Uint8 *buf, int size)
     pbt->_mutex.unlock();
 }
 
+
+} // namespace audio
 
 } // namespace hiwi
