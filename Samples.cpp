@@ -26,7 +26,9 @@ Samples::Samples(const std::string &fileName) :
     ainfo.rate = PlaybackThread::DefaultFrequency;
 
     // Load the samples.
-    ss = Sound_NewSampleFromFile(fileName.c_str(), &ainfo, 16384);
+    // Note: If the initial buffer size's magnitude is chosen less than 1L<<24,
+    //       Sound_DecodeAll needs forever on win32 platforms.
+    ss = Sound_NewSampleFromFile(fileName.c_str(), &ainfo, 1L<<24);
     if (!ss || ss->flags & SOUND_SAMPLEFLAG_ERROR)
         throw std::runtime_error(SDL_GetError());
 
