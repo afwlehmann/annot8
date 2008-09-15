@@ -94,7 +94,7 @@ void MainWindow::setupMovies()
 
     // Create one tab per movie and make sure that all movies have the exact
     // same length.
-    int lengthCheck;
+    int lengthCheck = -1;
     for (vector<Movie *>::const_iterator it = _movies.begin();
         it != _movies.end(); it++)
     {
