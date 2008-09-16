@@ -19,6 +19,7 @@ namespace hiwi
 // Forward declaration
 struct Movie;
 struct Participant;
+struct Attributes;
 namespace audio { struct Samples; }
 
 
@@ -74,11 +75,11 @@ public:
      * @param  timestamp    the exact moment as a real value within [0,1]
      * @param  senderID     the unique ID of the sending participant
      * @param  receiverIDs  a list of the unique IDs of the receivers
-     * @param  laughing     whether the sender's laughing or not
+     * @param  attributes   the attributes for the corresponding frame
      */
     void storeAnnotation(float timestamp, int senderID,
                          const std::vector<int> &receiverIDs,
-                         bool laughing);
+                         const Attributes &attributes);
 
 
     /**
@@ -87,12 +88,14 @@ public:
      * @param  senderID     the unique ID of the sending participant
      * @param  receiverIDs  a pointer to a vector that will hold the IDs of
      *                      of the respective receivers
-     * @param  laughing     a pointer to a bool that will tell whether the
-     *                      sender was laughing or not
+     * @param  attributes   a pointer to the structure that will hold the
+     *                      attributes of the corresponding frame
+     * @return              true iff data could be retrieved for the given
+     *                      timestamp
      */
-    void getAnnotation(float timestamp, int senderID,
+    bool getAnnotation(float timestamp, int senderID,
                        std::vector<int> *receiverIDs,
-                       bool *laughing);
+                       Attributes *attributes);
 
 
 protected:

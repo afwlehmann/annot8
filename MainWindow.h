@@ -188,9 +188,17 @@ protected slots:
     /**
      * Event-handler for the "Save and continue"-button. Stores the annotations
      * of the current frame, resets the `window modified'-flag and displays
-     * the next frame.
+     * the next frame. Eventually synchronizes the samples position with the
+     * new frame position.
      */
     void on_pbSaveAndContinue_clicked();
+
+
+protected:
+    /**
+     * Invoked whenever the user presses a key.
+     */
+    virtual void keyPressEvent(QKeyEvent *);
 
 
 private:
@@ -248,12 +256,20 @@ private:
     void enableUI(bool playing);
 
 
+    /**
+     * Clears all annotations, i.e. resets the corresponding widgets to their
+     * default state.
+     */
+    void clearAnnotations();
+
+
     Ui::MainWindow          _ui;
     std::vector<Movie *>    _movies;
     Participant             *_participant;
     audio::Samples          *_samples;
     audio::PlaybackThread   *_pbThread;
     bool                    _flipping;
+    bool                    _takeAlong;
 };
 
 

@@ -8,6 +8,7 @@
 #include "Movie.h"
 #include "Participant.h"
 #include "Samples.h"
+#include "Attributes.h"
 #include <stdexcept>
 #include <sstream>
 #include <QtSql>
@@ -127,8 +128,9 @@ void DBController::setupTables()
         query.clear();
         query.prepare(
                 "CREATE TABLE IF NOT EXISTS attributes ("
-                "  timestamp        REAL NOT NULL,"
+                "  timestamp        REAL NOT NULL PRIMARY KEY,"
                 "  participant_id   INTEGER NOT NULL REFERENCES participants(id),"
+                "  speaking         INTEGER,"
                 "  laughing         INTEGER"
                 ");"
         );
@@ -351,7 +353,7 @@ audio::Samples* DBController::getSamplesForParticipant(Participant *p) const
 
 void DBController::storeAnnotation(float timestamp, int senderID,
                                    const std::vector<int> &receiverIDs,
-                                   bool laughing)
+                                   const Attributes &attributes)
 {
     QSqlQuery query;
 
@@ -381,11 +383,12 @@ void DBController::storeAnnotation(float timestamp, int senderID,
             break;
 
         query.clear();
-        query.prepare("INSERT INTO attributes (timestamp, participant_id, laughing) "
-                      "VALUES (?, ?, ?)");
+        query.prepare("INSERT INTO attributes (timestamp, participant_id, "
+                      "speaking, laughing) VALUES (?, ?, ?, ?)");
         query.addBindValue(timestamp);
         query.addBindValue(senderID);
-        query.addBindValue(laughing ? 1 : 0);
+        query.addBindValue(attributes.speaking ? 1 : 0);
+        query.addBindValue(attributes.laughing ? 1 : 0);
         if (!query.exec())
             break;
 
@@ -403,15 +406,16 @@ void DBController::storeAnnotation(float timestamp, int senderID,
 }
 
 
-void DBController::getAnnotation(float timestamp, int senderID,
+bool DBController::getAnnotation(float timestamp, int senderID,
                                  std::vector<int> *receiverIDs,
-                                 bool *laughing)
+                                 Attributes *attributes)
 {
     QSqlQuery query;
 
     // Reset the annotations.
     receiverIDs->clear();
-    *laughing = false;
+    attributes->speaking = false;
+    attributes->laughing = false;
 
     do {
         QSqlDatabase::database().transaction();
@@ -429,16 +433,21 @@ void DBController::getAnnotation(float timestamp, int senderID,
 
         // Get the stored attributes.
         query.clear();
-        query.prepare("SELECT laughing FROM attributes WHERE participant_id = ? "
-                      "AND timestamp = ?");
+        query.prepare("SELECT speaking, laughing FROM attributes "
+                      "WHERE participant_id = ? AND timestamp = ?");
         query.addBindValue(senderID);
         query.addBindValue(timestamp);
         if (!query.exec())
             break;
         else if (query.next()) {
-            *laughing = query.value(0).toBool();
+            attributes->speaking = query.value(0).toBool();
+            attributes->laughing = query.value(1).toBool();
+        } else {
+            // No data available for the given timestamp
+            return false;
         }
-#if QT_VERSION >= 0x040401
+
+#if QT_VERSION >= 0x040302
         query.finish();
 #else
         while (query.next()) {}
@@ -449,7 +458,7 @@ void DBController::getAnnotation(float timestamp, int senderID,
             break;
 
         // Everything's fine, return now.
-        return;
+        return true;
     } while (false);
 
     // Once we get to this point, an error has occured. Let's throw an

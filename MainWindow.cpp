@@ -11,6 +11,7 @@
 #include "PlaybackThread.h"
 #include "Samples.h"
 #include "AboutDlg.h"
+#include "Attributes.h"
 
 #include <stdexcept>
 #include <cmath>
@@ -19,6 +20,7 @@
 #include <QMessageBox>
 #include <QListWidgetItem>
 #include <QProgressDialog>
+#include <QKeyEvent>
 
 
 // The zoom factor to be used for zoom-in and -out.
@@ -35,7 +37,8 @@ namespace hiwi {
 MainWindow::MainWindow(int participantID) :
     _participant(0),
     _pbThread(0),
-    _flipping(false)
+    _flipping(false),
+    _takeAlong(true)
 {
     _ui.setupUi(this);
     _ui.twMovies->removeTab(0);
@@ -230,15 +233,14 @@ void MainWindow::on_hsCurrentFrame_valueChanged(int value)
     MovieWidget *mw = static_cast<MovieWidget *>(_ui.twMovies->currentWidget());
     mw->setPosition(positionForValue(value));
 
-    // Also adapt the samples position iff flipping is _not_ currently active.
-    if (!_flipping)
+    if (!_flipping) {
+        // Adapt the samples position.
         _pbThread->setPlaybackPos(positionForValue(value));
-
-    // Resetting the windows `modified' flag isn't neccessary at this point
-    // as it is done by on_pbReset_clicked instead.
-
-    // Retrieve the new frame's annotations.
-    on_pbReset_clicked();
+        // Retrieve the new frame's annotations iff flipping.
+        on_pbReset_clicked();
+        // Resetting the windows `modified' flag isn't neccessary at this point
+        // as this is done by on_pbReset_clicked instead.
+    }
 }
 
 
@@ -267,14 +269,14 @@ void MainWindow::on_lwReceivers_itemClicked(QListWidgetItem *)
 void MainWindow::on_pbReset_clicked()
 {
     vector<int> selectedReceiverIDs;
-    bool laughing;
+    Attributes attributes;
 
     // First get the annotations for this frame.
     DBController::instance()->getAnnotation(
             positionForValue(_ui.hsCurrentFrame->value()),
             _participant->id,
             &selectedReceiverIDs,
-            &laughing
+            &attributes
     );
 
     // Reset the checked/unchecked state of the receivers.
@@ -292,7 +294,8 @@ void MainWindow::on_pbReset_clicked()
     }
 
     // Adapt the check/unchecked state of the `laughing' checkbox.
-    _ui.cbLaughing->setChecked(laughing);
+    _ui.cbSpeaking->setChecked(attributes.speaking);
+    _ui.cbLaughing->setChecked(attributes.laughing);
 
     // Reset the `window modified' flag.
     setWindowModified(false);
@@ -309,15 +312,20 @@ void MainWindow::on_pbSave_clicked()
             selectedReceiverIDs.push_back(lwi->data(Qt::UserRole).toInt());
     }
 
-    // Then store those ids in conjunction with the `laughing' attribute.
+    // Then determine the attributes.
+    Attributes attributes;
+    attributes.speaking = _ui.cbSpeaking->isChecked();
+    attributes.laughing = _ui.cbLaughing->isChecked();
+
+    // Store those ids in conjunction with the `laughing' attribute.
     DBController::instance()->storeAnnotation(
             positionForValue(_ui.hsCurrentFrame->value()),
             _participant->id,
             selectedReceiverIDs,
-            _ui.cbLaughing->isChecked()
+            attributes
     );
 
-    // Reset the `window modified' flag.
+    // Eventually reset the `window modified' flag.
     setWindowModified(false);
 }
 
@@ -327,6 +335,7 @@ void MainWindow::on_pbSaveAndContinue_clicked()
     // Let "The Others" do the rest ;-)
     on_pbSave_clicked();
     on_tbNext_clicked();
+    on_tbSyncSamples_clicked();
 }
 
 
@@ -472,7 +481,11 @@ void MainWindow::on_pbFlipbook_clicked()
     if (_flipping) {
         _ui.pbFlipbook->setText(tr("Flipbook"));
         on_pbPause_clicked();
+        // Since during flipping no annotation retrieval is done, the
+        // annotations for the current frame have to be retrieved now.
+        on_pbReset_clicked();
     } else {
+        clearAnnotations();
         _ui.pbFlipbook->setText(tr("Still image"));
         on_pbPlay_clicked();
         _ui.pbFlipbook->setEnabled(true);
@@ -480,6 +493,46 @@ void MainWindow::on_pbFlipbook_clicked()
     }
 
     _flipping = !_flipping;
+}
+
+
+void MainWindow::keyPressEvent(QKeyEvent *ev)
+{
+    ev->ignore();
+
+    switch (ev->key()) {
+    case Qt::Key_F1:
+        on_tbSyncSamples_clicked();
+        ev->accept();
+        break;
+
+    case Qt::Key_F3:
+        on_tbPrev_clicked();
+        ev->accept();
+        break;
+
+    case Qt::Key_F4:
+        on_tbNext_clicked();
+        ev->accept();
+        break;
+
+    case Qt::Key_F5:
+        on_pbSaveAndContinue_clicked();
+        ev->accept();
+        break;
+    }
+
+    QMainWindow::keyPressEvent(ev);
+}
+
+
+void MainWindow::clearAnnotations()
+{
+    for (int i = 0; i < _ui.lwReceivers->count(); i++)
+        _ui.lwReceivers->item(i)->setCheckState(Qt::Unchecked);
+
+    _ui.cbSpeaking->setChecked(false);
+    _ui.cbLaughing->setChecked(false);
 }
 
 
