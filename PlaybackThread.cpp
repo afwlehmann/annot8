@@ -85,7 +85,7 @@ void PlaybackThread::setPlaybackState(PlaybackState state)
         _audioSpec->freq     = PlaybackThread::DefaultFrequency;
         _audioSpec->format   = AUDIO_S16SYS;
         _audioSpec->channels = 1;
-        _audioSpec->samples  = 8192;
+        _audioSpec->samples  = 16384;
         _audioSpec->callback = pbCallback;
         _audioSpec->userdata = this;
         if (SDL_OpenAudio(_audioSpec, NULL) != 0) {
