@@ -37,6 +37,7 @@ namespace hiwi {
 MainWindow::MainWindow(int participantID, bool takeAlong) :
     _participant(0),
     _pbThread(0),
+    _playing(false),
     _flipping(false),
     _takeAlong(takeAlong)
 {
@@ -47,8 +48,7 @@ MainWindow::MainWindow(int participantID, bool takeAlong) :
     setupParticipants(participantID);
     setupSamples();
 
-    // Delegate the retrieval of the annotations for the initial frame.
-    on_pbReset_clicked();
+    loadAnnotations(false);
 }
 
 
@@ -174,7 +174,6 @@ void MainWindow::setupSamples()
     _ui.spvCanvas->setSamples(_samples->samplesAsFloat, _samples->numSamples);
     _ui.spvCanvas->setMarkerVisible(true);
     _ui.hsbSamples->setRange(0, 0);
-    _ui.pbPause->setEnabled(false);
 
     progDlg.setValue(2);
 
@@ -185,7 +184,7 @@ void MainWindow::setupSamples()
             SLOT(xx_on_pbThread_playbackPosChanged(float)));
     connect(_pbThread,
             SIGNAL(finished()),
-            SLOT(on_pbPause_clicked()));
+            SLOT(xx_on_pbThread_finished()));
 }
 
 
@@ -395,15 +394,17 @@ void MainWindow::on_hsbSamples_valueChanged(int value)
 
 void MainWindow::on_pbPlay_clicked()
 {
-    enableUI(true);
-    _pbThread->setPlaybackState(PlaybackThread::Play);
-}
+    if (_playing) {
+        _pbThread->setPlaybackState(PlaybackThread::Pause);
+        _ui.pbPlay->setText(tr("Play"));
+        enableUI(false);
+    } else {
+        _pbThread->setPlaybackState(PlaybackThread::Play);
+        _ui.pbPlay->setText(tr("Pause"));
+        enableUI(true);
+    }
 
-
-void MainWindow::on_pbPause_clicked()
-{
-    enableUI(false);
-    _pbThread->setPlaybackState(PlaybackThread::Pause);
+    _playing = !_playing;
 }
 
 
@@ -420,8 +421,8 @@ void MainWindow::enableUI(bool playing)
     _ui.pbSave->setEnabled(!playing);
     _ui.pbSaveAndContinue->setEnabled(!playing);
     _ui.tbSyncSamples->setEnabled(!playing);
-    _ui.pbPlay->setEnabled(!playing);
-    _ui.pbPause->setEnabled(playing);
+    _ui.groupBoxReceivers->setEnabled(!playing);
+    _ui.groupBoxAdditionalInfo->setEnabled(!playing);
 }
 
 
@@ -436,6 +437,14 @@ void MainWindow::xx_on_pbThread_playbackPosChanged(float pos)
     _ui.spvCanvas->setMarkerPos(pos);
     if (_flipping)
         _ui.hsCurrentFrame->setValue(pos * _ui.hsCurrentFrame->maximum());
+}
+
+
+void MainWindow::xx_on_pbThread_finished()
+{
+    _ui.pbPlay->setText(tr("Play"));
+    enableUI(false);
+    _playing = false;
 }
 
 
@@ -467,16 +476,23 @@ void MainWindow::on_pbFlipbook_clicked()
 {
     if (_flipping) {
         _ui.pbFlipbook->setText(tr("Flipbook"));
-        on_pbPause_clicked();
+        _pbThread->setPlaybackState(PlaybackThread::Pause);
         // Since during flipping no annotation retrieval is done, the
         // annotations for the current frame have to be retrieved now.
-        on_pbReset_clicked();
+        loadAnnotations(false);
+        enableUI(false);
+        _ui.pbPlay->setEnabled(true);
     } else {
-        clearAnnotations();
         _ui.pbFlipbook->setText(tr("Still image"));
-        on_pbPlay_clicked();
+        _pbThread->setPlaybackState(PlaybackThread::Play);
+        // During flipping no annotation retrieval is done, so clear all
+        // possible annotations at this point.
+        clearAnnotations();
+        enableUI(true);
+        // Because enableUI(true) implicitly disables the flipbook button, the
+        // button's `enabled' state has to be manually reset to true.
         _ui.pbFlipbook->setEnabled(true);
-        _ui.pbPause->setEnabled(false);
+        _ui.pbPlay->setEnabled(false);
     }
 
     _flipping = !_flipping;
@@ -493,6 +509,11 @@ void MainWindow::keyPressEvent(QKeyEvent *ev)
         ev->accept();
         break;
 
+    case Qt::Key_F2:
+        on_pbPlay_clicked();
+        ev->accept();
+        break;
+
     case Qt::Key_F3:
         on_tbPrev_clicked();
         ev->accept();
@@ -505,6 +526,11 @@ void MainWindow::keyPressEvent(QKeyEvent *ev)
 
     case Qt::Key_F5:
         on_pbSaveAndContinue_clicked();
+        ev->accept();
+        break;
+
+    case Qt::Key_F6:
+        update();
         ev->accept();
         break;
     }

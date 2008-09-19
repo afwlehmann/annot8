@@ -125,17 +125,10 @@ protected slots:
 
 
     /**
-     * Event-handler for the 'Play' button. Updates the ui accordingly and
-     * starts the playback of the samples.
+     * Event-handler for the 'Play' (and also 'Pause') button. Updates the ui
+     * accordingly and starts the playback of the samples.
      */
     void on_pbPlay_clicked();
-
-
-    /**
-     * Event-handler for the 'Pause' button. Udpates the ui accordingly and
-     * stops the playback of the samples.
-     */
-    void on_pbPause_clicked();
 
 
     /**
@@ -152,6 +145,12 @@ protected slots:
      * order to update the marker position of the samples.
      */
     void xx_on_pbThread_playbackPosChanged(float);
+
+
+    /**
+     * Invoked whenver the playback thread stop playing.
+     */
+    void xx_on_pbThread_finished();
 
 
     /**
@@ -279,6 +278,7 @@ private:
     Participant             *_participant;
     audio::Samples          *_samples;
     audio::PlaybackThread   *_pbThread;
+    bool                    _playing;
     bool                    _flipping;
     bool                    _takeAlong;
 };

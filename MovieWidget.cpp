@@ -23,15 +23,15 @@ namespace hiwi
 MovieWidget::MovieWidget(Movie *movie) :
     _movie(movie),
     _numFrames(_movie->lastFrame - _movie->firstFrame + 1),
-    _imageProducer(0),
     _position(0.0),
-    _initialized(false)
+    _imageProducer(0)
 {
     // A small sanity check...
     assert(_movie->firstFrame >= 0);
     assert(_movie->firstFrame < _movie->lastFrame);
     assert(_movie->numDigits > 0);
 
+    // Acquire access on the image producer thread.
     _imageProducer = ImageProducer::acquireInstance();
 }
 

@@ -63,7 +63,7 @@ public:
 
 
     /**
-     * Get the movie's number of frames.
+     * Get the movie's total number of frames.
      */
     inline int getNumFrames() const { return _numFrames; }
 
@@ -100,15 +100,12 @@ protected:
 private:
     const Movie *       _movie;
     const int           _numFrames;
+    float               _position;
 
     ImageProducer       *_imageProducer;
     QMutex              _mutex;
     QHash<int, QImage*> _images;
     QQueue<int>         _imagesFifo;
-
-    float               _position;
-
-    bool                _initialized;
 };
 
 
