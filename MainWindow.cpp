@@ -34,11 +34,11 @@ using namespace std;
 namespace hiwi {
 
 
-MainWindow::MainWindow(int participantID) :
+MainWindow::MainWindow(int participantID, bool takeAlong) :
     _participant(0),
     _pbThread(0),
     _flipping(false),
-    _takeAlong(true)
+    _takeAlong(takeAlong)
 {
     _ui.setupUi(this);
     _ui.twMovies->removeTab(0);
@@ -46,11 +46,6 @@ MainWindow::MainWindow(int participantID) :
     setupMovies();
     setupParticipants(participantID);
     setupSamples();
-
-    // Initialize the current-frame slider with the first movie's number of
-    // frames.
-    _ui.hsCurrentFrame->setRange(0,
-        static_cast<MovieWidget *>(_ui.twMovies->widget(0))->getNumFrames() - 1);
 
     // Delegate the retrieval of the annotations for the initial frame.
     on_pbReset_clicked();
@@ -112,6 +107,10 @@ void MainWindow::setupMovies()
         mw->initialize();
         progDlg.setValue(progDlg.value() + 1);
     }
+
+    // Update the range of the current-frame horizontal slider.
+    _ui.hsCurrentFrame->setRange(0, lengthCheck);
+    _ui.spbCurrentFrame->setRange(0, lengthCheck);
 }
 
 
@@ -209,37 +208,28 @@ void MainWindow::on_twMovies_currentChanged(int index)
     if (index < 0)
         return;
 
-    // Update the current-frame range according to the number of frames of the
-    // currently selected movie.
-    setFramesRange(
-     0,
-     static_cast<MovieWidget *>(_ui.twMovies->widget(index))->getNumFrames() - 1
-    );
-
     // Assure that the newly selected movie's position gets updated as well,
-    // i.e. delegate this task to the horizontal slider as everybody else does.
-    on_hsCurrentFrame_valueChanged(_ui.hsCurrentFrame->value());
+    // i.e. delegate this task to the horizontal slider as (almost) everybody
+    // else does.
+    on_hsCurrentFrame_valueChanged(currentFrame());
 }
 
 
 void MainWindow::on_hsCurrentFrame_valueChanged(int value)
 {
-    // Since the associated is emitted already during Qt's `startup' we must
-    // introduce a little safety check at this point:
+    // Since the associated signal is already emitted during Qt's `startup' we
+    // must introduce a little safety check at this point:
     if (!_participant)
         return;
 
-    // Set the new movie position according to the slider's value.
-    MovieWidget *mw = static_cast<MovieWidget *>(_ui.twMovies->currentWidget());
-    mw->setPosition(positionForValue(value));
+    // Go to the desired frame.
+    goToFrame(value);
 
     if (!_flipping) {
         // Adapt the samples position.
         _pbThread->setPlaybackPos(positionForValue(value));
-        // Retrieve the new frame's annotations iff flipping.
-        on_pbReset_clicked();
-        // Resetting the windows `modified' flag isn't neccessary at this point
-        // as this is done by on_pbReset_clicked instead.
+        // Update the annotations.
+        loadAnnotations();
     }
 }
 
@@ -247,58 +237,45 @@ void MainWindow::on_hsCurrentFrame_valueChanged(int value)
 void MainWindow::on_tbPrev_clicked()
 {
     // Delegate the task to the current frame slider.
-    if (_ui.hsCurrentFrame->value() > 0)
-        _ui.hsCurrentFrame->setValue(_ui.hsCurrentFrame->value() - 1);
+    if (currentFrame() > 0)
+        _ui.hsCurrentFrame->setValue(currentFrame() - 1);
 }
 
 
 void MainWindow::on_tbNext_clicked()
 {
-    // Delegate the task to the current frame slider.
-    if (_ui.hsCurrentFrame->value() < _ui.hsCurrentFrame->maximum())
-        _ui.hsCurrentFrame->setValue(_ui.hsCurrentFrame->value() + 1);
-}
+    if (currentFrame() >= _ui.hsCurrentFrame->maximum())
+        return;
 
+    // Block the current-frame slider and spinbox signals in order to suppress
+    // unwanted event handling.
+    _ui.hsCurrentFrame->blockSignals(true);
+    _ui.spbCurrentFrame->blockSignals(true);
 
-void MainWindow::on_lwReceivers_itemClicked(QListWidgetItem *)
-{
-     setWindowModified(true);
+    // Go to the desired frame.
+    const int nextFrame = currentFrame() + 1;
+    goToFrame(nextFrame);
+
+    // Adapt the current-frame slider and the spinbox.
+    _ui.hsCurrentFrame->setValue(nextFrame);
+    _ui.spbCurrentFrame->setValue(nextFrame);
+
+    // Adapt the samples position.
+    _pbThread->setPlaybackPos(positionForValue(nextFrame));
+
+    // Take along the annotations iff desired.
+    loadAnnotations(_takeAlong);
+
+    // Unblock the current-frame slider and spinbox signals again.
+    _ui.hsCurrentFrame->blockSignals(false);
+    _ui.spbCurrentFrame->blockSignals(false);
 }
 
 
 void MainWindow::on_pbReset_clicked()
 {
-    vector<int> selectedReceiverIDs;
-    Attributes attributes;
-
-    // First get the annotations for this frame.
-    DBController::instance()->getAnnotation(
-            positionForValue(_ui.hsCurrentFrame->value()),
-            _participant->id,
-            &selectedReceiverIDs,
-            &attributes
-    );
-
-    // Reset the checked/unchecked state of the receivers.
-    for (int i = 0; i < _ui.lwReceivers->count(); i++) {
-        QListWidgetItem *lwi = _ui.lwReceivers->item(i);
-        lwi->setCheckState(Qt::Unchecked);
-        for (vector<int>::const_iterator it = selectedReceiverIDs.begin();
-            it != selectedReceiverIDs.end(); it++)
-        {
-            if (lwi->data(Qt::UserRole).toInt() == *it) {
-                lwi->setCheckState(Qt::Checked);
-                break;
-            }
-        }
-    }
-
-    // Adapt the check/unchecked state of the `laughing' checkbox.
-    _ui.cbSpeaking->setChecked(attributes.speaking);
-    _ui.cbLaughing->setChecked(attributes.laughing);
-
-    // Reset the `window modified' flag.
-    setWindowModified(false);
+    // (Re)load the corresponding annotations.
+    loadAnnotations();
 }
 
 
@@ -319,14 +296,11 @@ void MainWindow::on_pbSave_clicked()
 
     // Store those ids in conjunction with the `laughing' attribute.
     DBController::instance()->storeAnnotation(
-            positionForValue(_ui.hsCurrentFrame->value()),
+            currentTimestamp(),
             _participant->id,
             selectedReceiverIDs,
             attributes
     );
-
-    // Eventually reset the `window modified' flag.
-    setWindowModified(false);
 }
 
 
@@ -345,10 +319,23 @@ float MainWindow::positionForValue(int value) const
 }
 
 
-void MainWindow::setFramesRange(int min, int max)
+float MainWindow::currentPosition() const
 {
-    _ui.hsCurrentFrame->setRange(min, max);
-    _ui.spbCurrentFrame->setRange(min, max);
+    MovieWidget *mw = static_cast<MovieWidget *>(_ui.twMovies->currentWidget());
+    return mw->getPosition();
+}
+
+
+int MainWindow::currentTimestamp() const
+{
+    MovieWidget *mw = static_cast<MovieWidget *>(_ui.twMovies->currentWidget());
+    return mw->getTimestamp();
+}
+
+
+int MainWindow::currentFrame() const
+{
+    return _ui.hsCurrentFrame->value();
 }
 
 
@@ -463,7 +450,7 @@ void MainWindow::on_tbSyncSamples_clicked()
     }
     _ui.spvCanvas->setMinMax(newMin, newMax);
 
-    _pbThread->setPlaybackPos(positionForValue(_ui.hsCurrentFrame->value()));
+    _pbThread->setPlaybackPos(currentPosition());
 }
 
 
@@ -533,6 +520,51 @@ void MainWindow::clearAnnotations()
 
     _ui.cbSpeaking->setChecked(false);
     _ui.cbLaughing->setChecked(false);
+}
+
+
+void MainWindow::loadAnnotations(bool takeAlong)
+{
+    vector<int> selectedReceiverIDs;
+    Attributes attributes;
+
+    // First get the annotations for this frame.
+    const bool hasAnnotations = DBController::instance()->getAnnotation(
+            currentTimestamp(),
+            _participant->id,
+            &selectedReceiverIDs,
+            &attributes
+    );
+
+    // If no annotations have been stored for the current frame and the
+    // takeAlong flag is set, simply return and leave everything untouched.
+    if (takeAlong && !hasAnnotations)
+        return;
+
+    // Reset the checked/unchecked state of the receivers.
+    for (int i = 0; i < _ui.lwReceivers->count(); i++) {
+        QListWidgetItem *lwi = _ui.lwReceivers->item(i);
+        lwi->setCheckState(Qt::Unchecked);
+        for (vector<int>::const_iterator it = selectedReceiverIDs.begin();
+            it != selectedReceiverIDs.end(); it++)
+        {
+            if (lwi->data(Qt::UserRole).toInt() == *it) {
+                lwi->setCheckState(Qt::Checked);
+                break;
+            }
+        }
+    }
+
+    // Adapt the check/unchecked state of the `laughing' checkbox.
+    _ui.cbSpeaking->setChecked(attributes.speaking);
+    _ui.cbLaughing->setChecked(attributes.laughing);
+}
+
+
+void MainWindow::goToFrame(int frame)
+{
+    MovieWidget *mw = static_cast<MovieWidget *>(_ui.twMovies->currentWidget());
+    mw->setPosition(positionForValue(frame));
 }
 
 

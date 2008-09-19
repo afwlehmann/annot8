@@ -26,14 +26,17 @@ using namespace std;
 void displayUsageAndExit()
 {
     cout << "Usage: annot8 [options]" << endl
-         << "  --initdb    Remove the old database file and initialize a new one file." << endl
-         << "  --help      Display this message." << endl;
+         << "  --initdb          Remove the old database file and initialize a new one file." << endl
+         << "  --no-take-along   Don't take along any annotations." << endl
+         << "  --help            Display this message." << endl;
     exit(1);
 }
 
 
-void parseCmdLine(const QList<QString> &args)
+void parseCmdLine(const QList<QString> &args, bool *takeAlong)
 {
+    *takeAlong = true;
+
     foreach (const QString &arg, args) {
         if (!arg.compare("--initdb", Qt::CaseInsensitive)) {
             // Delete the old file, then create a new database and eventually
@@ -45,6 +48,8 @@ void parseCmdLine(const QList<QString> &args)
             DBController::instance()->disconnect();
             cout << "Exiting." << endl;
             exit(0);
+        } else if (!arg.compare("--no-take-along", Qt::CaseInsensitive)) {
+            *takeAlong = false;
         } else if (!arg.compare("--help", Qt::CaseInsensitive)) {
             displayUsageAndExit();
         } else {
@@ -67,11 +72,13 @@ int main(int argc, char *argv[])
     }
 
     try {
+        bool takeAlong;
+
         // Parse the command-line arguments, but remove the first argument
         // beforehand because it is only the application's executable name.
         QList<QString> args = app.arguments();
         args.pop_front();
-        parseCmdLine(args);
+        parseCmdLine(args, &takeAlong);
 
         // Attempt to connect to the database.
         if (!DBController::instance()->connect("experiment.sql")) {
@@ -87,7 +94,7 @@ int main(int argc, char *argv[])
 
         // Now that the user has successfully chosen a participant, go on
         // and show the main window.
-        MainWindow mw(cpDlg.getParticipantID());
+        MainWindow mw(cpDlg.getParticipantID(), takeAlong);
         mw.show();
         mw.raise();
 

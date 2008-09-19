@@ -72,19 +72,19 @@ public:
 
     /**
      * Stores the annotation of a frame in terms of the given parameters.
-     * @param  timestamp    the exact moment as a real value within [0,1]
+     * @param  timestamp    the timestamp in milliseconds
      * @param  senderID     the unique ID of the sending participant
      * @param  receiverIDs  a list of the unique IDs of the receivers
      * @param  attributes   the attributes for the corresponding frame
      */
-    void storeAnnotation(float timestamp, int senderID,
+    void storeAnnotation(int timestamp, int senderID,
                          const std::vector<int> &receiverIDs,
                          const Attributes &attributes);
 
 
     /**
      * Retrieves the annotation of a frame for the given timestamp and sender.
-     * @param  timestamp    the exact moment as a real value within [0,1]
+     * @param  timestamp    the timestamp in milliseconds
      * @param  senderID     the unique ID of the sending participant
      * @param  receiverIDs  a pointer to a vector that will hold the IDs of
      *                      of the respective receivers
@@ -93,7 +93,7 @@ public:
      * @return              true iff data could be retrieved for the given
      *                      timestamp
      */
-    bool getAnnotation(float timestamp, int senderID,
+    bool getAnnotation(int timestamp, int senderID,
                        std::vector<int> *receiverIDs,
                        Attributes *attributes);
 

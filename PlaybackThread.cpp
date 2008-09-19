@@ -60,8 +60,8 @@ void PlaybackThread::run()
         }
         emit playbackPosChanged(playbackPos());
         _mutex.unlock();
-        // 200ms gives a refresh rate of 5Hz.
-        msleep(200);
+        // 125ms gives a refresh rate of 8Hz.
+        msleep(125);
     }
     // Qt emits the QThread::finished() signal right after run() has terminated.
 }

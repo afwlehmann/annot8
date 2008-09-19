@@ -5,6 +5,7 @@
 
 
 #include "MovieWidget.h"
+#include "ImageProducer.h"
 #include <QPainter>
 #include <cassert>
 #include <sstream>
@@ -22,6 +23,7 @@ namespace hiwi
 MovieWidget::MovieWidget(Movie *movie) :
     _movie(movie),
     _numFrames(_movie->lastFrame - _movie->firstFrame + 1),
+    _imageProducer(0),
     _position(0.0),
     _initialized(false)
 {
@@ -29,6 +31,8 @@ MovieWidget::MovieWidget(Movie *movie) :
     assert(_movie->firstFrame >= 0);
     assert(_movie->firstFrame < _movie->lastFrame);
     assert(_movie->numDigits > 0);
+
+    _imageProducer = ImageProducer::acquireInstance();
 }
 
 
@@ -43,6 +47,9 @@ MovieWidget::~MovieWidget()
     // The movie ptr ist owned by the MainWindow, so all we do is set
     // _movie to 0.
     _movie = 0;
+
+    // We're also done with the ImageProducer thread.
+    ImageProducer::releaseInstance();
 }
 
 
@@ -52,9 +59,11 @@ void MovieWidget::loadFrame(float pos)
     const int endIndex = qMin(startIndex + MAX_IMAGES_FIFO_SIZE - 1,
                               _movie->lastFrame);
 
+#ifdef DEBUG
     assert(startIndex >= _movie->firstFrame && startIndex <= _movie->lastFrame);
+#endif
 
-    std::stringstream ss(std::ios_base::app | std::ios_base::ate | std::ios_base::out);
+    _mutex.lock();
     for (int i = startIndex; i <= endIndex; i++) {
         // Load the frame only when neccessary
         if (!_images.contains(i)) {
@@ -70,23 +79,11 @@ void MovieWidget::loadFrame(float pos)
                 }
                 delete _images.take(oldestIndex);
             }
-
-            // Now fetch the desired frame.
-            ss.str(_movie->prefix);
-            ss << std::setfill('0') << std::setw(_movie->numDigits) << i
-               << _movie->suffix;
-            QImage *newImage = new QImage(QString::fromStdString(ss.str()));
-            if (newImage->isNull()) {
-                delete newImage;
-                throw std::runtime_error("Couldn't load '" + ss.str() + "'.");
-            }
-
-            // Store the pointer to the image and enqueue the image's index in
-            // the fifo.
-            _images[i] = newImage;
-            _imagesFifo.enqueue(i);
+            // Now delegate the retrieval of the desired frame.
+            _imageProducer->retrieve(_movie, i, &_mutex, &_images, &_imagesFifo);
         }
     }
+    _mutex.unlock();
 }
 
 
@@ -95,7 +92,11 @@ void MovieWidget::paintEvent(QPaintEvent *)
     QPainter p(this);
 
     const int index = _movie->firstFrame + (_numFrames - 1) * _position;
-    if (_images.contains(index)) {
+    _mutex.lock();
+    QImage *im = _images.value(index);
+    _mutex.unlock();
+
+    if (im) {
         p.drawImage(rect(), *_images[index]);
     } else {
         p.fillRect(rect(), QBrush(Qt::black, Qt::DiagCrossPattern));
@@ -105,7 +106,10 @@ void MovieWidget::paintEvent(QPaintEvent *)
 
 void MovieWidget::setPosition(float position)
 {
+#ifdef DEBUG
     assert(position >= 0 && position <= 1);
+#endif
+
     _position = position;
     loadFrame(_position);
     update();

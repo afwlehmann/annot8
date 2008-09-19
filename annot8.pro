@@ -3,6 +3,7 @@ QT += sql gui
 
 SOURCES = ChooseParticipantDlg.cpp \
           DBController.cpp \
+          ImageProducer.cpp \
           MainWindow.cpp \
           MovieWidget.cpp \
           PlaybackThread.cpp \
@@ -14,6 +15,7 @@ SOURCES = ChooseParticipantDlg.cpp \
 HEADERS = AboutDlg.h \
           ChooseParticipantDlg.h \
           DBController.h \
+          ImageProducer.h \
           MainWindow.h \
           Movie.h \
           MovieWidget.h \

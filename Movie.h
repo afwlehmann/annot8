@@ -19,16 +19,18 @@ struct Movie {
     const std::string suffix;
     const int         firstFrame;
     const int         lastFrame;
+    const int         msPerFrame;
     const int         numDigits;
     const std::string description;
 
     Movie(const std::string &aPrefix, const std::string &aSuffix,
-          int aFirstFrame, int aLastFrame, int aNumDigits,
+          int aFirstFrame, int aLastFrame, int aMsPerFrame, int aNumDigits,
           const std::string &aDescription) :
         prefix(aPrefix),
         suffix(aSuffix),
         firstFrame(aFirstFrame),
         lastFrame(aLastFrame),
+        msPerFrame(aMsPerFrame),
         numDigits(aNumDigits),
         description(aDescription)
     {

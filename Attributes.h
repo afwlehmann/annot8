@@ -14,6 +14,8 @@ namespace hiwi {
 struct Attributes {
     bool speaking;
     bool laughing;
+
+    // TODO: Constructor
 };
 
 

@@ -29,7 +29,7 @@ class MainWindow : public QMainWindow
     Q_OBJECT
 
 public:
-    MainWindow(int participantID);
+    MainWindow(int participantID, bool takeAlong);
     virtual ~MainWindow();
 
 
@@ -166,12 +166,6 @@ protected slots:
 
 
     /**
-     * Invoked whenever the user clicks on a list widget item.
-     */
-    void on_lwReceivers_itemClicked(QListWidgetItem *);
-
-
-    /**
      * Event-handler for the "Reset"-button. Rereads the annotations for
      * the current frame and sets the UI's elements accordingly.
      */
@@ -232,10 +226,21 @@ private:
 
 
     /**
-     * Sets the range of the frame-related horizontal scrollbar to the
-     * specified range.
+     * Returns the current position mapped to [0, 1].
      */
-    void setFramesRange(int min, int max);
+    float currentPosition() const;
+
+
+    /**
+     * Returns the current timestamp in milliseconds.
+     */
+    int currentTimestamp() const;
+
+
+    /**
+     * Returns the current frame number.
+     */
+    int currentFrame() const;
 
 
     /**
@@ -261,6 +266,12 @@ private:
      * default state.
      */
     void clearAnnotations();
+
+
+    void loadAnnotations(bool takeAlong = false);
+
+
+    void goToFrame(int frame);
 
 
     Ui::MainWindow          _ui;

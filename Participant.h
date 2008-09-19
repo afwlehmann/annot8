@@ -15,10 +15,10 @@ namespace hiwi {
 
 
 struct Participant {
-    int         id;
-    std::string name;
-    std::string firstName;
-    int         number;
+    const int         id;
+    const std::string name;
+    const std::string firstName;
+    const int         number;
 
     Participant(int aId,
                 const std::string &aName,

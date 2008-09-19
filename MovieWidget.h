@@ -10,6 +10,7 @@
 
 #include "Movie.h"
 #include <QWidget>
+#include <QMutex>
 #include <QHash>
 #include <QQueue>
 #include <QImage>
@@ -17,6 +18,10 @@
 
 namespace hiwi
 {
+
+
+// Forward declaration
+class ImageProducer;
 
 
 class MovieWidget : public QWidget
@@ -48,7 +53,13 @@ public:
     inline float getPosition() const { return _position; }
 
 
-    inline int getFirstFrame() const { return _movie->firstFrame; }
+    /**
+     * Get the movie's current position in milliseconds.
+     */
+    inline int getTimestamp() const
+    {
+        return (int)(_position * _numFrames * _movie->msPerFrame);
+    }
 
 
     /**
@@ -90,6 +101,8 @@ private:
     const Movie *       _movie;
     const int           _numFrames;
 
+    ImageProducer       *_imageProducer;
+    QMutex              _mutex;
     QHash<int, QImage*> _images;
     QQueue<int>         _imagesFifo;
 

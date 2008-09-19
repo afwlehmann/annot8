@@ -77,65 +77,58 @@ void DBController::setupTables()
     QSqlQuery query;
 
     do {
-        query.clear();
-        query.prepare(
+        if (!query.exec(
                 "CREATE TABLE IF NOT EXISTS participants ("
                 "  id               INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,"
                 "  name             TEXT NOT NULL,"
                 "  first_name       TEXT,"
                 "  number           INTEGER"
-                ");"
-        );
-        if (!query.exec())
-            break;
+                ");"))
+        { break; }
 
-        query.clear();
-        query.prepare(
+        if (!query.exec(
                 "CREATE TABLE IF NOT EXISTS samples ("
                 "  participant_id   INTEGER NOT NULL REFERENCES participants(id),"
                 "  filename         TEXT NOT NULL"
-                ");"
-        );
-        if (!query.exec())
-            break;
+                ");"))
+        { break; }
 
-        query.clear();
-        query.prepare(
+        if (!query.exec(
                 "CREATE TABLE IF NOT EXISTS movies ("
                 "  prefix           TEXT NOT NULL,"
                 "  suffix           TEXT NOT NULL,"
                 "  first_frame      INTEGER NOT NULL,"
                 "  last_frame       INTEGER NOT NULL,"
+                "  ms_per_frame     INTEGER NOT NULL,"
                 "  num_digits       INTEGER NOT NULL,"
                 "  description      TEXT"
-                ");"
-        );
-        if (!query.exec())
-            break;
+                ");"))
+        { break; }
 
-        query.clear();
-        query.prepare(
+        if (!query.exec(
                 "CREATE TABLE IF NOT EXISTS sender ("
-                "  timestamp        REAL NOT NULL,"
+                "  timestamp        INTEGER NOT NULL,"
                 "  sender_id        INTEGER NOT NULL REFERENCES participants(id),"
                 "  receiver_id      INTEGER NOT NULL REFERENCES participants(id),"
                 "  UNIQUE(timestamp, sender_id, receiver_id)"
-                ");"
-        );
-        if (!query.exec())
-            break;
+                ");") ||
+            !query.exec(
+                "CREATE INDEX IF NOT EXISTS sender_custom_index "
+                " ON sender (timestamp, sender_id);"))
+        { break; }
 
-        query.clear();
-        query.prepare(
+        if (!query.exec(
                 "CREATE TABLE IF NOT EXISTS attributes ("
-                "  timestamp        REAL NOT NULL PRIMARY KEY,"
+                "  timestamp        INTEGER NOT NULL,"
                 "  participant_id   INTEGER NOT NULL REFERENCES participants(id),"
                 "  speaking         INTEGER,"
-                "  laughing         INTEGER"
-                ");"
-        );
-        if (!query.exec())
-            break;
+                "  laughing         INTEGER,"
+                "  UNIQUE(timestamp, participant_id)"
+                ");") ||
+            !query.exec(
+                "CREATE INDEX IF NOT EXISTS attributes_custom_index "
+                " ON attributes (timestamp, participant_id);"))
+        { break; }
 
         // Finalize the transaction.
         if (!QSqlDatabase::database().commit())
@@ -256,27 +249,6 @@ void DBController::setupTriggers()
         if (query.lastError().isValid())
             break;
 
-        // Create one trigger for checking the timestamp of an annotation.
-        if (!query.exec("DROP TRIGGER IF EXISTS check_sender_timestamp_insert;") ||
-            !query.exec(
-                "CREATE TRIGGER IF NOT EXISTS check_sender_timestamp_insert "
-                "BEFORE INSERT ON sender "
-                "FOR EACH ROW BEGIN "
-                "  SELECT RAISE(ROLLBACK, 'Invalid timestamp.')"
-                "    WHERE NEW.timestamp < 0 OR NEW.timestamp > 1;"
-                "END;") ||
-            !query.exec("DROP TRIGGER IF EXISTS check_sender_timestamp_update;") ||
-            !query.exec(
-                "CREATE TRIGGER IF NOT EXISTS check_sender_timestamp_update "
-                "BEFORE UPDATE ON sender "
-                "FOR EACH ROW BEGIN "
-                "  SELECT RAISE(ROLLBACK, 'Invalid timestamp.')"
-                "    WHERE NEW.timestamp < 0 OR NEW.timestamp > 1; "
-                "END;"))
-        {
-            break;
-        }
-
         // Finalize the transaction.
         if (!QSqlDatabase::database().commit())
             break;
@@ -297,19 +269,20 @@ std::vector<Movie *> DBController::getAvailableMovies() const
 
     QSqlQuery query;
     if (!query.exec("SELECT prefix, suffix, first_frame, last_frame, "
-            "num_digits, description FROM movies"))
+            "ms_per_frame, num_digits, description FROM movies"))
     {
         throw std::runtime_error("Unable to get the list of available movies!");
     }
 
     while (query.next()) {
         result.push_back(new Movie(
-                query.value(0).toString().toStdString(),
-                query.value(1).toString().toStdString(),
-                query.value(2).toInt(),
-                query.value(3).toInt(),
-                query.value(4).toInt(),
-                query.value(5).toString().toStdString())
+                query.value(0).toString().toStdString(),    // prefix
+                query.value(1).toString().toStdString(),    // suffix
+                query.value(2).toInt(),                     // first_frame
+                query.value(3).toInt(),                     // last_frame
+                query.value(4).toInt(),                     // ms_per_frame,
+                query.value(5).toInt(),                     // num_digits
+                query.value(6).toString().toStdString())    // descripition
         );
     }
 
@@ -351,7 +324,7 @@ audio::Samples* DBController::getSamplesForParticipant(Participant *p) const
 }
 
 
-void DBController::storeAnnotation(float timestamp, int senderID,
+void DBController::storeAnnotation(int timestamp, int senderID,
                                    const std::vector<int> &receiverIDs,
                                    const Attributes &attributes)
 {
@@ -361,9 +334,9 @@ void DBController::storeAnnotation(float timestamp, int senderID,
         QSqlDatabase::database().transaction();
 
         query.clear();
-        query.prepare("DELETE FROM sender WHERE sender_id = ? AND timestamp = ?");
-        query.addBindValue(senderID);
+        query.prepare("DELETE FROM sender WHERE timestamp = ? AND sender_id = ?");
         query.addBindValue(timestamp);
+        query.addBindValue(senderID);
         if (!query.exec())
             break;
 
@@ -376,6 +349,7 @@ void DBController::storeAnnotation(float timestamp, int senderID,
             query.addBindValue(timestamp);
             query.addBindValue(senderID);
             query.addBindValue(*it);
+            qDebug("%d", *it);
             if (!query.exec())
                 break;
         }
@@ -383,8 +357,9 @@ void DBController::storeAnnotation(float timestamp, int senderID,
             break;
 
         query.clear();
-        query.prepare("INSERT INTO attributes (timestamp, participant_id, "
-                      "speaking, laughing) VALUES (?, ?, ?, ?)");
+        query.prepare("INSERT OR REPLACE INTO attributes "
+                      "(timestamp, participant_id, speaking, laughing) "
+                      "VALUES (?, ?, ?, ?)");
         query.addBindValue(timestamp);
         query.addBindValue(senderID);
         query.addBindValue(attributes.speaking ? 1 : 0);
@@ -406,7 +381,7 @@ void DBController::storeAnnotation(float timestamp, int senderID,
 }
 
 
-bool DBController::getAnnotation(float timestamp, int senderID,
+bool DBController::getAnnotation(int timestamp, int senderID,
                                  std::vector<int> *receiverIDs,
                                  Attributes *attributes)
 {
@@ -422,10 +397,10 @@ bool DBController::getAnnotation(float timestamp, int senderID,
 
         // Get the IDs of the receivers.
         query.clear();
-        query.prepare("SELECT receiver_id FROM sender WHERE sender_id = ? "
-                      "AND timestamp = ?");
-        query.addBindValue(senderID);
+        query.prepare("SELECT receiver_id FROM sender WHERE timestamp = ? "
+                      "AND sender_id = ?");
         query.addBindValue(timestamp);
+        query.addBindValue(senderID);
         if (!query.exec())
             break;
         while (query.next())
@@ -434,9 +409,9 @@ bool DBController::getAnnotation(float timestamp, int senderID,
         // Get the stored attributes.
         query.clear();
         query.prepare("SELECT speaking, laughing FROM attributes "
-                      "WHERE participant_id = ? AND timestamp = ?");
-        query.addBindValue(senderID);
+                      "WHERE timestamp = ? AND participant_id = ?");
         query.addBindValue(timestamp);
+        query.addBindValue(senderID);
         if (!query.exec())
             break;
         else if (query.next()) {

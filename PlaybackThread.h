@@ -69,7 +69,7 @@ public:
 signals:
     /**
      * This signal is emitted every time the playback position changed.
-     * During playback this happens at a rate of about 5Hz at best.
+     * During playback this happens at a rate of about 8Hz at best.
      */
     void playbackPosChanged(float pos);
 
