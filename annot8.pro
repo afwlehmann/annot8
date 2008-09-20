@@ -3,6 +3,7 @@ QT += sql gui
 
 SOURCES = ChooseParticipantDlg.cpp \
           DBController.cpp \
+          DBInitializationDlg.cpp \
           ImageProducer.cpp \
           MainWindow.cpp \
           MovieWidget.cpp \
@@ -15,6 +16,7 @@ SOURCES = ChooseParticipantDlg.cpp \
 HEADERS = AboutDlg.h \
           ChooseParticipantDlg.h \
           DBController.h \
+          DBInitializationDlg.h \
           ImageProducer.h \
           MainWindow.h \
           Movie.h \
@@ -25,7 +27,10 @@ HEADERS = AboutDlg.h \
           SamplesPreviewCanvas.h \
           audio.h
 
-FORMS = AboutDlg.ui ChooseParticipantDlg.ui MainWindow.ui
+FORMS = AboutDlg.ui \
+        ChooseParticipantDlg.ui \
+        DBInitializationDlg.ui \
+        MainWindow.ui
 
 RESOURCES = annot8.qrc
 
