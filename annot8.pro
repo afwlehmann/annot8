@@ -54,6 +54,7 @@ mac {
 win32 {
     # Add CONFIG += console for messages on std(out|err).
     CONFIG += windows embed_manifest_exe
+    LIBS += SDL.lib SDL_sound.lib
 }
 
 unix {

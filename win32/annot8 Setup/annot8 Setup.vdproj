@@ -22,7 +22,7 @@
         "Entry"
         {
         "MsmKey" = "8:_1194A0BD450CD85F5F2E81A877596515"
-        "OwnerKey" = "8:_6022436602474A86B3399BA68E482EF2"
+        "OwnerKey" = "8:_A34EDBE545404FD9A85EE7B6FCB4B286"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -33,26 +33,26 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_2C369960C3EF41C4856D561B490F30BF"
+        "OwnerKey" = "8:_A34EDBE545404FD9A85EE7B6FCB4B286"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_3708731FC0DA110B6691DB68E21CAAE3"
-        "OwnerKey" = "8:_6022436602474A86B3399BA68E482EF2"
+        "OwnerKey" = "8:_A34EDBE545404FD9A85EE7B6FCB4B286"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_49D862B36A0FFE9D25ADE19E078B0DC9"
-        "OwnerKey" = "8:_6022436602474A86B3399BA68E482EF2"
+        "OwnerKey" = "8:_A34EDBE545404FD9A85EE7B6FCB4B286"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_5EF11F8216E380F5FAF0FCC8E5513C84"
-        "OwnerKey" = "8:_6022436602474A86B3399BA68E482EF2"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_6022436602474A86B3399BA68E482EF2"
-        "OwnerKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_A34EDBE545404FD9A85EE7B6FCB4B286"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -93,6 +93,12 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_A34EDBE545404FD9A85EE7B6FCB4B286"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_AA99BC27A5284855A30112C5F0D79D93"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
@@ -118,19 +124,13 @@
         "Entry"
         {
         "MsmKey" = "8:_E679C4D03B3E313E2FEC7261928A6859"
-        "OwnerKey" = "8:_6022436602474A86B3399BA68E482EF2"
+        "OwnerKey" = "8:_A34EDBE545404FD9A85EE7B6FCB4B286"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_F0598CBA1D0849E7A08DC54C4A3306DE"
-        "OwnerKey" = "8:_F82E1B73B46642AAA0E2B6EC9961CD22"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_F82E1B73B46642AAA0E2B6EC9961CD22"
-        "OwnerKey" = "8:_6022436602474A86B3399BA68E482EF2"
+        "MsmKey" = "8:_FC86B9A4928C457EA0A3F7D23850BA5C"
+        "OwnerKey" = "8:_2C369960C3EF41C4856D561B490F30BF"
         "MsmSig" = "8:_UNDEFINED"
         }
     }
@@ -182,11 +182,16 @@
             {
             "Enabled" = "11:TRUE"
             "PromptEnabled" = "11:TRUE"
-            "PrerequisitesLocation" = "2:1"
+            "PrerequisitesLocation" = "2:2"
             "Url" = "8:"
             "ComponentsUrl" = "8:"
                 "Items"
                 {
+                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:Microsoft.Windows.Installer.2.0"
+                    {
+                    "Name" = "8:Windows Installer 2.0"
+                    "ProductCode" = "8:Microsoft.Windows.Installer.2.0"
+                    }
                 }
             }
         }
@@ -650,7 +655,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:annot8"
         "ProductCode" = "8:{3722BEDF-463D-4F7B-89DE-A4D981DCCFAF}"
-        "PackageCode" = "8:{E4C334FE-A395-4ED9-8ACB-B187E59D5EC6}"
+        "PackageCode" = "8:{154923E7-0878-4A97-9722-548B13FB781C}"
         "UpgradeCode" = "8:{280D6C62-E3D6-4210-BE19-1BDDF2C73B53}"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:TRUE"
@@ -777,7 +782,7 @@
             "ShowCmd" = "3:1"
             "IconIndex" = "3:0"
             "Transitive" = "11:FALSE"
-            "Target" = "8:_6022436602474A86B3399BA68E482EF2"
+            "Target" = "8:_A34EDBE545404FD9A85EE7B6FCB4B286"
             "Folder" = "8:_667FE982CCBB49F19550B62029F1F3AF"
             "WorkingFolder" = "8:_C0D1CBE2A82C453183C9CBBED4FDDC92"
             "Icon" = "8:"
@@ -791,7 +796,7 @@
             "ShowCmd" = "3:1"
             "IconIndex" = "3:0"
             "Transitive" = "11:FALSE"
-            "Target" = "8:_6022436602474A86B3399BA68E482EF2"
+            "Target" = "8:_A34EDBE545404FD9A85EE7B6FCB4B286"
             "Folder" = "8:_4C778F19200B4570992A5844A25EC63B"
             "WorkingFolder" = "8:_C0D1CBE2A82C453183C9CBBED4FDDC92"
             "Icon" = "8:"
@@ -1193,21 +1198,7 @@
         }
         "MergeModule"
         {
-            "{CEE29DC0-9FBA-4B99-8D47-5BC643D9B626}:_F0598CBA1D0849E7A08DC54C4A3306DE"
-            {
-            "UseDynamicProperties" = "11:TRUE"
-            "IsDependency" = "11:TRUE"
-            "SourcePath" = "8:policy_8_0_microsoft_vc80_crt_x86.msm"
-                "Properties"
-                {
-                }
-            "LanguageId" = "3:0"
-            "Exclude" = "11:FALSE"
-            "Folder" = "8:"
-            "Feature" = "8:"
-            "IsolateTo" = "8:"
-            }
-            "{CEE29DC0-9FBA-4B99-8D47-5BC643D9B626}:_F82E1B73B46642AAA0E2B6EC9961CD22"
+            "{CEE29DC0-9FBA-4B99-8D47-5BC643D9B626}:_2C369960C3EF41C4856D561B490F30BF"
             {
             "UseDynamicProperties" = "11:TRUE"
             "IsDependency" = "11:TRUE"
@@ -1221,10 +1212,24 @@
             "Feature" = "8:"
             "IsolateTo" = "8:"
             }
+            "{CEE29DC0-9FBA-4B99-8D47-5BC643D9B626}:_FC86B9A4928C457EA0A3F7D23850BA5C"
+            {
+            "UseDynamicProperties" = "11:TRUE"
+            "IsDependency" = "11:TRUE"
+            "SourcePath" = "8:policy_8_0_microsoft_vc80_crt_x86.msm"
+                "Properties"
+                {
+                }
+            "LanguageId" = "3:0"
+            "Exclude" = "11:FALSE"
+            "Folder" = "8:"
+            "Feature" = "8:"
+            "IsolateTo" = "8:"
+            }
         }
         "ProjectOutput"
         {
-            "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_6022436602474A86B3399BA68E482EF2"
+            "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_A34EDBE545404FD9A85EE7B6FCB4B286"
             {
             "SourcePath" = "8:..\\..\\build\\release\\build\\release\\annot8.exe"
             "TargetName" = "8:"
@@ -1244,9 +1249,9 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             "ProjectOutputGroupRegister" = "3:1"
-            "OutputConfiguration" = "8:"
+            "OutputConfiguration" = "8:Release|Win32"
             "OutputGroupCanonicalName" = "8:Built"
-            "OutputProjectGuid" = "8:{3FA847BC-3448-3E4C-9D2F-83095B35E557}"
+            "OutputProjectGuid" = "8:{DDDA478A-085E-3A3B-BC54-2C5A0D9F1808}"
             "ShowKeyOutput" = "11:TRUE"
                 "ExcludeFilters"
                 {

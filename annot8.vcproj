@@ -3,7 +3,7 @@
 	ProjectType="Visual C++"
 	Version="8,00"
 	Name="annot8"
-	ProjectGUID="{3FA847BC-3448-3E4C-9D2F-83095B35E557}"
+	ProjectGUID="{DDDA478A-085E-3A3B-BC54-2C5A0D9F1808}"
 	Keyword="Qt4VSv1.0"
 	>
 	<Platforms>
@@ -71,7 +71,7 @@
 			<Tool
 				Name="VCLinkerTool"
 				IgnoreImportLibrary="true"
-				AdditionalDependencies="c:\Qt\4.3.0\lib\qtmaind.lib c:\Qt\4.3.0\lib\QtSqld4.lib c:\Qt\4.3.0\lib\QtGuid4.lib c:\Qt\4.3.0\lib\QtCored4.lib SDL.lib SDL_sound.lib"
+				AdditionalDependencies="c:\Qt\4.3.0\lib\qtmaind.lib SDL.lib SDL_sound.lib c:\Qt\4.3.0\lib\QtSqld4.lib c:\Qt\4.3.0\lib\QtGuid4.lib c:\Qt\4.3.0\lib\QtCored4.lib"
 				OutputFile="build\debug\build\debug\annot8.exe"
 				SuppressStartupBanner="true"
 				AdditionalLibraryDirectories="c:\Qt\4.3.0\lib"
@@ -161,7 +161,7 @@
 			<Tool
 				Name="VCLinkerTool"
 				IgnoreImportLibrary="true"
-				AdditionalDependencies="c:\Qt\4.3.0\lib\qtmain.lib c:\Qt\4.3.0\lib\QtSql4.lib c:\Qt\4.3.0\lib\QtGui4.lib c:\Qt\4.3.0\lib\QtCore4.lib SDL.lib SDL_sound.lib"
+				AdditionalDependencies="c:\Qt\4.3.0\lib\qtmain.lib SDL.lib SDL_sound.lib c:\Qt\4.3.0\lib\QtSql4.lib c:\Qt\4.3.0\lib\QtGui4.lib c:\Qt\4.3.0\lib\QtCore4.lib"
 				OutputFile="build\release\build\release\annot8.exe"
 				LinkIncremental="1"
 				SuppressStartupBanner="true"
@@ -217,6 +217,14 @@
 				>
 			</File>
 			<File
+				RelativePath="DBInitializationDlg.cpp"
+				>
+			</File>
+			<File
+				RelativePath="ImageProducer.cpp"
+				>
+			</File>
+			<File
 				RelativePath="main.cpp"
 				>
 			</File>
@@ -261,6 +269,36 @@
 			<File
 				RelativePath="DBController.h"
 				>
+			</File>
+			<File
+				RelativePath="DBInitializationDlg.h"
+				>
+			</File>
+			<File
+				RelativePath="ImageProducer.h"
+				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="MOC ImageProducer.h"
+						CommandLine="&quot;$(QTDIR)\bin\moc.exe&quot;  -D_WINDOWS -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DDEBUG -DQT_THREAD_SUPPORT -DQT_DLL -DQT_SQL_LIB -DQT_GUI_LIB -DQT_CORE_LIB -I&quot;.\..\..\Qt\4.3.0\include\QtCore&quot; -I&quot;.\..\..\Qt\4.3.0\include\QtCore&quot; -I&quot;.\..\..\Qt\4.3.0\include\QtGui&quot; -I&quot;.\..\..\Qt\4.3.0\include\QtGui&quot; -I&quot;.\..\..\Qt\4.3.0\include\QtSql&quot; -I&quot;.\..\..\Qt\4.3.0\include\QtSql&quot; -I&quot;.\..\..\Qt\4.3.0\include&quot; -I&quot;.\..\..\Qt\4.3.0\include\ActiveQt&quot; -I&quot;.\build\debug&quot; -I&quot;.\build\debug&quot; -I&quot;.\..\..\Qt\4.3.0\mkspecs\default&quot; &quot;ImageProducer.h&quot; -o &quot;build\debug\moc_ImageProducer.cpp&quot;&#x0D;&#x0A;"
+						AdditionalDependencies="C:\Qt\4.3.0\bin\moc.exe;ImageProducer.h"
+						Outputs="build\debug\moc_ImageProducer.cpp"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="MOC ImageProducer.h"
+						CommandLine="&quot;$(QTDIR)\bin\moc.exe&quot;  -DQT_NO_DEBUG -DNDEBUG -D_WINDOWS -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DQT_THREAD_SUPPORT -DQT_DLL -DQT_NO_DEBUG -DQT_SQL_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DNDEBUG -I&quot;.\..\..\Qt\4.3.0\include\QtCore&quot; -I&quot;.\..\..\Qt\4.3.0\include\QtCore&quot; -I&quot;.\..\..\Qt\4.3.0\include\QtGui&quot; -I&quot;.\..\..\Qt\4.3.0\include\QtGui&quot; -I&quot;.\..\..\Qt\4.3.0\include\QtSql&quot; -I&quot;.\..\..\Qt\4.3.0\include\QtSql&quot; -I&quot;.\..\..\Qt\4.3.0\include&quot; -I&quot;.\..\..\Qt\4.3.0\include\ActiveQt&quot; -I&quot;.\build\release&quot; -I&quot;.\build\release&quot; -I&quot;.\..\..\Qt\4.3.0\mkspecs\default&quot; &quot;ImageProducer.h&quot; -o &quot;build\release\moc_ImageProducer.cpp&quot;&#x0D;&#x0A;"
+						AdditionalDependencies="C:\Qt\4.3.0\bin\moc.exe;ImageProducer.h"
+						Outputs="build\release\moc_ImageProducer.cpp"
+					/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="MainWindow.h"
@@ -385,6 +423,30 @@
 			UniqueIdentifier="{71ED8ED8-ACB9-4CE9-BBE1-E00B30144E11}"
 			>
 			<File
+				RelativePath="build\release\moc_ImageProducer.cpp"
+				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					ExcludedFromBuild="true"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+					/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="build\debug\moc_ImageProducer.cpp"
+				>
+				<FileConfiguration
+					Name="Release|Win32"
+					ExcludedFromBuild="true"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+					/>
+				</FileConfiguration>
+			</File>
+			<File
 				RelativePath="build\release\moc_MainWindow.cpp"
 				>
 				<FileConfiguration
@@ -409,10 +471,10 @@
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="build\release\moc_MovieWidget.cpp"
+				RelativePath="build\debug\moc_MovieWidget.cpp"
 				>
 				<FileConfiguration
-					Name="Debug|Win32"
+					Name="Release|Win32"
 					ExcludedFromBuild="true"
 					>
 					<Tool
@@ -421,10 +483,10 @@
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="build\debug\moc_MovieWidget.cpp"
+				RelativePath="build\release\moc_MovieWidget.cpp"
 				>
 				<FileConfiguration
-					Name="Release|Win32"
+					Name="Debug|Win32"
 					ExcludedFromBuild="true"
 					>
 					<Tool
@@ -553,6 +615,30 @@
 				</FileConfiguration>
 			</File>
 			<File
+				RelativePath="build\release\ui_DBInitializationDlg.h"
+				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					ExcludedFromBuild="true"
+					>
+					<Tool
+						Name="VCCustomBuildTool"
+					/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="build\debug\ui_DBInitializationDlg.h"
+				>
+				<FileConfiguration
+					Name="Release|Win32"
+					ExcludedFromBuild="true"
+					>
+					<Tool
+						Name="VCCustomBuildTool"
+					/>
+				</FileConfiguration>
+			</File>
+			<File
 				RelativePath="build\release\ui_MainWindow.h"
 				>
 				<FileConfiguration
@@ -632,6 +718,32 @@
 						CommandLine="C:\Qt\4.3.0\bin\uic.exe ChooseParticipantDlg.ui -o build\release\ui_ChooseParticipantDlg.h&#x0D;&#x0A;"
 						AdditionalDependencies="C:\Qt\4.3.0\bin\uic.exe;ChooseParticipantDlg.ui"
 						Outputs="build\release\ui_ChooseParticipantDlg.h"
+					/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="DBInitializationDlg.ui"
+				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="UIC DBInitializationDlg.ui"
+						CommandLine="C:\Qt\4.3.0\bin\uic.exe DBInitializationDlg.ui -o build\debug\ui_DBInitializationDlg.h&#x0D;&#x0A;"
+						AdditionalDependencies="C:\Qt\4.3.0\bin\uic.exe;DBInitializationDlg.ui"
+						Outputs="build\debug\ui_DBInitializationDlg.h"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="UIC DBInitializationDlg.ui"
+						CommandLine="C:\Qt\4.3.0\bin\uic.exe DBInitializationDlg.ui -o build\release\ui_DBInitializationDlg.h&#x0D;&#x0A;"
+						AdditionalDependencies="C:\Qt\4.3.0\bin\uic.exe;DBInitializationDlg.ui"
+						Outputs="build\release\ui_DBInitializationDlg.h"
 					/>
 				</FileConfiguration>
 			</File>
