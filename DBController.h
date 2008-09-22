@@ -71,6 +71,15 @@ public:
 
 
     /**
+     * Retrieves the available samples.
+     * @param  ids          a pointer to a vector that will hold the ids
+     * @param  fileNames    a pointer to a vector that will hold the filenames
+     */
+    void getAvailableSamples(std::vector<int> *ids,
+                             std::vector<std::string> *fileNames);
+
+
+    /**
      * Stores the annotation of a frame in terms of the given parameters.
      * @param  timestamp    the timestamp in milliseconds
      * @param  senderID     the unique ID of the sending participant

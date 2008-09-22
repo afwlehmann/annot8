@@ -1,0 +1,39 @@
+<ui version="4.0" >
+ <class>FileNameWidget</class>
+ <widget class="QWidget" name="FileNameWidget" >
+  <property name="geometry" >
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>335</width>
+    <height>24</height>
+   </rect>
+  </property>
+  <property name="windowTitle" >
+   <string>Form</string>
+  </property>
+  <layout class="QHBoxLayout" name="horizontalLayout" >
+   <property name="spacing" >
+    <number>0</number>
+   </property>
+   <property name="sizeConstraint" >
+    <enum>QLayout::SetNoConstraint</enum>
+   </property>
+   <property name="margin" >
+    <number>0</number>
+   </property>
+   <item>
+    <widget class="QLineEdit" name="leFileName" />
+   </item>
+   <item>
+    <widget class="QToolButton" name="tbGetFileName" >
+     <property name="text" >
+      <string>...</string>
+     </property>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

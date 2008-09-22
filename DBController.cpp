@@ -94,6 +94,13 @@ void DBController::setupTables()
         { break; }
 
         if (!query.exec(
+                "CREATE VIEW IF NOT EXISTS pinfo AS"
+                " SELECT id, name || COALESCE(', ' || first_name, '') "
+                "   || COALESCE(' (' || number || ')', '') AS name_info"
+                " FROM participants;"))
+        { break; }
+
+        if (!query.exec(
                 "CREATE TABLE IF NOT EXISTS movies ("
                 "  prefix           TEXT NOT NULL,"
                 "  suffix           TEXT NOT NULL,"
@@ -321,6 +328,22 @@ audio::Samples* DBController::getSamplesForParticipant(Participant *p) const
 
     return query.next() ?
         new audio::Samples(query.value(0).toString().toStdString()) : 0;
+}
+
+
+void DBController::getAvailableSamples(std::vector<int> *ids,
+                                       std::vector<std::string> *fileNames)
+{
+    QSqlQuery query;
+    if (!query.exec("SELECT id, filename FROM samples"))
+        throw std::runtime_error(query.lastError().text().toStdString());
+
+    ids->clear();
+    fileNames->clear();
+    while (query.next()) {
+        ids->push_back(query.value(0).toInt());
+        fileNames->push_back(query.value(1).toString().toStdString());
+    }
 }
 
 

@@ -8,6 +8,7 @@
 #include "MainWindow.h"
 #include "ChooseParticipantDlg.h"
 #include "audio.h"
+#include "DBSetupWizard.h"
 
 #include <iostream>
 
@@ -39,15 +40,10 @@ void parseCmdLine(const QList<QString> &args, bool *takeAlong)
 
     foreach (const QString &arg, args) {
         if (!arg.compare("--initdb", Qt::CaseInsensitive)) {
-            // Delete the old file, then create a new database and eventually
-            // exit.
-            cout << "Removing database " << DB_FILENAME << "." << endl;
-            QFile::remove(DB_FILENAME);
-            cout << "Initializing new database " << DB_FILENAME << "." << endl;
-            DBController::instance()->connect(DB_FILENAME);
-            DBController::instance()->disconnect();
-            cout << "Exiting." << endl;
-            exit(0);
+            DBSetupWizard wizard;
+            wizard.raise();
+            if (QDialog::Accepted != wizard.exec())
+                exit(1);
         } else if (!arg.compare("--no-take-along", Qt::CaseInsensitive)) {
             *takeAlong = false;
         } else if (!arg.compare("--help", Qt::CaseInsensitive)) {
@@ -74,18 +70,19 @@ int main(int argc, char *argv[])
     try {
         bool takeAlong;
 
+        // Attempt to connect to the database.
+        if (!DBController::instance()->connect("experiment.sql")) {
+            QMessageBox::critical(0,
+                                  QObject::tr("Error"),
+                                  QObject::tr("Couldn't open the database!"));
+            return 1;
+        }
+
         // Parse the command-line arguments, but remove the first argument
         // beforehand because it is only the application's executable name.
         QList<QString> args = app.arguments();
         args.pop_front();
         parseCmdLine(args, &takeAlong);
-
-        // Attempt to connect to the database.
-        if (!DBController::instance()->connect("experiment.sql")) {
-            QMessageBox::critical(0, QObject::tr("Error"),
-                                  QObject::tr("Couldn't open the database!"));
-            return 1;
-        }
 
         // Let the user choose a participant.
         ChooseParticipantDlg cpDlg;
