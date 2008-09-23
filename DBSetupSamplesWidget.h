@@ -12,6 +12,10 @@
 #include "ui_DBSetupSamplesWidget.h"
 
 
+// Forward declaration
+class QSqlRecord;
+
+
 namespace hiwi {
 
 
@@ -23,13 +27,12 @@ public:
     DBSetupSamplesWidget(QWidget *parent);
 
 
-    virtual bool validatePage() const;
+    virtual bool validatePage();
 
 
-    virtual bool isComplete() const;
+protected slots:
+    void on_tbRefresh_clicked();
 
-
-    virtual void initializePage();
 
 
 private:

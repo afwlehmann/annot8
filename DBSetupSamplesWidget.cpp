@@ -7,11 +7,10 @@
 #include "DBSetupSamplesWidget.h"
 #include "DBController.h"
 #include "FileNameDelegate.h"
-#include <QSqlRelationalTableModel>
-#include <QSqlRelationalDelegate>
 #include <QHeaderView>
 #include <QFile>
-#include <QFileDialog>
+#include <QMessageBox>
+#include <map>
 
 
 using namespace std;
@@ -25,58 +24,84 @@ DBSetupSamplesWidget::DBSetupSamplesWidget(QWidget *parent) :
 {
     _ui.setupUi(this);
 
+    _ui.twSamples->setItemDelegateForColumn(
+            1,
+            new FileNameDelegate(this,
+                                 tr("Wave files (*.wav);;"
+                                    "MP3 files (*.mp3);;"
+                                    "OGG files (*.ogg)"))
+    );
+    _ui.twSamples->verticalHeader()->setVisible(false);
+    _ui.twSamples->horizontalHeader()->stretchLastSection();
+    on_tbRefresh_clicked();
+
     setTitle(tr("Samples setup"));
     setSubTitle(tr("Please fill in a sound file for each participant."));
-
-    QSqlRelationalTableModel *model = new QSqlRelationalTableModel();
-    model->setTable("samples");
-    model->setRelation(0, QSqlRelation("pinfo", "id", "name_info"));
-    model->select();
-    model->setHeaderData(0, Qt::Horizontal, tr("Participant"));
-    model->setHeaderData(1, Qt::Horizontal, tr("Sound file"));
-    _ui.tvSamples->setModel(model);
-    _ui.tvSamples->setItemDelegate(new QSqlRelationalDelegate(_ui.tvSamples));
-    _ui.tvSamples->setItemDelegateForColumn(
-        model->fieldIndex("filename"),
-        new FileNameDelegate(this,
-                             tr("Wave files (*.wav);;"
-                                "MP3 files (*.mp3);;"
-                                "OGG files (*.ogg)"))
-    );
-    _ui.tvSamples->verticalHeader()->setVisible(false);
-    _ui.tvSamples->resizeColumnsToContents();
-
-    connect(model, SIGNAL(dataChanged(const QModelIndex&, const QModelIndex&)),
-            SIGNAL(completeChanged()));
 }
 
 
-bool DBSetupSamplesWidget::validatePage() const
+bool DBSetupSamplesWidget::validatePage()
 {
-    static_cast<QSqlRelationalTableModel *>(_ui.tvSamples->model())->submitAll();
-    return true;
-}
+    map<int, string> samples;
 
+    // Check that every given filename names an existing file.
+    for (int row = 0; row < _ui.twSamples->rowCount(); row++) {
+        const QString fileName =
+            _ui.twSamples->item(row, 1)->data(Qt::DisplayRole).toString();
 
-bool DBSetupSamplesWidget::isComplete() const
-{
-    // Assure that every sound file exists.
-    QSqlRelationalTableModel *model =
-        static_cast<QSqlRelationalTableModel *>(_ui.tvSamples->model());
-    const int fiFileName = model->fieldIndex("filename");
-    for (int row = 0; row < model->rowCount(); row++) {
-        QModelIndex index = model->index(row, fiFileName);
-        if (!QFile::exists(model->data(index).toString()))
+        if (fileName.isEmpty()) {
+            continue;
+        } else if (!QFile::exists(fileName)) {
+            // The file doesn't exist -- complain!
+            _ui.twSamples->setCurrentCell(row, 1);
+            QMessageBox::information(this,
+                    tr("Missing file"),
+                    tr("The file '%1' doesn't exist.").arg(fileName));
             return false;
+        }
+
+        const int participantID =
+            _ui.twSamples->item(row, 0)->data(Qt::UserRole).toInt();
+        samples[participantID] = fileName.toStdString();
     }
 
+    // Once everything is alright, go ahead and save the data.
+    DBController::instance()->storeAvailableSamples(samples);
+
     return true;
 }
 
 
-void DBSetupSamplesWidget::initializePage()
+void DBSetupSamplesWidget::on_tbRefresh_clicked()
 {
-    static_cast<QSqlRelationalTableModel *>(_ui.tvSamples->model())->select();
+    // Get the available participants info.
+    map<int, string> pinfo;
+    DBController::instance()->getParticipantsInfo(&pinfo);
+
+    // Get the available samples.
+    map<int, string> samples;
+    DBController::instance()->getAvailableSamples(&samples);
+
+    // Fill the table widget with the data.
+    _ui.twSamples->clearContents();
+    _ui.twSamples->setSortingEnabled(false);
+    map<int, string>::const_iterator it;
+    for (it = pinfo.begin(); it != pinfo.end(); it++) {
+        QTableWidgetItem *twiParticipant =
+            new QTableWidgetItem(QString::fromStdString(it->second));
+        twiParticipant->setData(Qt::UserRole, it->first);
+        twiParticipant->setFlags(Qt::NoItemFlags);
+
+        QTableWidgetItem *twiFile =
+            new QTableWidgetItem(QString::fromStdString(samples[it->first]));
+        //twiFile->setFlags(Qt::ItemIsEditable | Qt::ItemIsSelectable);
+
+        _ui.twSamples->insertRow(0);
+        _ui.twSamples->setItem(0, 0, twiParticipant);
+        _ui.twSamples->setItem(0, 1, twiFile);
+    }
+    _ui.twSamples->setSortingEnabled(true);
+    _ui.twSamples->resizeColumnsToContents();
 }
 
 

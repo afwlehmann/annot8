@@ -297,13 +297,19 @@ std::vector<Movie *> DBController::getAvailableMovies() const
 }
 
 
-std::vector<Participant *> DBController::getParticipants() const
+std::vector<Participant *> DBController::getParticipants(bool withSamplesOnly) const
 {
     std::vector<Participant *> result;
 
     QSqlQuery query;
-    if (!query.exec("SELECT id, name, first_name, number FROM participants"))
-        throw std::runtime_error("Unable to get the list of participants.");
+    if (withSamplesOnly) {
+        if (!query.exec("SELECT id, name, first_name, number FROM participants "
+                        "JOIN samples ON samples.participant_id = id"))
+            throw std::runtime_error("Unable to get the list of participants.");
+    } else {
+        if (!query.exec("SELECT id, name, first_name, number FROM participants"))
+            throw std::runtime_error("Unable to get the list of participants.");
+    }
 
     while (query.next()) {
         result.push_back(new Participant(
@@ -315,6 +321,22 @@ std::vector<Participant *> DBController::getParticipants() const
     }
 
     return result;
+}
+
+
+void DBController::getParticipantsInfo(std::map<int, std::string> *info)
+{
+    QSqlQuery query;
+    if (!query.exec("SELECT id, name_info FROM pinfo"))
+        throw std::runtime_error(query.lastError().text().toStdString());
+
+    info->clear();
+    while (query.next()) {
+        info->insert(
+            std::pair<int, string>(query.value(0).toInt(),
+                                   query.value(1).toString().toStdString())
+        );
+    }
 }
 
 
@@ -331,18 +353,57 @@ audio::Samples* DBController::getSamplesForParticipant(Participant *p) const
 }
 
 
-void DBController::getAvailableSamples(std::vector<int> *ids,
-                                       std::vector<std::string> *fileNames)
+void DBController::storeAvailableSamples(std::map<int, std::string> &samples)
 {
     QSqlQuery query;
-    if (!query.exec("SELECT id, filename FROM samples"))
+
+    do {
+        // Begin a transaction.
+        QSqlDatabase::database().transaction();
+
+        if (!query.exec("DELETE FROM samples"))
+            break;
+
+        std::map<int, std::string>::const_iterator it;
+        for (it = samples.begin(); it != samples.end(); it++) {
+            query.clear();
+            query.prepare("INSERT INTO samples (participant_id, filename) "
+                          "VALUES (?, ?)");
+            query.addBindValue(it->first);
+            query.addBindValue(QString::fromStdString(it->second));
+            if (!query.exec())
+                break;
+        }
+        if (query.lastError().isValid())
+            break;
+
+        // Finalize the transaction.
+        if (!QSqlDatabase::database().commit())
+            break;
+
+        // Everything's fine, return now.
+        return;
+    } while (false);
+
+    // Once we get to this point, an error has occured. Let's throw an
+    // exception.
+    throw std::runtime_error(query.lastError().text().toStdString());
+}
+
+
+void DBController::getAvailableSamples(std::map<int, std::string> *samples)
+{
+    QSqlQuery query;
+    if (!query.exec("SELECT participant_id, filename FROM samples"))
         throw std::runtime_error(query.lastError().text().toStdString());
 
-    ids->clear();
-    fileNames->clear();
+    samples->clear();
     while (query.next()) {
-        ids->push_back(query.value(0).toInt());
-        fileNames->push_back(query.value(1).toString().toStdString());
+        samples->insert(
+            std::pair<int, std::string>(
+                query.value(0).toInt(),
+                query.value(1).toString().toStdString())
+        );
     }
 }
 
@@ -354,6 +415,7 @@ void DBController::storeAnnotation(int timestamp, int senderID,
     QSqlQuery query;
 
     do {
+        // Begin a transaction.
         QSqlDatabase::database().transaction();
 
         query.clear();

@@ -28,8 +28,9 @@ DBSetupMoviesWidget::DBSetupMoviesWidget(QWidget *parent) :
             "995, you'd use the prefix 'abc_', the suffix '.jpg', 4 digits, "
             "the first frame 50 and the last frame 995."));
 
-    QSqlTableModel *model = new QSqlTableModel();
+    QSqlTableModel *model = new QSqlTableModel(_ui.tvMovies);
     model->setTable("movies");
+    model->setEditStrategy(QSqlTableModel::OnFieldChange);
     model->select();
     model->setHeaderData(0, Qt::Horizontal, tr("Prefix"));
     model->setHeaderData(1, Qt::Horizontal, tr("Suffix"));
@@ -47,13 +48,6 @@ DBSetupMoviesWidget::DBSetupMoviesWidget(QWidget *parent) :
 }
 
 
-bool DBSetupMoviesWidget::validatePage() const
-{
-    static_cast<QSqlTableModel *>(_ui.tvMovies->model())->submitAll();
-    return true;
-}
-
-
 bool DBSetupMoviesWidget::isComplete() const
 {
     QSqlTableModel *model =
@@ -65,18 +59,12 @@ bool DBSetupMoviesWidget::isComplete() const
 }
 
 
-void DBSetupMoviesWidget::initializePage()
-{
-    static_cast<QSqlTableModel *>(_ui.tvMovies->model())->select();
-}
-
-
 void DBSetupMoviesWidget::on_tbAddMovie_clicked()
 {
     QSqlTableModel *model =
         static_cast<QSqlTableModel *>(_ui.tvMovies->model());
 
-    model->insertRecord(-1, QSqlRecord());
+    model->insertRow(model->rowCount());
     QModelIndex index = model->index(model->rowCount() - 1, 1);
     _ui.tvMovies->setCurrentIndex(index);
     _ui.tvMovies->edit(index);

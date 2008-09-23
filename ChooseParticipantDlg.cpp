@@ -23,7 +23,7 @@ ChooseParticipantDlg::ChooseParticipantDlg(QWidget *parent) : QDialog(parent)
 
     // Get the available participants.
     std::vector<Participant *> participants =
-        DBController::instance()->getParticipants();
+        DBController::instance()->getParticipants(true);
     if (participants.empty())
         throw std::runtime_error("There are no participants.");
 

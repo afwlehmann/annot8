@@ -10,6 +10,7 @@
 
 #include <string>
 #include <vector>
+#include <map>
 
 
 namespace hiwi
@@ -59,8 +60,16 @@ public:
 
     /**
      * Returns a list of all participants.
+     * @param  withSamplesOnly  get only those participants with related samples
      */
-    std::vector<Participant *> getParticipants() const;
+    std::vector<Participant *> getParticipants(bool withSamplesOnly = false) const;
+
+
+    /**
+     * Retrieves the available participants info strings.
+     * @param  pinfo        a pointer to a map that will hold the infos
+     */
+    void getParticipantsInfo(std::map<int, std::string> *info);
 
 
     /**
@@ -71,12 +80,17 @@ public:
 
 
     /**
-     * Retrieves the available samples.
-     * @param  ids          a pointer to a vector that will hold the ids
-     * @param  fileNames    a pointer to a vector that will hold the filenames
+     * Stores the available samples.
+     * @param  samples      a map from participant ids to filenames
      */
-    void getAvailableSamples(std::vector<int> *ids,
-                             std::vector<std::string> *fileNames);
+    void storeAvailableSamples(std::map<int, std::string> &samples);
+
+
+    /**
+     * Retrieves the available samples.
+     * @param  samples      a pointer to a map from participant ids to filenames
+     */
+    void getAvailableSamples(std::map<int, std::string> *samples);
 
 
     /**

@@ -22,8 +22,9 @@ DBSetupParticipantsWidget::DBSetupParticipantsWidget(QWidget *parent) :
     setTitle(tr("Participants setup"));
     setSubTitle(tr("Please fill in the list of participants."));
 
-    QSqlTableModel *model = new QSqlTableModel();
+    QSqlTableModel *model = new QSqlTableModel(_ui.tvParticipants);
     model->setTable("participants");
+    model->setEditStrategy(QSqlTableModel::OnFieldChange);
     model->select();
     model->setHeaderData(1, Qt::Horizontal, tr("Name"));
     model->setHeaderData(2, Qt::Horizontal, tr("First name"));
@@ -35,13 +36,6 @@ DBSetupParticipantsWidget::DBSetupParticipantsWidget(QWidget *parent) :
 
     connect(model, SIGNAL(dataChanged(const QModelIndex&, const QModelIndex&)),
             SIGNAL(completeChanged()));
-}
-
-
-bool DBSetupParticipantsWidget::validatePage() const
-{
-    static_cast<QSqlTableModel *>(_ui.tvParticipants->model())->submitAll();
-    return true;
 }
 
 
@@ -62,18 +56,12 @@ bool DBSetupParticipantsWidget::isComplete() const
 }
 
 
-void DBSetupParticipantsWidget::initializePage()
-{
-    static_cast<QSqlTableModel *>(_ui.tvParticipants->model())->select();
-}
-
-
 void DBSetupParticipantsWidget::on_tbAddParticipant_clicked()
 {
     QSqlTableModel *model =
         static_cast<QSqlTableModel *>(_ui.tvParticipants->model());
 
-    model->insertRecord(-1, QSqlRecord());
+    model->insertRow(model->rowCount());
     QModelIndex index = model->index(model->rowCount() - 1, 1);
     _ui.tvParticipants->setCurrentIndex(index);
     _ui.tvParticipants->edit(index);

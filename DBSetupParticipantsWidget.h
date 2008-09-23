@@ -23,13 +23,7 @@ public:
     DBSetupParticipantsWidget(QWidget *parent);
 
 
-    virtual bool validatePage() const;
-
-
     virtual bool isComplete() const;
-
-
-    virtual void initializePage();
 
 
 protected slots:
