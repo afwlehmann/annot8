@@ -434,7 +434,6 @@ void DBController::storeAnnotation(int timestamp, int senderID,
             query.addBindValue(timestamp);
             query.addBindValue(senderID);
             query.addBindValue(*it);
-            qDebug("%d", *it);
             if (!query.exec())
                 break;
         }
