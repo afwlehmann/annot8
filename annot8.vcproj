@@ -3,7 +3,7 @@
 	ProjectType="Visual C++"
 	Version="8,00"
 	Name="annot8"
-	ProjectGUID="{DDDA478A-085E-3A3B-BC54-2C5A0D9F1808}"
+	ProjectGUID="{2835F309-30D1-39C2-AFDC-1220D4801540}"
 	Keyword="Qt4VSv1.0"
 	>
 	<Platforms>
@@ -42,11 +42,12 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalOptions="-Zm200 -EHsc -w34100 -w34189 -Zm200 -EHsc -w34100 -w34189 -w34100 -w34189"
+				AdditionalOptions="-Zm200 -w34100 -w34189 -Zm200 -w34100 -w34189 -w34100 -w34189"
 				Optimization="4"
-				AdditionalIncludeDirectories="&quot;..\..\Qt\4.3.0\include\QtCore&quot;,&quot;..\..\Qt\4.3.0\include\QtCore&quot;,&quot;..\..\Qt\4.3.0\include\QtGui&quot;,&quot;..\..\Qt\4.3.0\include\QtGui&quot;,&quot;..\..\Qt\4.3.0\include\QtSql&quot;,&quot;..\..\Qt\4.3.0\include\QtSql&quot;,&quot;..\..\Qt\4.3.0\include&quot;,&quot;..\..\Qt\4.3.0\include\ActiveQt&quot;,&quot;build\debug&quot;,&quot;build\debug&quot;,..\..\Qt\4.3.0\mkspecs\default"
+				AdditionalIncludeDirectories="&quot;..\..\Qt\4.4.2\include\QtCore&quot;,&quot;..\..\Qt\4.4.2\include\QtCore&quot;,&quot;..\..\Qt\4.4.2\include\QtGui&quot;,&quot;..\..\Qt\4.4.2\include\QtGui&quot;,&quot;..\..\Qt\4.4.2\include\QtSql&quot;,&quot;..\..\Qt\4.4.2\include\QtSql&quot;,&quot;..\..\Qt\4.4.2\include&quot;,&quot;c:\Qt\4.4.2\include\ActiveQt&quot;,&quot;build\debug&quot;,&quot;build\debug&quot;,..\..\Qt\4.4.2\mkspecs\default"
 				PreprocessorDefinitions="_WINDOWS,UNICODE,WIN32,QT_LARGEFILE_SUPPORT,DEBUG,QT_THREAD_SUPPORT,QT_DLL,QT_SQL_LIB,QT_GUI_LIB,QT_CORE_LIB"
 				GeneratePreprocessedFile="0"
+				ExceptionHandling="1"
 				RuntimeLibrary="3"
 				BufferSecurityCheck="false"
 				TreatWChar_tAsBuiltInType="false"
@@ -71,13 +72,15 @@
 			<Tool
 				Name="VCLinkerTool"
 				IgnoreImportLibrary="true"
-				AdditionalDependencies="c:\Qt\4.3.0\lib\qtmaind.lib SDL.lib SDL_sound.lib c:\Qt\4.3.0\lib\QtSqld4.lib c:\Qt\4.3.0\lib\QtGuid4.lib c:\Qt\4.3.0\lib\QtCored4.lib"
+				AdditionalOptions="&quot;/MANIFESTDEPENDENCY:type=&apos;win32&apos; name=&apos;Microsoft.Windows.Common-Controls&apos; version=&apos;6.0.0.0&apos; publicKeyToken=&apos;6595b64144ccf1df&apos; language=&apos;*&apos; processorArchitecture=&apos;*&apos;&quot; &quot;/MANIFESTDEPENDENCY:type=&apos;win32&apos; name=&apos;Microsoft.Windows.Common-Controls&apos; version=&apos;6.0.0.0&apos; publicKeyToken=&apos;6595b64144ccf1df&apos; language=&apos;*&apos; processorArchitecture=&apos;*&apos;&quot;"
+				AdditionalDependencies="c:\Qt\4.4.2\lib\qtmaind.lib SDL.lib SDL_sound.lib c:\Qt\4.4.2\lib\QtSqld4.lib c:\Qt\4.4.2\lib\QtGuid4.lib c:\Qt\4.4.2\lib\QtCored4.lib"
 				OutputFile="build\debug\build\debug\annot8.exe"
 				SuppressStartupBanner="true"
-				AdditionalLibraryDirectories="c:\Qt\4.3.0\lib"
+				AdditionalLibraryDirectories="c:\Qt\4.4.2\lib,c:\src\include,c:\Programme\PostgreSQL\8.3\lib"
 				GenerateDebugInformation="true"
 				ProgramDatabaseFile=""
 				SubSystem="2"
+				LinkTimeCodeGeneration="0"
 			/>
 			<Tool
 				Name="VCALinkTool"
@@ -132,11 +135,12 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalOptions="-Zm200 -EHsc -w34100 -w34189 -Zm200 -EHsc -w34100 -w34189 -w34100 -w34189"
+				AdditionalOptions="-Zm200 -w34100 -w34189 -Zm200 -w34100 -w34189 -w34100 -w34189"
 				Optimization="2"
-				AdditionalIncludeDirectories="&quot;..\..\Qt\4.3.0\include\QtCore&quot;,&quot;..\..\Qt\4.3.0\include\QtCore&quot;,&quot;..\..\Qt\4.3.0\include\QtGui&quot;,&quot;..\..\Qt\4.3.0\include\QtGui&quot;,&quot;..\..\Qt\4.3.0\include\QtSql&quot;,&quot;..\..\Qt\4.3.0\include\QtSql&quot;,&quot;..\..\Qt\4.3.0\include&quot;,&quot;..\..\Qt\4.3.0\include\ActiveQt&quot;,&quot;build\release&quot;,&quot;build\release&quot;,..\..\Qt\4.3.0\mkspecs\default"
+				AdditionalIncludeDirectories="&quot;..\..\Qt\4.4.2\include\QtCore&quot;,&quot;..\..\Qt\4.4.2\include\QtCore&quot;,&quot;..\..\Qt\4.4.2\include\QtGui&quot;,&quot;..\..\Qt\4.4.2\include\QtGui&quot;,&quot;..\..\Qt\4.4.2\include\QtSql&quot;,&quot;..\..\Qt\4.4.2\include\QtSql&quot;,&quot;..\..\Qt\4.4.2\include&quot;,&quot;c:\Qt\4.4.2\include\ActiveQt&quot;,&quot;build\release&quot;,&quot;build\release&quot;,..\..\Qt\4.4.2\mkspecs\default"
 				PreprocessorDefinitions="QT_NO_DEBUG,NDEBUG,_WINDOWS,UNICODE,WIN32,QT_LARGEFILE_SUPPORT,QT_THREAD_SUPPORT,QT_DLL,QT_NO_DEBUG,QT_SQL_LIB,QT_GUI_LIB,QT_CORE_LIB,NDEBUG"
 				GeneratePreprocessedFile="0"
+				ExceptionHandling="1"
 				RuntimeLibrary="2"
 				BufferSecurityCheck="false"
 				TreatWChar_tAsBuiltInType="false"
@@ -161,14 +165,16 @@
 			<Tool
 				Name="VCLinkerTool"
 				IgnoreImportLibrary="true"
-				AdditionalDependencies="c:\Qt\4.3.0\lib\qtmain.lib SDL.lib SDL_sound.lib c:\Qt\4.3.0\lib\QtSql4.lib c:\Qt\4.3.0\lib\QtGui4.lib c:\Qt\4.3.0\lib\QtCore4.lib"
+				AdditionalOptions="&quot;/MANIFESTDEPENDENCY:type=&apos;win32&apos; name=&apos;Microsoft.Windows.Common-Controls&apos; version=&apos;6.0.0.0&apos; publicKeyToken=&apos;6595b64144ccf1df&apos; language=&apos;*&apos; processorArchitecture=&apos;*&apos;&quot; &quot;/MANIFESTDEPENDENCY:type=&apos;win32&apos; name=&apos;Microsoft.Windows.Common-Controls&apos; version=&apos;6.0.0.0&apos; publicKeyToken=&apos;6595b64144ccf1df&apos; language=&apos;*&apos; processorArchitecture=&apos;*&apos;&quot;"
+				AdditionalDependencies="c:\Qt\4.4.2\lib\qtmain.lib SDL.lib SDL_sound.lib c:\Qt\4.4.2\lib\QtSql4.lib c:\Qt\4.4.2\lib\QtGui4.lib c:\Qt\4.4.2\lib\QtCore4.lib"
 				OutputFile="build\release\build\release\annot8.exe"
 				LinkIncremental="1"
 				SuppressStartupBanner="true"
-				AdditionalLibraryDirectories="c:\Qt\4.3.0\lib"
+				AdditionalLibraryDirectories="c:\Qt\4.4.2\lib,c:\src\include,c:\Programme\PostgreSQL\8.3\lib"
 				GenerateDebugInformation="false"
 				ProgramDatabaseFile=""
 				SubSystem="2"
+				LinkTimeCodeGeneration="0"
 			/>
 			<Tool
 				Name="VCALinkTool"
@@ -217,7 +223,27 @@
 				>
 			</File>
 			<File
-				RelativePath="DBInitializationDlg.cpp"
+				RelativePath="DBSetupMoviesWidget.cpp"
+				>
+			</File>
+			<File
+				RelativePath="DBSetupParticipantsWidget.cpp"
+				>
+			</File>
+			<File
+				RelativePath="DBSetupSamplesWidget.cpp"
+				>
+			</File>
+			<File
+				RelativePath="DBSetupWizard.cpp"
+				>
+			</File>
+			<File
+				RelativePath="FileNameDelegate.cpp"
+				>
+			</File>
+			<File
+				RelativePath="FileNameWidget.cpp"
 				>
 			</File>
 			<File
@@ -271,8 +297,116 @@
 				>
 			</File>
 			<File
-				RelativePath="DBInitializationDlg.h"
+				RelativePath="DBSetupMoviesWidget.h"
 				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="MOC DBSetupMoviesWidget.h"
+						CommandLine="&quot;$(QTDIR)\bin\moc.exe&quot;  -D_WINDOWS -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DDEBUG -DQT_THREAD_SUPPORT -DQT_DLL -DQT_SQL_LIB -DQT_GUI_LIB -DQT_CORE_LIB -I&quot;.\..\..\Qt\4.4.2\include\QtCore&quot; -I&quot;.\..\..\Qt\4.4.2\include\QtCore&quot; -I&quot;.\..\..\Qt\4.4.2\include\QtGui&quot; -I&quot;.\..\..\Qt\4.4.2\include\QtGui&quot; -I&quot;.\..\..\Qt\4.4.2\include\QtSql&quot; -I&quot;.\..\..\Qt\4.4.2\include\QtSql&quot; -I&quot;.\..\..\Qt\4.4.2\include&quot; -I&quot;c:\Qt\4.4.2\include\ActiveQt&quot; -I&quot;.\build\debug&quot; -I&quot;.\build\debug&quot; -I&quot;.\..\..\Qt\4.4.2\mkspecs\default&quot; &quot;DBSetupMoviesWidget.h&quot; -o &quot;build\debug\moc_DBSetupMoviesWidget.cpp&quot;&#x0D;&#x0A;"
+						AdditionalDependencies="C:\Qt\4.4.2\bin\moc.exe;DBSetupMoviesWidget.h"
+						Outputs="build\debug\moc_DBSetupMoviesWidget.cpp"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="MOC DBSetupMoviesWidget.h"
+						CommandLine="&quot;$(QTDIR)\bin\moc.exe&quot;  -DQT_NO_DEBUG -DNDEBUG -D_WINDOWS -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DQT_THREAD_SUPPORT -DQT_DLL -DQT_NO_DEBUG -DQT_SQL_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DNDEBUG -I&quot;.\..\..\Qt\4.4.2\include\QtCore&quot; -I&quot;.\..\..\Qt\4.4.2\include\QtCore&quot; -I&quot;.\..\..\Qt\4.4.2\include\QtGui&quot; -I&quot;.\..\..\Qt\4.4.2\include\QtGui&quot; -I&quot;.\..\..\Qt\4.4.2\include\QtSql&quot; -I&quot;.\..\..\Qt\4.4.2\include\QtSql&quot; -I&quot;.\..\..\Qt\4.4.2\include&quot; -I&quot;c:\Qt\4.4.2\include\ActiveQt&quot; -I&quot;.\build\release&quot; -I&quot;.\build\release&quot; -I&quot;.\..\..\Qt\4.4.2\mkspecs\default&quot; &quot;DBSetupMoviesWidget.h&quot; -o &quot;build\release\moc_DBSetupMoviesWidget.cpp&quot;&#x0D;&#x0A;"
+						AdditionalDependencies="C:\Qt\4.4.2\bin\moc.exe;DBSetupMoviesWidget.h"
+						Outputs="build\release\moc_DBSetupMoviesWidget.cpp"
+					/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="DBSetupParticipantsWidget.h"
+				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="MOC DBSetupParticipantsWidget.h"
+						CommandLine="&quot;$(QTDIR)\bin\moc.exe&quot;  -D_WINDOWS -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DDEBUG -DQT_THREAD_SUPPORT -DQT_DLL -DQT_SQL_LIB -DQT_GUI_LIB -DQT_CORE_LIB -I&quot;.\..\..\Qt\4.4.2\include\QtCore&quot; -I&quot;.\..\..\Qt\4.4.2\include\QtCore&quot; -I&quot;.\..\..\Qt\4.4.2\include\QtGui&quot; -I&quot;.\..\..\Qt\4.4.2\include\QtGui&quot; -I&quot;.\..\..\Qt\4.4.2\include\QtSql&quot; -I&quot;.\..\..\Qt\4.4.2\include\QtSql&quot; -I&quot;.\..\..\Qt\4.4.2\include&quot; -I&quot;c:\Qt\4.4.2\include\ActiveQt&quot; -I&quot;.\build\debug&quot; -I&quot;.\build\debug&quot; -I&quot;.\..\..\Qt\4.4.2\mkspecs\default&quot; &quot;DBSetupParticipantsWidget.h&quot; -o &quot;build\debug\moc_DBSetupParticipantsWidget.cpp&quot;&#x0D;&#x0A;"
+						AdditionalDependencies="C:\Qt\4.4.2\bin\moc.exe;DBSetupParticipantsWidget.h"
+						Outputs="build\debug\moc_DBSetupParticipantsWidget.cpp"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="MOC DBSetupParticipantsWidget.h"
+						CommandLine="&quot;$(QTDIR)\bin\moc.exe&quot;  -DQT_NO_DEBUG -DNDEBUG -D_WINDOWS -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DQT_THREAD_SUPPORT -DQT_DLL -DQT_NO_DEBUG -DQT_SQL_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DNDEBUG -I&quot;.\..\..\Qt\4.4.2\include\QtCore&quot; -I&quot;.\..\..\Qt\4.4.2\include\QtCore&quot; -I&quot;.\..\..\Qt\4.4.2\include\QtGui&quot; -I&quot;.\..\..\Qt\4.4.2\include\QtGui&quot; -I&quot;.\..\..\Qt\4.4.2\include\QtSql&quot; -I&quot;.\..\..\Qt\4.4.2\include\QtSql&quot; -I&quot;.\..\..\Qt\4.4.2\include&quot; -I&quot;c:\Qt\4.4.2\include\ActiveQt&quot; -I&quot;.\build\release&quot; -I&quot;.\build\release&quot; -I&quot;.\..\..\Qt\4.4.2\mkspecs\default&quot; &quot;DBSetupParticipantsWidget.h&quot; -o &quot;build\release\moc_DBSetupParticipantsWidget.cpp&quot;&#x0D;&#x0A;"
+						AdditionalDependencies="C:\Qt\4.4.2\bin\moc.exe;DBSetupParticipantsWidget.h"
+						Outputs="build\release\moc_DBSetupParticipantsWidget.cpp"
+					/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="DBSetupSamplesWidget.h"
+				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="MOC DBSetupSamplesWidget.h"
+						CommandLine="&quot;$(QTDIR)\bin\moc.exe&quot;  -D_WINDOWS -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DDEBUG -DQT_THREAD_SUPPORT -DQT_DLL -DQT_SQL_LIB -DQT_GUI_LIB -DQT_CORE_LIB -I&quot;.\..\..\Qt\4.4.2\include\QtCore&quot; -I&quot;.\..\..\Qt\4.4.2\include\QtCore&quot; -I&quot;.\..\..\Qt\4.4.2\include\QtGui&quot; -I&quot;.\..\..\Qt\4.4.2\include\QtGui&quot; -I&quot;.\..\..\Qt\4.4.2\include\QtSql&quot; -I&quot;.\..\..\Qt\4.4.2\include\QtSql&quot; -I&quot;.\..\..\Qt\4.4.2\include&quot; -I&quot;c:\Qt\4.4.2\include\ActiveQt&quot; -I&quot;.\build\debug&quot; -I&quot;.\build\debug&quot; -I&quot;.\..\..\Qt\4.4.2\mkspecs\default&quot; &quot;DBSetupSamplesWidget.h&quot; -o &quot;build\debug\moc_DBSetupSamplesWidget.cpp&quot;&#x0D;&#x0A;"
+						AdditionalDependencies="C:\Qt\4.4.2\bin\moc.exe;DBSetupSamplesWidget.h"
+						Outputs="build\debug\moc_DBSetupSamplesWidget.cpp"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="MOC DBSetupSamplesWidget.h"
+						CommandLine="&quot;$(QTDIR)\bin\moc.exe&quot;  -DQT_NO_DEBUG -DNDEBUG -D_WINDOWS -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DQT_THREAD_SUPPORT -DQT_DLL -DQT_NO_DEBUG -DQT_SQL_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DNDEBUG -I&quot;.\..\..\Qt\4.4.2\include\QtCore&quot; -I&quot;.\..\..\Qt\4.4.2\include\QtCore&quot; -I&quot;.\..\..\Qt\4.4.2\include\QtGui&quot; -I&quot;.\..\..\Qt\4.4.2\include\QtGui&quot; -I&quot;.\..\..\Qt\4.4.2\include\QtSql&quot; -I&quot;.\..\..\Qt\4.4.2\include\QtSql&quot; -I&quot;.\..\..\Qt\4.4.2\include&quot; -I&quot;c:\Qt\4.4.2\include\ActiveQt&quot; -I&quot;.\build\release&quot; -I&quot;.\build\release&quot; -I&quot;.\..\..\Qt\4.4.2\mkspecs\default&quot; &quot;DBSetupSamplesWidget.h&quot; -o &quot;build\release\moc_DBSetupSamplesWidget.cpp&quot;&#x0D;&#x0A;"
+						AdditionalDependencies="C:\Qt\4.4.2\bin\moc.exe;DBSetupSamplesWidget.h"
+						Outputs="build\release\moc_DBSetupSamplesWidget.cpp"
+					/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="DBSetupWizard.h"
+				>
+			</File>
+			<File
+				RelativePath="FileNameDelegate.h"
+				>
+			</File>
+			<File
+				RelativePath="FileNameWidget.h"
+				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="MOC FileNameWidget.h"
+						CommandLine="&quot;$(QTDIR)\bin\moc.exe&quot;  -D_WINDOWS -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DDEBUG -DQT_THREAD_SUPPORT -DQT_DLL -DQT_SQL_LIB -DQT_GUI_LIB -DQT_CORE_LIB -I&quot;.\..\..\Qt\4.4.2\include\QtCore&quot; -I&quot;.\..\..\Qt\4.4.2\include\QtCore&quot; -I&quot;.\..\..\Qt\4.4.2\include\QtGui&quot; -I&quot;.\..\..\Qt\4.4.2\include\QtGui&quot; -I&quot;.\..\..\Qt\4.4.2\include\QtSql&quot; -I&quot;.\..\..\Qt\4.4.2\include\QtSql&quot; -I&quot;.\..\..\Qt\4.4.2\include&quot; -I&quot;c:\Qt\4.4.2\include\ActiveQt&quot; -I&quot;.\build\debug&quot; -I&quot;.\build\debug&quot; -I&quot;.\..\..\Qt\4.4.2\mkspecs\default&quot; &quot;FileNameWidget.h&quot; -o &quot;build\debug\moc_FileNameWidget.cpp&quot;&#x0D;&#x0A;"
+						AdditionalDependencies="C:\Qt\4.4.2\bin\moc.exe;FileNameWidget.h"
+						Outputs="build\debug\moc_FileNameWidget.cpp"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="MOC FileNameWidget.h"
+						CommandLine="&quot;$(QTDIR)\bin\moc.exe&quot;  -DQT_NO_DEBUG -DNDEBUG -D_WINDOWS -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DQT_THREAD_SUPPORT -DQT_DLL -DQT_NO_DEBUG -DQT_SQL_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DNDEBUG -I&quot;.\..\..\Qt\4.4.2\include\QtCore&quot; -I&quot;.\..\..\Qt\4.4.2\include\QtCore&quot; -I&quot;.\..\..\Qt\4.4.2\include\QtGui&quot; -I&quot;.\..\..\Qt\4.4.2\include\QtGui&quot; -I&quot;.\..\..\Qt\4.4.2\include\QtSql&quot; -I&quot;.\..\..\Qt\4.4.2\include\QtSql&quot; -I&quot;.\..\..\Qt\4.4.2\include&quot; -I&quot;c:\Qt\4.4.2\include\ActiveQt&quot; -I&quot;.\build\release&quot; -I&quot;.\build\release&quot; -I&quot;.\..\..\Qt\4.4.2\mkspecs\default&quot; &quot;FileNameWidget.h&quot; -o &quot;build\release\moc_FileNameWidget.cpp&quot;&#x0D;&#x0A;"
+						AdditionalDependencies="C:\Qt\4.4.2\bin\moc.exe;FileNameWidget.h"
+						Outputs="build\release\moc_FileNameWidget.cpp"
+					/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="ImageProducer.h"
@@ -283,8 +417,8 @@
 					<Tool
 						Name="VCCustomBuildTool"
 						Description="MOC ImageProducer.h"
-						CommandLine="&quot;$(QTDIR)\bin\moc.exe&quot;  -D_WINDOWS -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DDEBUG -DQT_THREAD_SUPPORT -DQT_DLL -DQT_SQL_LIB -DQT_GUI_LIB -DQT_CORE_LIB -I&quot;.\..\..\Qt\4.3.0\include\QtCore&quot; -I&quot;.\..\..\Qt\4.3.0\include\QtCore&quot; -I&quot;.\..\..\Qt\4.3.0\include\QtGui&quot; -I&quot;.\..\..\Qt\4.3.0\include\QtGui&quot; -I&quot;.\..\..\Qt\4.3.0\include\QtSql&quot; -I&quot;.\..\..\Qt\4.3.0\include\QtSql&quot; -I&quot;.\..\..\Qt\4.3.0\include&quot; -I&quot;.\..\..\Qt\4.3.0\include\ActiveQt&quot; -I&quot;.\build\debug&quot; -I&quot;.\build\debug&quot; -I&quot;.\..\..\Qt\4.3.0\mkspecs\default&quot; &quot;ImageProducer.h&quot; -o &quot;build\debug\moc_ImageProducer.cpp&quot;&#x0D;&#x0A;"
-						AdditionalDependencies="C:\Qt\4.3.0\bin\moc.exe;ImageProducer.h"
+						CommandLine="&quot;$(QTDIR)\bin\moc.exe&quot;  -D_WINDOWS -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DDEBUG -DQT_THREAD_SUPPORT -DQT_DLL -DQT_SQL_LIB -DQT_GUI_LIB -DQT_CORE_LIB -I&quot;.\..\..\Qt\4.4.2\include\QtCore&quot; -I&quot;.\..\..\Qt\4.4.2\include\QtCore&quot; -I&quot;.\..\..\Qt\4.4.2\include\QtGui&quot; -I&quot;.\..\..\Qt\4.4.2\include\QtGui&quot; -I&quot;.\..\..\Qt\4.4.2\include\QtSql&quot; -I&quot;.\..\..\Qt\4.4.2\include\QtSql&quot; -I&quot;.\..\..\Qt\4.4.2\include&quot; -I&quot;c:\Qt\4.4.2\include\ActiveQt&quot; -I&quot;.\build\debug&quot; -I&quot;.\build\debug&quot; -I&quot;.\..\..\Qt\4.4.2\mkspecs\default&quot; &quot;ImageProducer.h&quot; -o &quot;build\debug\moc_ImageProducer.cpp&quot;&#x0D;&#x0A;"
+						AdditionalDependencies="C:\Qt\4.4.2\bin\moc.exe;ImageProducer.h"
 						Outputs="build\debug\moc_ImageProducer.cpp"
 					/>
 				</FileConfiguration>
@@ -294,8 +428,8 @@
 					<Tool
 						Name="VCCustomBuildTool"
 						Description="MOC ImageProducer.h"
-						CommandLine="&quot;$(QTDIR)\bin\moc.exe&quot;  -DQT_NO_DEBUG -DNDEBUG -D_WINDOWS -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DQT_THREAD_SUPPORT -DQT_DLL -DQT_NO_DEBUG -DQT_SQL_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DNDEBUG -I&quot;.\..\..\Qt\4.3.0\include\QtCore&quot; -I&quot;.\..\..\Qt\4.3.0\include\QtCore&quot; -I&quot;.\..\..\Qt\4.3.0\include\QtGui&quot; -I&quot;.\..\..\Qt\4.3.0\include\QtGui&quot; -I&quot;.\..\..\Qt\4.3.0\include\QtSql&quot; -I&quot;.\..\..\Qt\4.3.0\include\QtSql&quot; -I&quot;.\..\..\Qt\4.3.0\include&quot; -I&quot;.\..\..\Qt\4.3.0\include\ActiveQt&quot; -I&quot;.\build\release&quot; -I&quot;.\build\release&quot; -I&quot;.\..\..\Qt\4.3.0\mkspecs\default&quot; &quot;ImageProducer.h&quot; -o &quot;build\release\moc_ImageProducer.cpp&quot;&#x0D;&#x0A;"
-						AdditionalDependencies="C:\Qt\4.3.0\bin\moc.exe;ImageProducer.h"
+						CommandLine="&quot;$(QTDIR)\bin\moc.exe&quot;  -DQT_NO_DEBUG -DNDEBUG -D_WINDOWS -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DQT_THREAD_SUPPORT -DQT_DLL -DQT_NO_DEBUG -DQT_SQL_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DNDEBUG -I&quot;.\..\..\Qt\4.4.2\include\QtCore&quot; -I&quot;.\..\..\Qt\4.4.2\include\QtCore&quot; -I&quot;.\..\..\Qt\4.4.2\include\QtGui&quot; -I&quot;.\..\..\Qt\4.4.2\include\QtGui&quot; -I&quot;.\..\..\Qt\4.4.2\include\QtSql&quot; -I&quot;.\..\..\Qt\4.4.2\include\QtSql&quot; -I&quot;.\..\..\Qt\4.4.2\include&quot; -I&quot;c:\Qt\4.4.2\include\ActiveQt&quot; -I&quot;.\build\release&quot; -I&quot;.\build\release&quot; -I&quot;.\..\..\Qt\4.4.2\mkspecs\default&quot; &quot;ImageProducer.h&quot; -o &quot;build\release\moc_ImageProducer.cpp&quot;&#x0D;&#x0A;"
+						AdditionalDependencies="C:\Qt\4.4.2\bin\moc.exe;ImageProducer.h"
 						Outputs="build\release\moc_ImageProducer.cpp"
 					/>
 				</FileConfiguration>
@@ -309,8 +443,8 @@
 					<Tool
 						Name="VCCustomBuildTool"
 						Description="MOC MainWindow.h"
-						CommandLine="&quot;$(QTDIR)\bin\moc.exe&quot;  -D_WINDOWS -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DDEBUG -DQT_THREAD_SUPPORT -DQT_DLL -DQT_SQL_LIB -DQT_GUI_LIB -DQT_CORE_LIB -I&quot;.\..\..\Qt\4.3.0\include\QtCore&quot; -I&quot;.\..\..\Qt\4.3.0\include\QtCore&quot; -I&quot;.\..\..\Qt\4.3.0\include\QtGui&quot; -I&quot;.\..\..\Qt\4.3.0\include\QtGui&quot; -I&quot;.\..\..\Qt\4.3.0\include\QtSql&quot; -I&quot;.\..\..\Qt\4.3.0\include\QtSql&quot; -I&quot;.\..\..\Qt\4.3.0\include&quot; -I&quot;.\..\..\Qt\4.3.0\include\ActiveQt&quot; -I&quot;.\build\debug&quot; -I&quot;.\build\debug&quot; -I&quot;.\..\..\Qt\4.3.0\mkspecs\default&quot; &quot;MainWindow.h&quot; -o &quot;build\debug\moc_MainWindow.cpp&quot;&#x0D;&#x0A;"
-						AdditionalDependencies="C:\Qt\4.3.0\bin\moc.exe;MainWindow.h"
+						CommandLine="&quot;$(QTDIR)\bin\moc.exe&quot;  -D_WINDOWS -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DDEBUG -DQT_THREAD_SUPPORT -DQT_DLL -DQT_SQL_LIB -DQT_GUI_LIB -DQT_CORE_LIB -I&quot;.\..\..\Qt\4.4.2\include\QtCore&quot; -I&quot;.\..\..\Qt\4.4.2\include\QtCore&quot; -I&quot;.\..\..\Qt\4.4.2\include\QtGui&quot; -I&quot;.\..\..\Qt\4.4.2\include\QtGui&quot; -I&quot;.\..\..\Qt\4.4.2\include\QtSql&quot; -I&quot;.\..\..\Qt\4.4.2\include\QtSql&quot; -I&quot;.\..\..\Qt\4.4.2\include&quot; -I&quot;c:\Qt\4.4.2\include\ActiveQt&quot; -I&quot;.\build\debug&quot; -I&quot;.\build\debug&quot; -I&quot;.\..\..\Qt\4.4.2\mkspecs\default&quot; &quot;MainWindow.h&quot; -o &quot;build\debug\moc_MainWindow.cpp&quot;&#x0D;&#x0A;"
+						AdditionalDependencies="C:\Qt\4.4.2\bin\moc.exe;MainWindow.h"
 						Outputs="build\debug\moc_MainWindow.cpp"
 					/>
 				</FileConfiguration>
@@ -320,8 +454,8 @@
 					<Tool
 						Name="VCCustomBuildTool"
 						Description="MOC MainWindow.h"
-						CommandLine="&quot;$(QTDIR)\bin\moc.exe&quot;  -DQT_NO_DEBUG -DNDEBUG -D_WINDOWS -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DQT_THREAD_SUPPORT -DQT_DLL -DQT_NO_DEBUG -DQT_SQL_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DNDEBUG -I&quot;.\..\..\Qt\4.3.0\include\QtCore&quot; -I&quot;.\..\..\Qt\4.3.0\include\QtCore&quot; -I&quot;.\..\..\Qt\4.3.0\include\QtGui&quot; -I&quot;.\..\..\Qt\4.3.0\include\QtGui&quot; -I&quot;.\..\..\Qt\4.3.0\include\QtSql&quot; -I&quot;.\..\..\Qt\4.3.0\include\QtSql&quot; -I&quot;.\..\..\Qt\4.3.0\include&quot; -I&quot;.\..\..\Qt\4.3.0\include\ActiveQt&quot; -I&quot;.\build\release&quot; -I&quot;.\build\release&quot; -I&quot;.\..\..\Qt\4.3.0\mkspecs\default&quot; &quot;MainWindow.h&quot; -o &quot;build\release\moc_MainWindow.cpp&quot;&#x0D;&#x0A;"
-						AdditionalDependencies="C:\Qt\4.3.0\bin\moc.exe;MainWindow.h"
+						CommandLine="&quot;$(QTDIR)\bin\moc.exe&quot;  -DQT_NO_DEBUG -DNDEBUG -D_WINDOWS -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DQT_THREAD_SUPPORT -DQT_DLL -DQT_NO_DEBUG -DQT_SQL_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DNDEBUG -I&quot;.\..\..\Qt\4.4.2\include\QtCore&quot; -I&quot;.\..\..\Qt\4.4.2\include\QtCore&quot; -I&quot;.\..\..\Qt\4.4.2\include\QtGui&quot; -I&quot;.\..\..\Qt\4.4.2\include\QtGui&quot; -I&quot;.\..\..\Qt\4.4.2\include\QtSql&quot; -I&quot;.\..\..\Qt\4.4.2\include\QtSql&quot; -I&quot;.\..\..\Qt\4.4.2\include&quot; -I&quot;c:\Qt\4.4.2\include\ActiveQt&quot; -I&quot;.\build\release&quot; -I&quot;.\build\release&quot; -I&quot;.\..\..\Qt\4.4.2\mkspecs\default&quot; &quot;MainWindow.h&quot; -o &quot;build\release\moc_MainWindow.cpp&quot;&#x0D;&#x0A;"
+						AdditionalDependencies="C:\Qt\4.4.2\bin\moc.exe;MainWindow.h"
 						Outputs="build\release\moc_MainWindow.cpp"
 					/>
 				</FileConfiguration>
@@ -339,8 +473,8 @@
 					<Tool
 						Name="VCCustomBuildTool"
 						Description="MOC MovieWidget.h"
-						CommandLine="&quot;$(QTDIR)\bin\moc.exe&quot;  -D_WINDOWS -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DDEBUG -DQT_THREAD_SUPPORT -DQT_DLL -DQT_SQL_LIB -DQT_GUI_LIB -DQT_CORE_LIB -I&quot;.\..\..\Qt\4.3.0\include\QtCore&quot; -I&quot;.\..\..\Qt\4.3.0\include\QtCore&quot; -I&quot;.\..\..\Qt\4.3.0\include\QtGui&quot; -I&quot;.\..\..\Qt\4.3.0\include\QtGui&quot; -I&quot;.\..\..\Qt\4.3.0\include\QtSql&quot; -I&quot;.\..\..\Qt\4.3.0\include\QtSql&quot; -I&quot;.\..\..\Qt\4.3.0\include&quot; -I&quot;.\..\..\Qt\4.3.0\include\ActiveQt&quot; -I&quot;.\build\debug&quot; -I&quot;.\build\debug&quot; -I&quot;.\..\..\Qt\4.3.0\mkspecs\default&quot; &quot;MovieWidget.h&quot; -o &quot;build\debug\moc_MovieWidget.cpp&quot;&#x0D;&#x0A;"
-						AdditionalDependencies="C:\Qt\4.3.0\bin\moc.exe;MovieWidget.h"
+						CommandLine="&quot;$(QTDIR)\bin\moc.exe&quot;  -D_WINDOWS -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DDEBUG -DQT_THREAD_SUPPORT -DQT_DLL -DQT_SQL_LIB -DQT_GUI_LIB -DQT_CORE_LIB -I&quot;.\..\..\Qt\4.4.2\include\QtCore&quot; -I&quot;.\..\..\Qt\4.4.2\include\QtCore&quot; -I&quot;.\..\..\Qt\4.4.2\include\QtGui&quot; -I&quot;.\..\..\Qt\4.4.2\include\QtGui&quot; -I&quot;.\..\..\Qt\4.4.2\include\QtSql&quot; -I&quot;.\..\..\Qt\4.4.2\include\QtSql&quot; -I&quot;.\..\..\Qt\4.4.2\include&quot; -I&quot;c:\Qt\4.4.2\include\ActiveQt&quot; -I&quot;.\build\debug&quot; -I&quot;.\build\debug&quot; -I&quot;.\..\..\Qt\4.4.2\mkspecs\default&quot; &quot;MovieWidget.h&quot; -o &quot;build\debug\moc_MovieWidget.cpp&quot;&#x0D;&#x0A;"
+						AdditionalDependencies="C:\Qt\4.4.2\bin\moc.exe;MovieWidget.h"
 						Outputs="build\debug\moc_MovieWidget.cpp"
 					/>
 				</FileConfiguration>
@@ -350,8 +484,8 @@
 					<Tool
 						Name="VCCustomBuildTool"
 						Description="MOC MovieWidget.h"
-						CommandLine="&quot;$(QTDIR)\bin\moc.exe&quot;  -DQT_NO_DEBUG -DNDEBUG -D_WINDOWS -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DQT_THREAD_SUPPORT -DQT_DLL -DQT_NO_DEBUG -DQT_SQL_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DNDEBUG -I&quot;.\..\..\Qt\4.3.0\include\QtCore&quot; -I&quot;.\..\..\Qt\4.3.0\include\QtCore&quot; -I&quot;.\..\..\Qt\4.3.0\include\QtGui&quot; -I&quot;.\..\..\Qt\4.3.0\include\QtGui&quot; -I&quot;.\..\..\Qt\4.3.0\include\QtSql&quot; -I&quot;.\..\..\Qt\4.3.0\include\QtSql&quot; -I&quot;.\..\..\Qt\4.3.0\include&quot; -I&quot;.\..\..\Qt\4.3.0\include\ActiveQt&quot; -I&quot;.\build\release&quot; -I&quot;.\build\release&quot; -I&quot;.\..\..\Qt\4.3.0\mkspecs\default&quot; &quot;MovieWidget.h&quot; -o &quot;build\release\moc_MovieWidget.cpp&quot;&#x0D;&#x0A;"
-						AdditionalDependencies="C:\Qt\4.3.0\bin\moc.exe;MovieWidget.h"
+						CommandLine="&quot;$(QTDIR)\bin\moc.exe&quot;  -DQT_NO_DEBUG -DNDEBUG -D_WINDOWS -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DQT_THREAD_SUPPORT -DQT_DLL -DQT_NO_DEBUG -DQT_SQL_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DNDEBUG -I&quot;.\..\..\Qt\4.4.2\include\QtCore&quot; -I&quot;.\..\..\Qt\4.4.2\include\QtCore&quot; -I&quot;.\..\..\Qt\4.4.2\include\QtGui&quot; -I&quot;.\..\..\Qt\4.4.2\include\QtGui&quot; -I&quot;.\..\..\Qt\4.4.2\include\QtSql&quot; -I&quot;.\..\..\Qt\4.4.2\include\QtSql&quot; -I&quot;.\..\..\Qt\4.4.2\include&quot; -I&quot;c:\Qt\4.4.2\include\ActiveQt&quot; -I&quot;.\build\release&quot; -I&quot;.\build\release&quot; -I&quot;.\..\..\Qt\4.4.2\mkspecs\default&quot; &quot;MovieWidget.h&quot; -o &quot;build\release\moc_MovieWidget.cpp&quot;&#x0D;&#x0A;"
+						AdditionalDependencies="C:\Qt\4.4.2\bin\moc.exe;MovieWidget.h"
 						Outputs="build\release\moc_MovieWidget.cpp"
 					/>
 				</FileConfiguration>
@@ -369,8 +503,8 @@
 					<Tool
 						Name="VCCustomBuildTool"
 						Description="MOC PlaybackThread.h"
-						CommandLine="&quot;$(QTDIR)\bin\moc.exe&quot;  -D_WINDOWS -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DDEBUG -DQT_THREAD_SUPPORT -DQT_DLL -DQT_SQL_LIB -DQT_GUI_LIB -DQT_CORE_LIB -I&quot;.\..\..\Qt\4.3.0\include\QtCore&quot; -I&quot;.\..\..\Qt\4.3.0\include\QtCore&quot; -I&quot;.\..\..\Qt\4.3.0\include\QtGui&quot; -I&quot;.\..\..\Qt\4.3.0\include\QtGui&quot; -I&quot;.\..\..\Qt\4.3.0\include\QtSql&quot; -I&quot;.\..\..\Qt\4.3.0\include\QtSql&quot; -I&quot;.\..\..\Qt\4.3.0\include&quot; -I&quot;.\..\..\Qt\4.3.0\include\ActiveQt&quot; -I&quot;.\build\debug&quot; -I&quot;.\build\debug&quot; -I&quot;.\..\..\Qt\4.3.0\mkspecs\default&quot; &quot;PlaybackThread.h&quot; -o &quot;build\debug\moc_PlaybackThread.cpp&quot;&#x0D;&#x0A;"
-						AdditionalDependencies="C:\Qt\4.3.0\bin\moc.exe;PlaybackThread.h"
+						CommandLine="&quot;$(QTDIR)\bin\moc.exe&quot;  -D_WINDOWS -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DDEBUG -DQT_THREAD_SUPPORT -DQT_DLL -DQT_SQL_LIB -DQT_GUI_LIB -DQT_CORE_LIB -I&quot;.\..\..\Qt\4.4.2\include\QtCore&quot; -I&quot;.\..\..\Qt\4.4.2\include\QtCore&quot; -I&quot;.\..\..\Qt\4.4.2\include\QtGui&quot; -I&quot;.\..\..\Qt\4.4.2\include\QtGui&quot; -I&quot;.\..\..\Qt\4.4.2\include\QtSql&quot; -I&quot;.\..\..\Qt\4.4.2\include\QtSql&quot; -I&quot;.\..\..\Qt\4.4.2\include&quot; -I&quot;c:\Qt\4.4.2\include\ActiveQt&quot; -I&quot;.\build\debug&quot; -I&quot;.\build\debug&quot; -I&quot;.\..\..\Qt\4.4.2\mkspecs\default&quot; &quot;PlaybackThread.h&quot; -o &quot;build\debug\moc_PlaybackThread.cpp&quot;&#x0D;&#x0A;"
+						AdditionalDependencies="C:\Qt\4.4.2\bin\moc.exe;PlaybackThread.h"
 						Outputs="build\debug\moc_PlaybackThread.cpp"
 					/>
 				</FileConfiguration>
@@ -380,8 +514,8 @@
 					<Tool
 						Name="VCCustomBuildTool"
 						Description="MOC PlaybackThread.h"
-						CommandLine="&quot;$(QTDIR)\bin\moc.exe&quot;  -DQT_NO_DEBUG -DNDEBUG -D_WINDOWS -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DQT_THREAD_SUPPORT -DQT_DLL -DQT_NO_DEBUG -DQT_SQL_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DNDEBUG -I&quot;.\..\..\Qt\4.3.0\include\QtCore&quot; -I&quot;.\..\..\Qt\4.3.0\include\QtCore&quot; -I&quot;.\..\..\Qt\4.3.0\include\QtGui&quot; -I&quot;.\..\..\Qt\4.3.0\include\QtGui&quot; -I&quot;.\..\..\Qt\4.3.0\include\QtSql&quot; -I&quot;.\..\..\Qt\4.3.0\include\QtSql&quot; -I&quot;.\..\..\Qt\4.3.0\include&quot; -I&quot;.\..\..\Qt\4.3.0\include\ActiveQt&quot; -I&quot;.\build\release&quot; -I&quot;.\build\release&quot; -I&quot;.\..\..\Qt\4.3.0\mkspecs\default&quot; &quot;PlaybackThread.h&quot; -o &quot;build\release\moc_PlaybackThread.cpp&quot;&#x0D;&#x0A;"
-						AdditionalDependencies="C:\Qt\4.3.0\bin\moc.exe;PlaybackThread.h"
+						CommandLine="&quot;$(QTDIR)\bin\moc.exe&quot;  -DQT_NO_DEBUG -DNDEBUG -D_WINDOWS -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DQT_THREAD_SUPPORT -DQT_DLL -DQT_NO_DEBUG -DQT_SQL_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DNDEBUG -I&quot;.\..\..\Qt\4.4.2\include\QtCore&quot; -I&quot;.\..\..\Qt\4.4.2\include\QtCore&quot; -I&quot;.\..\..\Qt\4.4.2\include\QtGui&quot; -I&quot;.\..\..\Qt\4.4.2\include\QtGui&quot; -I&quot;.\..\..\Qt\4.4.2\include\QtSql&quot; -I&quot;.\..\..\Qt\4.4.2\include\QtSql&quot; -I&quot;.\..\..\Qt\4.4.2\include&quot; -I&quot;c:\Qt\4.4.2\include\ActiveQt&quot; -I&quot;.\build\release&quot; -I&quot;.\build\release&quot; -I&quot;.\..\..\Qt\4.4.2\mkspecs\default&quot; &quot;PlaybackThread.h&quot; -o &quot;build\release\moc_PlaybackThread.cpp&quot;&#x0D;&#x0A;"
+						AdditionalDependencies="C:\Qt\4.4.2\bin\moc.exe;PlaybackThread.h"
 						Outputs="build\release\moc_PlaybackThread.cpp"
 					/>
 				</FileConfiguration>
@@ -399,8 +533,8 @@
 					<Tool
 						Name="VCCustomBuildTool"
 						Description="MOC SamplesPreviewCanvas.h"
-						CommandLine="&quot;$(QTDIR)\bin\moc.exe&quot;  -D_WINDOWS -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DDEBUG -DQT_THREAD_SUPPORT -DQT_DLL -DQT_SQL_LIB -DQT_GUI_LIB -DQT_CORE_LIB -I&quot;.\..\..\Qt\4.3.0\include\QtCore&quot; -I&quot;.\..\..\Qt\4.3.0\include\QtCore&quot; -I&quot;.\..\..\Qt\4.3.0\include\QtGui&quot; -I&quot;.\..\..\Qt\4.3.0\include\QtGui&quot; -I&quot;.\..\..\Qt\4.3.0\include\QtSql&quot; -I&quot;.\..\..\Qt\4.3.0\include\QtSql&quot; -I&quot;.\..\..\Qt\4.3.0\include&quot; -I&quot;.\..\..\Qt\4.3.0\include\ActiveQt&quot; -I&quot;.\build\debug&quot; -I&quot;.\build\debug&quot; -I&quot;.\..\..\Qt\4.3.0\mkspecs\default&quot; &quot;SamplesPreviewCanvas.h&quot; -o &quot;build\debug\moc_SamplesPreviewCanvas.cpp&quot;&#x0D;&#x0A;"
-						AdditionalDependencies="C:\Qt\4.3.0\bin\moc.exe;SamplesPreviewCanvas.h"
+						CommandLine="&quot;$(QTDIR)\bin\moc.exe&quot;  -D_WINDOWS -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DDEBUG -DQT_THREAD_SUPPORT -DQT_DLL -DQT_SQL_LIB -DQT_GUI_LIB -DQT_CORE_LIB -I&quot;.\..\..\Qt\4.4.2\include\QtCore&quot; -I&quot;.\..\..\Qt\4.4.2\include\QtCore&quot; -I&quot;.\..\..\Qt\4.4.2\include\QtGui&quot; -I&quot;.\..\..\Qt\4.4.2\include\QtGui&quot; -I&quot;.\..\..\Qt\4.4.2\include\QtSql&quot; -I&quot;.\..\..\Qt\4.4.2\include\QtSql&quot; -I&quot;.\..\..\Qt\4.4.2\include&quot; -I&quot;c:\Qt\4.4.2\include\ActiveQt&quot; -I&quot;.\build\debug&quot; -I&quot;.\build\debug&quot; -I&quot;.\..\..\Qt\4.4.2\mkspecs\default&quot; &quot;SamplesPreviewCanvas.h&quot; -o &quot;build\debug\moc_SamplesPreviewCanvas.cpp&quot;&#x0D;&#x0A;"
+						AdditionalDependencies="C:\Qt\4.4.2\bin\moc.exe;SamplesPreviewCanvas.h"
 						Outputs="build\debug\moc_SamplesPreviewCanvas.cpp"
 					/>
 				</FileConfiguration>
@@ -410,8 +544,8 @@
 					<Tool
 						Name="VCCustomBuildTool"
 						Description="MOC SamplesPreviewCanvas.h"
-						CommandLine="&quot;$(QTDIR)\bin\moc.exe&quot;  -DQT_NO_DEBUG -DNDEBUG -D_WINDOWS -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DQT_THREAD_SUPPORT -DQT_DLL -DQT_NO_DEBUG -DQT_SQL_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DNDEBUG -I&quot;.\..\..\Qt\4.3.0\include\QtCore&quot; -I&quot;.\..\..\Qt\4.3.0\include\QtCore&quot; -I&quot;.\..\..\Qt\4.3.0\include\QtGui&quot; -I&quot;.\..\..\Qt\4.3.0\include\QtGui&quot; -I&quot;.\..\..\Qt\4.3.0\include\QtSql&quot; -I&quot;.\..\..\Qt\4.3.0\include\QtSql&quot; -I&quot;.\..\..\Qt\4.3.0\include&quot; -I&quot;.\..\..\Qt\4.3.0\include\ActiveQt&quot; -I&quot;.\build\release&quot; -I&quot;.\build\release&quot; -I&quot;.\..\..\Qt\4.3.0\mkspecs\default&quot; &quot;SamplesPreviewCanvas.h&quot; -o &quot;build\release\moc_SamplesPreviewCanvas.cpp&quot;&#x0D;&#x0A;"
-						AdditionalDependencies="C:\Qt\4.3.0\bin\moc.exe;SamplesPreviewCanvas.h"
+						CommandLine="&quot;$(QTDIR)\bin\moc.exe&quot;  -DQT_NO_DEBUG -DNDEBUG -D_WINDOWS -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DQT_THREAD_SUPPORT -DQT_DLL -DQT_NO_DEBUG -DQT_SQL_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DNDEBUG -I&quot;.\..\..\Qt\4.4.2\include\QtCore&quot; -I&quot;.\..\..\Qt\4.4.2\include\QtCore&quot; -I&quot;.\..\..\Qt\4.4.2\include\QtGui&quot; -I&quot;.\..\..\Qt\4.4.2\include\QtGui&quot; -I&quot;.\..\..\Qt\4.4.2\include\QtSql&quot; -I&quot;.\..\..\Qt\4.4.2\include\QtSql&quot; -I&quot;.\..\..\Qt\4.4.2\include&quot; -I&quot;c:\Qt\4.4.2\include\ActiveQt&quot; -I&quot;.\build\release&quot; -I&quot;.\build\release&quot; -I&quot;.\..\..\Qt\4.4.2\mkspecs\default&quot; &quot;SamplesPreviewCanvas.h&quot; -o &quot;build\release\moc_SamplesPreviewCanvas.cpp&quot;&#x0D;&#x0A;"
+						AdditionalDependencies="C:\Qt\4.4.2\bin\moc.exe;SamplesPreviewCanvas.h"
 						Outputs="build\release\moc_SamplesPreviewCanvas.cpp"
 					/>
 				</FileConfiguration>
@@ -423,10 +557,94 @@
 			UniqueIdentifier="{71ED8ED8-ACB9-4CE9-BBE1-E00B30144E11}"
 			>
 			<File
-				RelativePath="build\release\moc_ImageProducer.cpp"
+				RelativePath="build\release\moc_DBSetupMoviesWidget.cpp"
 				>
 				<FileConfiguration
 					Name="Debug|Win32"
+					ExcludedFromBuild="true"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+					/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="build\debug\moc_DBSetupMoviesWidget.cpp"
+				>
+				<FileConfiguration
+					Name="Release|Win32"
+					ExcludedFromBuild="true"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+					/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="build\release\moc_DBSetupParticipantsWidget.cpp"
+				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					ExcludedFromBuild="true"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+					/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="build\debug\moc_DBSetupParticipantsWidget.cpp"
+				>
+				<FileConfiguration
+					Name="Release|Win32"
+					ExcludedFromBuild="true"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+					/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="build\release\moc_DBSetupSamplesWidget.cpp"
+				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					ExcludedFromBuild="true"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+					/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="build\debug\moc_DBSetupSamplesWidget.cpp"
+				>
+				<FileConfiguration
+					Name="Release|Win32"
+					ExcludedFromBuild="true"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+					/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="build\release\moc_FileNameWidget.cpp"
+				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					ExcludedFromBuild="true"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+					/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="build\debug\moc_FileNameWidget.cpp"
+				>
+				<FileConfiguration
+					Name="Release|Win32"
 					ExcludedFromBuild="true"
 					>
 					<Tool
@@ -439,6 +657,18 @@
 				>
 				<FileConfiguration
 					Name="Release|Win32"
+					ExcludedFromBuild="true"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+					/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="build\release\moc_ImageProducer.cpp"
+				>
+				<FileConfiguration
+					Name="Debug|Win32"
 					ExcludedFromBuild="true"
 					>
 					<Tool
@@ -471,10 +701,10 @@
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="build\debug\moc_MovieWidget.cpp"
+				RelativePath="build\release\moc_MovieWidget.cpp"
 				>
 				<FileConfiguration
-					Name="Release|Win32"
+					Name="Debug|Win32"
 					ExcludedFromBuild="true"
 					>
 					<Tool
@@ -483,10 +713,10 @@
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="build\release\moc_MovieWidget.cpp"
+				RelativePath="build\debug\moc_MovieWidget.cpp"
 				>
 				<FileConfiguration
-					Name="Debug|Win32"
+					Name="Release|Win32"
 					ExcludedFromBuild="true"
 					>
 					<Tool
@@ -519,18 +749,6 @@
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="build\release\moc_SamplesPreviewCanvas.cpp"
-				>
-				<FileConfiguration
-					Name="Debug|Win32"
-					ExcludedFromBuild="true"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-					/>
-				</FileConfiguration>
-			</File>
-			<File
 				RelativePath="build\debug\moc_SamplesPreviewCanvas.cpp"
 				>
 				<FileConfiguration
@@ -543,10 +761,10 @@
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="build\debug\qrc_annot8.cpp"
+				RelativePath="build\release\moc_SamplesPreviewCanvas.cpp"
 				>
 				<FileConfiguration
-					Name="Release|Win32"
+					Name="Debug|Win32"
 					ExcludedFromBuild="true"
 					>
 					<Tool
@@ -559,6 +777,18 @@
 				>
 				<FileConfiguration
 					Name="Debug|Win32"
+					ExcludedFromBuild="true"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+					/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="build\debug\qrc_annot8.cpp"
+				>
+				<FileConfiguration
+					Name="Release|Win32"
 					ExcludedFromBuild="true"
 					>
 					<Tool
@@ -615,7 +845,7 @@
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="build\release\ui_DBInitializationDlg.h"
+				RelativePath="build\release\ui_DBSetupMoviesWidget.h"
 				>
 				<FileConfiguration
 					Name="Debug|Win32"
@@ -627,7 +857,79 @@
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="build\debug\ui_DBInitializationDlg.h"
+				RelativePath="build\debug\ui_DBSetupMoviesWidget.h"
+				>
+				<FileConfiguration
+					Name="Release|Win32"
+					ExcludedFromBuild="true"
+					>
+					<Tool
+						Name="VCCustomBuildTool"
+					/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="build\debug\ui_DBSetupParticipantsWidget.h"
+				>
+				<FileConfiguration
+					Name="Release|Win32"
+					ExcludedFromBuild="true"
+					>
+					<Tool
+						Name="VCCustomBuildTool"
+					/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="build\release\ui_DBSetupParticipantsWidget.h"
+				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					ExcludedFromBuild="true"
+					>
+					<Tool
+						Name="VCCustomBuildTool"
+					/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="build\release\ui_DBSetupSamplesWidget.h"
+				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					ExcludedFromBuild="true"
+					>
+					<Tool
+						Name="VCCustomBuildTool"
+					/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="build\debug\ui_DBSetupSamplesWidget.h"
+				>
+				<FileConfiguration
+					Name="Release|Win32"
+					ExcludedFromBuild="true"
+					>
+					<Tool
+						Name="VCCustomBuildTool"
+					/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="build\release\ui_FileNameWidget.h"
+				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					ExcludedFromBuild="true"
+					>
+					<Tool
+						Name="VCCustomBuildTool"
+					/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="build\debug\ui_FileNameWidget.h"
 				>
 				<FileConfiguration
 					Name="Release|Win32"
@@ -678,8 +980,8 @@
 					<Tool
 						Name="VCCustomBuildTool"
 						Description="UIC AboutDlg.ui"
-						CommandLine="C:\Qt\4.3.0\bin\uic.exe AboutDlg.ui -o build\debug\ui_AboutDlg.h&#x0D;&#x0A;"
-						AdditionalDependencies="AboutDlg.ui;C:\Qt\4.3.0\bin\uic.exe"
+						CommandLine="C:\Qt\4.4.2\bin\uic.exe AboutDlg.ui -o build\debug\ui_AboutDlg.h&#x0D;&#x0A;"
+						AdditionalDependencies="AboutDlg.ui;C:\Qt\4.4.2\bin\uic.exe"
 						Outputs="build\debug\ui_AboutDlg.h"
 					/>
 				</FileConfiguration>
@@ -689,8 +991,8 @@
 					<Tool
 						Name="VCCustomBuildTool"
 						Description="UIC AboutDlg.ui"
-						CommandLine="C:\Qt\4.3.0\bin\uic.exe AboutDlg.ui -o build\release\ui_AboutDlg.h&#x0D;&#x0A;"
-						AdditionalDependencies="AboutDlg.ui;C:\Qt\4.3.0\bin\uic.exe"
+						CommandLine="C:\Qt\4.4.2\bin\uic.exe AboutDlg.ui -o build\release\ui_AboutDlg.h&#x0D;&#x0A;"
+						AdditionalDependencies="AboutDlg.ui;C:\Qt\4.4.2\bin\uic.exe"
 						Outputs="build\release\ui_AboutDlg.h"
 					/>
 				</FileConfiguration>
@@ -704,8 +1006,8 @@
 					<Tool
 						Name="VCCustomBuildTool"
 						Description="UIC ChooseParticipantDlg.ui"
-						CommandLine="C:\Qt\4.3.0\bin\uic.exe ChooseParticipantDlg.ui -o build\debug\ui_ChooseParticipantDlg.h&#x0D;&#x0A;"
-						AdditionalDependencies="C:\Qt\4.3.0\bin\uic.exe;ChooseParticipantDlg.ui"
+						CommandLine="C:\Qt\4.4.2\bin\uic.exe ChooseParticipantDlg.ui -o build\debug\ui_ChooseParticipantDlg.h&#x0D;&#x0A;"
+						AdditionalDependencies="C:\Qt\4.4.2\bin\uic.exe;ChooseParticipantDlg.ui"
 						Outputs="build\debug\ui_ChooseParticipantDlg.h"
 					/>
 				</FileConfiguration>
@@ -715,24 +1017,24 @@
 					<Tool
 						Name="VCCustomBuildTool"
 						Description="UIC ChooseParticipantDlg.ui"
-						CommandLine="C:\Qt\4.3.0\bin\uic.exe ChooseParticipantDlg.ui -o build\release\ui_ChooseParticipantDlg.h&#x0D;&#x0A;"
-						AdditionalDependencies="C:\Qt\4.3.0\bin\uic.exe;ChooseParticipantDlg.ui"
+						CommandLine="C:\Qt\4.4.2\bin\uic.exe ChooseParticipantDlg.ui -o build\release\ui_ChooseParticipantDlg.h&#x0D;&#x0A;"
+						AdditionalDependencies="C:\Qt\4.4.2\bin\uic.exe;ChooseParticipantDlg.ui"
 						Outputs="build\release\ui_ChooseParticipantDlg.h"
 					/>
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="DBInitializationDlg.ui"
+				RelativePath="DBSetupMoviesWidget.ui"
 				>
 				<FileConfiguration
 					Name="Debug|Win32"
 					>
 					<Tool
 						Name="VCCustomBuildTool"
-						Description="UIC DBInitializationDlg.ui"
-						CommandLine="C:\Qt\4.3.0\bin\uic.exe DBInitializationDlg.ui -o build\debug\ui_DBInitializationDlg.h&#x0D;&#x0A;"
-						AdditionalDependencies="C:\Qt\4.3.0\bin\uic.exe;DBInitializationDlg.ui"
-						Outputs="build\debug\ui_DBInitializationDlg.h"
+						Description="UIC DBSetupMoviesWidget.ui"
+						CommandLine="C:\Qt\4.4.2\bin\uic.exe DBSetupMoviesWidget.ui -o build\debug\ui_DBSetupMoviesWidget.h&#x0D;&#x0A;"
+						AdditionalDependencies="C:\Qt\4.4.2\bin\uic.exe;DBSetupMoviesWidget.ui"
+						Outputs="build\debug\ui_DBSetupMoviesWidget.h"
 					/>
 				</FileConfiguration>
 				<FileConfiguration
@@ -740,10 +1042,88 @@
 					>
 					<Tool
 						Name="VCCustomBuildTool"
-						Description="UIC DBInitializationDlg.ui"
-						CommandLine="C:\Qt\4.3.0\bin\uic.exe DBInitializationDlg.ui -o build\release\ui_DBInitializationDlg.h&#x0D;&#x0A;"
-						AdditionalDependencies="C:\Qt\4.3.0\bin\uic.exe;DBInitializationDlg.ui"
-						Outputs="build\release\ui_DBInitializationDlg.h"
+						Description="UIC DBSetupMoviesWidget.ui"
+						CommandLine="C:\Qt\4.4.2\bin\uic.exe DBSetupMoviesWidget.ui -o build\release\ui_DBSetupMoviesWidget.h&#x0D;&#x0A;"
+						AdditionalDependencies="C:\Qt\4.4.2\bin\uic.exe;DBSetupMoviesWidget.ui"
+						Outputs="build\release\ui_DBSetupMoviesWidget.h"
+					/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="DBSetupParticipantsWidget.ui"
+				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="UIC DBSetupParticipantsWidget.ui"
+						CommandLine="C:\Qt\4.4.2\bin\uic.exe DBSetupParticipantsWidget.ui -o build\debug\ui_DBSetupParticipantsWidget.h&#x0D;&#x0A;"
+						AdditionalDependencies="C:\Qt\4.4.2\bin\uic.exe;DBSetupParticipantsWidget.ui"
+						Outputs="build\debug\ui_DBSetupParticipantsWidget.h"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="UIC DBSetupParticipantsWidget.ui"
+						CommandLine="C:\Qt\4.4.2\bin\uic.exe DBSetupParticipantsWidget.ui -o build\release\ui_DBSetupParticipantsWidget.h&#x0D;&#x0A;"
+						AdditionalDependencies="C:\Qt\4.4.2\bin\uic.exe;DBSetupParticipantsWidget.ui"
+						Outputs="build\release\ui_DBSetupParticipantsWidget.h"
+					/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="DBSetupSamplesWidget.ui"
+				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="UIC DBSetupSamplesWidget.ui"
+						CommandLine="C:\Qt\4.4.2\bin\uic.exe DBSetupSamplesWidget.ui -o build\debug\ui_DBSetupSamplesWidget.h&#x0D;&#x0A;"
+						AdditionalDependencies="C:\Qt\4.4.2\bin\uic.exe;DBSetupSamplesWidget.ui"
+						Outputs="build\debug\ui_DBSetupSamplesWidget.h"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="UIC DBSetupSamplesWidget.ui"
+						CommandLine="C:\Qt\4.4.2\bin\uic.exe DBSetupSamplesWidget.ui -o build\release\ui_DBSetupSamplesWidget.h&#x0D;&#x0A;"
+						AdditionalDependencies="C:\Qt\4.4.2\bin\uic.exe;DBSetupSamplesWidget.ui"
+						Outputs="build\release\ui_DBSetupSamplesWidget.h"
+					/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="FileNameWidget.ui"
+				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="UIC FileNameWidget.ui"
+						CommandLine="C:\Qt\4.4.2\bin\uic.exe FileNameWidget.ui -o build\debug\ui_FileNameWidget.h&#x0D;&#x0A;"
+						AdditionalDependencies="C:\Qt\4.4.2\bin\uic.exe;FileNameWidget.ui"
+						Outputs="build\debug\ui_FileNameWidget.h"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="UIC FileNameWidget.ui"
+						CommandLine="C:\Qt\4.4.2\bin\uic.exe FileNameWidget.ui -o build\release\ui_FileNameWidget.h&#x0D;&#x0A;"
+						AdditionalDependencies="C:\Qt\4.4.2\bin\uic.exe;FileNameWidget.ui"
+						Outputs="build\release\ui_FileNameWidget.h"
 					/>
 				</FileConfiguration>
 			</File>
@@ -756,8 +1136,8 @@
 					<Tool
 						Name="VCCustomBuildTool"
 						Description="UIC MainWindow.ui"
-						CommandLine="C:\Qt\4.3.0\bin\uic.exe MainWindow.ui -o build\debug\ui_MainWindow.h&#x0D;&#x0A;"
-						AdditionalDependencies="C:\Qt\4.3.0\bin\uic.exe;MainWindow.ui;SamplesPreviewCanvas.h"
+						CommandLine="C:\Qt\4.4.2\bin\uic.exe MainWindow.ui -o build\debug\ui_MainWindow.h&#x0D;&#x0A;"
+						AdditionalDependencies="C:\Qt\4.4.2\bin\uic.exe;MainWindow.ui;SamplesPreviewCanvas.h"
 						Outputs="build\debug\ui_MainWindow.h"
 					/>
 				</FileConfiguration>
@@ -767,8 +1147,8 @@
 					<Tool
 						Name="VCCustomBuildTool"
 						Description="UIC MainWindow.ui"
-						CommandLine="C:\Qt\4.3.0\bin\uic.exe MainWindow.ui -o build\release\ui_MainWindow.h&#x0D;&#x0A;"
-						AdditionalDependencies="C:\Qt\4.3.0\bin\uic.exe;MainWindow.ui;SamplesPreviewCanvas.h"
+						CommandLine="C:\Qt\4.4.2\bin\uic.exe MainWindow.ui -o build\release\ui_MainWindow.h&#x0D;&#x0A;"
+						AdditionalDependencies="C:\Qt\4.4.2\bin\uic.exe;MainWindow.ui;SamplesPreviewCanvas.h"
 						Outputs="build\release\ui_MainWindow.h"
 					/>
 				</FileConfiguration>
@@ -789,8 +1169,8 @@
 					<Tool
 						Name="VCCustomBuildTool"
 						Description="RCC annot8.qrc"
-						CommandLine="C:\Qt\4.3.0\bin\rcc.exe -name annot8 annot8.qrc -o build\debug\qrc_annot8.cpp&#x0D;&#x0A;"
-						AdditionalDependencies="C:\Qt\4.3.0\bin\rcc.exe;annot8.qrc;res\title.png"
+						CommandLine="C:\Qt\4.4.2\bin\rcc.exe -name annot8 annot8.qrc -o build\debug\qrc_annot8.cpp&#x0D;&#x0A;"
+						AdditionalDependencies="C:\Qt\4.4.2\bin\rcc.exe;annot8.qrc;res\title.png"
 						Outputs="build\debug\qrc_annot8.cpp"
 					/>
 				</FileConfiguration>
@@ -800,8 +1180,8 @@
 					<Tool
 						Name="VCCustomBuildTool"
 						Description="RCC annot8.qrc"
-						CommandLine="C:\Qt\4.3.0\bin\rcc.exe -name annot8 annot8.qrc -o build\release\qrc_annot8.cpp&#x0D;&#x0A;"
-						AdditionalDependencies="C:\Qt\4.3.0\bin\rcc.exe;annot8.qrc;res\title.png"
+						CommandLine="C:\Qt\4.4.2\bin\rcc.exe -name annot8 annot8.qrc -o build\release\qrc_annot8.cpp&#x0D;&#x0A;"
+						AdditionalDependencies="C:\Qt\4.4.2\bin\rcc.exe;annot8.qrc;res\title.png"
 						Outputs="build\release\qrc_annot8.cpp"
 					/>
 				</FileConfiguration>
