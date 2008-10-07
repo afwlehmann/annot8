@@ -53,6 +53,10 @@ bool DBSetupMoviesWidget::isComplete() const
     QSqlTableModel *model =
         static_cast<QSqlTableModel *>(_ui.tvMovies->model());
 
+    // Assure that any movies exist at all.
+    if (model->rowCount() <= 0)
+        return false;
+    
     // TODO
 
     return true;
@@ -65,7 +69,7 @@ void DBSetupMoviesWidget::on_tbAddMovie_clicked()
         static_cast<QSqlTableModel *>(_ui.tvMovies->model());
 
     model->insertRow(model->rowCount());
-    QModelIndex index = model->index(model->rowCount() - 1, 1);
+    QModelIndex index = model->index(model->rowCount() - 1, 0);
     _ui.tvMovies->setCurrentIndex(index);
     _ui.tvMovies->edit(index);
 

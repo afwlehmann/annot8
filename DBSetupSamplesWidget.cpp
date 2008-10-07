@@ -37,9 +37,27 @@ DBSetupSamplesWidget::DBSetupSamplesWidget(QWidget *parent) :
 
     setTitle(tr("Samples setup"));
     setSubTitle(tr("Please fill in a sound file for each participant."));
+
+    connect(_ui.twSamples, SIGNAL(cellChanged(int, int)),
+            SIGNAL(completeChanged()));
 }
 
 
+bool DBSetupSamplesWidget::isComplete() const
+{
+    // Check that at least one sample has been given.
+    for (int row = 0; row < _ui.twSamples->rowCount(); row++) {
+        const QString fileName =
+            _ui.twSamples->item(row, 1)->data(Qt::DisplayRole).toString();
+
+        if (!fileName.isEmpty())
+            return true;
+    }
+
+    return false;
+}
+
+    
 bool DBSetupSamplesWidget::validatePage()
 {
     map<int, string> samples;
@@ -74,6 +92,11 @@ bool DBSetupSamplesWidget::validatePage()
 
 void DBSetupSamplesWidget::on_tbRefresh_clicked()
 {
+    // Block the table widget's signals in order to avoid interference
+    // with isComplete() because the table widget's cellChanged-signal
+    // might be emitted during refresh.
+    _ui.twSamples->blockSignals(true);
+
     // Get the available participants info.
     map<int, string> pinfo;
     DBController::instance()->getParticipantsInfo(&pinfo);
@@ -83,7 +106,8 @@ void DBSetupSamplesWidget::on_tbRefresh_clicked()
     DBController::instance()->getAvailableSamples(&samples);
 
     // Fill the table widget with the data.
-    _ui.twSamples->clearContents();
+    _ui.twSamples->clearContents(); // clear() would destroy the headers, too.
+    _ui.twSamples->setRowCount(0);  // Explictly neccessary.
     _ui.twSamples->setSortingEnabled(false);
     map<int, string>::const_iterator it;
     for (it = pinfo.begin(); it != pinfo.end(); it++) {
@@ -102,6 +126,10 @@ void DBSetupSamplesWidget::on_tbRefresh_clicked()
     }
     _ui.twSamples->setSortingEnabled(true);
     _ui.twSamples->resizeColumnsToContents();
+
+    // Reactive the table widget's signal again.
+    _ui.twSamples->blockSignals(false);
+    emit completeChanged();
 }
 
 

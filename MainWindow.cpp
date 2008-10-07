@@ -525,12 +525,12 @@ void MainWindow::keyPressEvent(QKeyEvent *ev)
         break;
 
     case Qt::Key_F5:
-        on_pbSaveAndContinue_clicked();
+        update();
         ev->accept();
         break;
 
     case Qt::Key_F6:
-        update();
+        on_pbSaveAndContinue_clicked();
         ev->accept();
         break;
     }

@@ -26,6 +26,9 @@ class DBSetupSamplesWidget : public QWizardPage
 public:
     DBSetupSamplesWidget(QWidget *parent);
 
+    
+    virtual bool isComplete() const;
+
 
     virtual bool validatePage();
 

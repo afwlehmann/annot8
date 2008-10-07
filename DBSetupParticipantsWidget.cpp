@@ -36,6 +36,8 @@ DBSetupParticipantsWidget::DBSetupParticipantsWidget(QWidget *parent) :
 
     connect(model, SIGNAL(dataChanged(const QModelIndex&, const QModelIndex&)),
             SIGNAL(completeChanged()));
+    connect(model, SIGNAL(dataChanged(const QModelIndex&, const QModelIndex&)),
+            SLOT(ping()));
 }
 
 
@@ -44,7 +46,11 @@ bool DBSetupParticipantsWidget::isComplete() const
     QSqlTableModel *model =
         static_cast<QSqlTableModel *>(_ui.tvParticipants->model());
 
-    // Assure that each participant has a name.
+    // Assure that participants exist at all.
+    if (model->rowCount() <= 0)
+        return false;
+
+    // Assure that each participant at least has a name.
     const int fiName = model->fieldIndex("name");
     for (int row = 0; row < model->rowCount(); row++) {
         QModelIndex index(model->index(row, fiName));
@@ -61,7 +67,11 @@ void DBSetupParticipantsWidget::on_tbAddParticipant_clicked()
     QSqlTableModel *model =
         static_cast<QSqlTableModel *>(_ui.tvParticipants->model());
 
-    model->insertRow(model->rowCount());
+    QSqlRecord r = model->record();
+    r.setValue("name", "Frog");
+    r.setValue("first_name", "Kermit");
+    model->insertRecord(-1, r);
+
     QModelIndex index = model->index(model->rowCount() - 1, 1);
     _ui.tvParticipants->setCurrentIndex(index);
     _ui.tvParticipants->edit(index);
