@@ -60,7 +60,7 @@ INSERT INTO movies VALUES ('/usr/local/Experiment/Einzelbilder/Camcorder_Alex/Ca
 INSERT INTO movies VALUES ('/usr/local/Experiment/Einzelbilder/Grosse_Kamera/Grosse_Kamera_', '.jpg', 0, 3599, 500, 5, 'Grosse Kamera');
 INSERT INTO movies VALUES ('/usr/local/Experiment/Einzelbilder/Mobile_Kamera/Mobile_Kamera_', '.jpg', 0, 3599, 500, 5, 'Mobile Kamera');
 INSERT INTO movies VALUES ('/usr/local/Experiment/Einzelbilder/Webcam_Georg/Webcam_Georg_', '.jpg', 0, 3599, 500, 5, 'Webcam Georg');
-INSERT INTO movies VALUES ('/usr/local/Experiment/Einzelbilder/Bruegge/Bruegge_', '.jpg', 0, 3599, 500, 5, 'Kamera am Lehrstuhl Bruegge');
+INSERT INTO movies VALUES ('/usr/local/Experiment/Einzelbilder/Bruegge/Bruegge_', '.jpg', 0, 3599, 500, 5, 'Bruegge');
 
 DELETE FROM sender;
 DELETE FROM attributes;

@@ -60,9 +60,33 @@ CONFIG(release, debug|release) {
 }
 
 mac {
-    CONFIG -= app_bundle
+    #CONFIG -= app_bundle
     INCLUDEPATH += /sw/include
     LIBS += -L/sw/lib
+    CONFIG(debug, debug|release) {
+        MY_BUNDLE_FRAMEWORKS.files = /usr/local/Trolltech/current/lib/libQtCore_debug.4.dylib \
+                                     /usr/local/Trolltech/current/lib/libQtGui_debug.4.dylib \
+                                     /usr/local/Trolltech/current/lib/libQtSql_debug.4.dylib
+    }
+    CONFIG(release, debug|release) {
+        MY_BUNDLE_FRAMEWORKS.files = /usr/local/Trolltech/current/lib/libQtCore.4.dylib \
+                                     /usr/local/Trolltech/current/lib/libQtGui.4.dylib \
+                                     /usr/local/Trolltech/current/lib/libQtSql.4.dylib
+    }
+    MY_BUNDLE_FRAMEWORKS.files += /sw/lib/libSDL.dylib \
+                                  /sw/lib/libSDL_sound.dylib \
+                                  /sw/lib/libsmpeg.dylib \
+	                              /sw/lib/libmikmod.dylib \
+	                              /sw/lib/libvorbis.dylib \
+	                              /sw/lib/libvorbisfile.dylib \
+	                              /sw/lib/libvorbisenc.dylib \
+	                              /sw/lib/libogg.dylib \
+	                              /sw/lib/libspeex.dylib
+    MY_BUNDLE_FRAMEWORKS.path = Frameworks
+    MY_BUNDLE_RESOURCES.files = res/mac/experiment.sql
+    MY_BUNDLE_RESOURCES.path = Contents/Resources
+    QMAKE_BUNDLE_DATA += MY_BUNDLE_FRAMEWORKS MY_BUNDLE_RESOURCES
+    CONFIG(app_bundle):DEFINES += OSX_APP_BUNDLE
 }
 
 win32 {

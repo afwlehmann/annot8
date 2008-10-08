@@ -71,7 +71,13 @@ int main(int argc, char *argv[])
         bool takeAlong;
 
         // Attempt to connect to the database.
+#ifndef OSX_APP_BUNDLE
         if (!DBController::instance()->connect("experiment.sql")) {
+#else
+        QString fileName =
+            QString("%1/../Resources/experiment.sql").arg(qApp->applicationDirPath());
+        if (!DBController::instance()->connect(fileName.toStdString())) {
+#endif
             QMessageBox::critical(0,
                                   QObject::tr("Error"),
                                   QObject::tr("Couldn't open the database!"));
