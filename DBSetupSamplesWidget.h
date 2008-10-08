@@ -34,7 +34,7 @@ public:
 
 
 protected slots:
-    void on_tbRefresh_clicked();
+    void on_tbReload_clicked();
 
 
 

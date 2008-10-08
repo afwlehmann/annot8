@@ -36,9 +36,9 @@
    <item>
     <layout class="QHBoxLayout" name="horizontalLayout" >
      <item>
-      <widget class="QToolButton" name="tbRefresh" >
+      <widget class="QToolButton" name="tbReload" >
        <property name="text" >
-        <string>Refresh</string>
+        <string>Reload</string>
        </property>
       </widget>
      </item>

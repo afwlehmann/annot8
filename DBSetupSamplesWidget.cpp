@@ -33,7 +33,7 @@ DBSetupSamplesWidget::DBSetupSamplesWidget(QWidget *parent) :
     );
     _ui.twSamples->verticalHeader()->setVisible(false);
     _ui.twSamples->horizontalHeader()->stretchLastSection();
-    on_tbRefresh_clicked();
+    on_tbReload_clicked();
 
     setTitle(tr("Samples setup"));
     setSubTitle(tr("Please fill in a sound file for each participant."));
@@ -90,7 +90,7 @@ bool DBSetupSamplesWidget::validatePage()
 }
 
 
-void DBSetupSamplesWidget::on_tbRefresh_clicked()
+void DBSetupSamplesWidget::on_tbReload_clicked()
 {
     // Block the table widget's signals in order to avoid interference
     // with isComplete() because the table widget's cellChanged-signal

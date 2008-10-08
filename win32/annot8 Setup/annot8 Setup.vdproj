@@ -27,7 +27,7 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_17CCC208F0B747BBA2F508EC03DB3840"
+        "MsmKey" = "8:_1B9C946300FC44259DB5FFFF1F73F21F"
         "OwnerKey" = "8:_4C4413FC36EC4C0A9FCBED81E206756B"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -35,12 +35,6 @@
         {
         "MsmKey" = "8:_1C644532B5314C02AC8B8C2B6527B217"
         "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_36D2E114D05F4DA4B054C7709CE6AD21"
-        "OwnerKey" = "8:_17CCC208F0B747BBA2F508EC03DB3840"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -87,12 +81,6 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_8C637DBD2BB2411A91D83A7B4BFC2A65"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
         "MsmKey" = "8:_AA99BC27A5284855A30112C5F0D79D93"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
@@ -117,6 +105,12 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_C9B317BC279346C5BA0A56E3441FCFB8"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_CC7F635A7652457692732420ABD9226E"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
@@ -131,6 +125,12 @@
         {
         "MsmKey" = "8:_E90DCF7EB9ED2A3A4B5BF5E88324939B"
         "OwnerKey" = "8:_4C4413FC36EC4C0A9FCBED81E206756B"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_EEE660466E2941ADA07AEF1A898D96F4"
+        "OwnerKey" = "8:_1B9C946300FC44259DB5FFFF1F73F21F"
         "MsmSig" = "8:_UNDEFINED"
         }
     }
@@ -395,26 +395,6 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_8C637DBD2BB2411A91D83A7B4BFC2A65"
-            {
-            "SourcePath" = "8:..\\..\\initdb.sh"
-            "TargetName" = "8:initdb.sh"
-            "Tag" = "8:"
-            "Folder" = "8:_C0D1CBE2A82C453183C9CBBED4FDDC92"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_AA99BC27A5284855A30112C5F0D79D93"
             {
             "SourcePath" = "8:C:\\Qt\\4.4.2\\plugins\\imageformats\\qmng4.dll"
@@ -493,6 +473,26 @@
             "Register" = "3:1"
             "Exclude" = "11:FALSE"
             "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_C9B317BC279346C5BA0A56E3441FCFB8"
+            {
+            "SourcePath" = "8:..\\..\\res\\experiment.sql"
+            "TargetName" = "8:experiment.sql"
+            "Tag" = "8:"
+            "Folder" = "8:_C0D1CBE2A82C453183C9CBBED4FDDC92"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_CC7F635A7652457692732420ABD9226E"
@@ -791,7 +791,7 @@
             "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_31B9818707EA4D449EBB3C69C1810ECD"
             {
             "Name" = "8:annot8 database initialization"
-            "Arguments" = "8:"
+            "Arguments" = "8:--initdb"
             "Description" = "8:"
             "ShowCmd" = "3:1"
             "IconIndex" = "3:0"
@@ -1212,7 +1212,7 @@
         }
         "MergeModule"
         {
-            "{CEE29DC0-9FBA-4B99-8D47-5BC643D9B626}:_17CCC208F0B747BBA2F508EC03DB3840"
+            "{CEE29DC0-9FBA-4B99-8D47-5BC643D9B626}:_1B9C946300FC44259DB5FFFF1F73F21F"
             {
             "UseDynamicProperties" = "11:TRUE"
             "IsDependency" = "11:TRUE"
@@ -1226,7 +1226,7 @@
             "Feature" = "8:"
             "IsolateTo" = "8:"
             }
-            "{CEE29DC0-9FBA-4B99-8D47-5BC643D9B626}:_36D2E114D05F4DA4B054C7709CE6AD21"
+            "{CEE29DC0-9FBA-4B99-8D47-5BC643D9B626}:_EEE660466E2941ADA07AEF1A898D96F4"
             {
             "UseDynamicProperties" = "11:TRUE"
             "IsDependency" = "11:TRUE"
