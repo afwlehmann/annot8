@@ -27,12 +27,6 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_1B9C946300FC44259DB5FFFF1F73F21F"
-        "OwnerKey" = "8:_4C4413FC36EC4C0A9FCBED81E206756B"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
         "MsmKey" = "8:_1C644532B5314C02AC8B8C2B6527B217"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
@@ -53,6 +47,12 @@
         {
         "MsmKey" = "8:_60EDEC8792D34771995C64FBEBA13C28"
         "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_7545083B5EF546A6B6CC37A69EB41CB4"
+        "OwnerKey" = "8:_4C4413FC36EC4C0A9FCBED81E206756B"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -123,14 +123,14 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_E90DCF7EB9ED2A3A4B5BF5E88324939B"
-        "OwnerKey" = "8:_4C4413FC36EC4C0A9FCBED81E206756B"
+        "MsmKey" = "8:_E77A44F2AEDA46BE963AA39ABC4475ED"
+        "OwnerKey" = "8:_7545083B5EF546A6B6CC37A69EB41CB4"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_EEE660466E2941ADA07AEF1A898D96F4"
-        "OwnerKey" = "8:_1B9C946300FC44259DB5FFFF1F73F21F"
+        "MsmKey" = "8:_E90DCF7EB9ED2A3A4B5BF5E88324939B"
+        "OwnerKey" = "8:_4C4413FC36EC4C0A9FCBED81E206756B"
         "MsmSig" = "8:_UNDEFINED"
         }
     }
@@ -654,9 +654,9 @@
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:annot8"
-        "ProductCode" = "8:{3722BEDF-463D-4F7B-89DE-A4D981DCCFAF}"
+        "ProductCode" = "8:{31CB71F5-C5D1-4948-ABD9-3FB9F34828B9}"
         "PackageCode" = "8:{0AE2F8CE-68A9-41E6-9EAC-9C7760B5F333}"
-        "UpgradeCode" = "8:{280D6C62-E3D6-4210-BE19-1BDDF2C73B53}"
+        "UpgradeCode" = "8:{38D5D200-0FAB-487A-AD76-92EB7D11FB32}"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:TRUE"
         "DetectNewerInstalledVersion" = "11:TRUE"
@@ -1212,7 +1212,7 @@
         }
         "MergeModule"
         {
-            "{CEE29DC0-9FBA-4B99-8D47-5BC643D9B626}:_1B9C946300FC44259DB5FFFF1F73F21F"
+            "{CEE29DC0-9FBA-4B99-8D47-5BC643D9B626}:_7545083B5EF546A6B6CC37A69EB41CB4"
             {
             "UseDynamicProperties" = "11:TRUE"
             "IsDependency" = "11:TRUE"
@@ -1226,7 +1226,7 @@
             "Feature" = "8:"
             "IsolateTo" = "8:"
             }
-            "{CEE29DC0-9FBA-4B99-8D47-5BC643D9B626}:_EEE660466E2941ADA07AEF1A898D96F4"
+            "{CEE29DC0-9FBA-4B99-8D47-5BC643D9B626}:_E77A44F2AEDA46BE963AA39ABC4475ED"
             {
             "UseDynamicProperties" = "11:TRUE"
             "IsDependency" = "11:TRUE"

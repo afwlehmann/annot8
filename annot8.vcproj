@@ -285,6 +285,10 @@
 				>
 			</File>
 			<File
+				RelativePath="Attributes.h"
+				>
+			</File>
+			<File
 				RelativePath="audio.h"
 				>
 			</File>
@@ -569,34 +573,10 @@
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="build\debug\moc_DBSetupMoviesWidget.cpp"
-				>
-				<FileConfiguration
-					Name="Release|Win32"
-					ExcludedFromBuild="true"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-					/>
-				</FileConfiguration>
-			</File>
-			<File
 				RelativePath="build\release\moc_DBSetupParticipantsWidget.cpp"
 				>
 				<FileConfiguration
 					Name="Debug|Win32"
-					ExcludedFromBuild="true"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-					/>
-				</FileConfiguration>
-			</File>
-			<File
-				RelativePath="build\debug\moc_DBSetupParticipantsWidget.cpp"
-				>
-				<FileConfiguration
-					Name="Release|Win32"
 					ExcludedFromBuild="true"
 					>
 					<Tool
@@ -617,46 +597,10 @@
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="build\debug\moc_DBSetupSamplesWidget.cpp"
-				>
-				<FileConfiguration
-					Name="Release|Win32"
-					ExcludedFromBuild="true"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-					/>
-				</FileConfiguration>
-			</File>
-			<File
 				RelativePath="build\release\moc_FileNameWidget.cpp"
 				>
 				<FileConfiguration
 					Name="Debug|Win32"
-					ExcludedFromBuild="true"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-					/>
-				</FileConfiguration>
-			</File>
-			<File
-				RelativePath="build\debug\moc_FileNameWidget.cpp"
-				>
-				<FileConfiguration
-					Name="Release|Win32"
-					ExcludedFromBuild="true"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-					/>
-				</FileConfiguration>
-			</File>
-			<File
-				RelativePath="build\debug\moc_ImageProducer.cpp"
-				>
-				<FileConfiguration
-					Name="Release|Win32"
 					ExcludedFromBuild="true"
 					>
 					<Tool
@@ -689,18 +633,6 @@
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="build\debug\moc_MainWindow.cpp"
-				>
-				<FileConfiguration
-					Name="Release|Win32"
-					ExcludedFromBuild="true"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-					/>
-				</FileConfiguration>
-			</File>
-			<File
 				RelativePath="build\release\moc_MovieWidget.cpp"
 				>
 				<FileConfiguration
@@ -713,46 +645,10 @@
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="build\debug\moc_MovieWidget.cpp"
-				>
-				<FileConfiguration
-					Name="Release|Win32"
-					ExcludedFromBuild="true"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-					/>
-				</FileConfiguration>
-			</File>
-			<File
 				RelativePath="build\release\moc_PlaybackThread.cpp"
 				>
 				<FileConfiguration
 					Name="Debug|Win32"
-					ExcludedFromBuild="true"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-					/>
-				</FileConfiguration>
-			</File>
-			<File
-				RelativePath="build\debug\moc_PlaybackThread.cpp"
-				>
-				<FileConfiguration
-					Name="Release|Win32"
-					ExcludedFromBuild="true"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-					/>
-				</FileConfiguration>
-			</File>
-			<File
-				RelativePath="build\debug\moc_SamplesPreviewCanvas.cpp"
-				>
-				<FileConfiguration
-					Name="Release|Win32"
 					ExcludedFromBuild="true"
 					>
 					<Tool
@@ -785,34 +681,10 @@
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="build\debug\qrc_annot8.cpp"
-				>
-				<FileConfiguration
-					Name="Release|Win32"
-					ExcludedFromBuild="true"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-					/>
-				</FileConfiguration>
-			</File>
-			<File
 				RelativePath="build\release\ui_AboutDlg.h"
 				>
 				<FileConfiguration
 					Name="Debug|Win32"
-					ExcludedFromBuild="true"
-					>
-					<Tool
-						Name="VCCustomBuildTool"
-					/>
-				</FileConfiguration>
-			</File>
-			<File
-				RelativePath="build\debug\ui_AboutDlg.h"
-				>
-				<FileConfiguration
-					Name="Release|Win32"
 					ExcludedFromBuild="true"
 					>
 					<Tool
@@ -833,46 +705,10 @@
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="build\debug\ui_ChooseParticipantDlg.h"
-				>
-				<FileConfiguration
-					Name="Release|Win32"
-					ExcludedFromBuild="true"
-					>
-					<Tool
-						Name="VCCustomBuildTool"
-					/>
-				</FileConfiguration>
-			</File>
-			<File
 				RelativePath="build\release\ui_DBSetupMoviesWidget.h"
 				>
 				<FileConfiguration
 					Name="Debug|Win32"
-					ExcludedFromBuild="true"
-					>
-					<Tool
-						Name="VCCustomBuildTool"
-					/>
-				</FileConfiguration>
-			</File>
-			<File
-				RelativePath="build\debug\ui_DBSetupMoviesWidget.h"
-				>
-				<FileConfiguration
-					Name="Release|Win32"
-					ExcludedFromBuild="true"
-					>
-					<Tool
-						Name="VCCustomBuildTool"
-					/>
-				</FileConfiguration>
-			</File>
-			<File
-				RelativePath="build\debug\ui_DBSetupParticipantsWidget.h"
-				>
-				<FileConfiguration
-					Name="Release|Win32"
 					ExcludedFromBuild="true"
 					>
 					<Tool
@@ -905,18 +741,6 @@
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="build\debug\ui_DBSetupSamplesWidget.h"
-				>
-				<FileConfiguration
-					Name="Release|Win32"
-					ExcludedFromBuild="true"
-					>
-					<Tool
-						Name="VCCustomBuildTool"
-					/>
-				</FileConfiguration>
-			</File>
-			<File
 				RelativePath="build\release\ui_FileNameWidget.h"
 				>
 				<FileConfiguration
@@ -929,34 +753,10 @@
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="build\debug\ui_FileNameWidget.h"
-				>
-				<FileConfiguration
-					Name="Release|Win32"
-					ExcludedFromBuild="true"
-					>
-					<Tool
-						Name="VCCustomBuildTool"
-					/>
-				</FileConfiguration>
-			</File>
-			<File
 				RelativePath="build\release\ui_MainWindow.h"
 				>
 				<FileConfiguration
 					Name="Debug|Win32"
-					ExcludedFromBuild="true"
-					>
-					<Tool
-						Name="VCCustomBuildTool"
-					/>
-				</FileConfiguration>
-			</File>
-			<File
-				RelativePath="build\debug\ui_MainWindow.h"
-				>
-				<FileConfiguration
-					Name="Release|Win32"
 					ExcludedFromBuild="true"
 					>
 					<Tool

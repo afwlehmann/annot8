@@ -27,13 +27,24 @@ public:
     DBSetupSamplesWidget(QWidget *parent);
 
     
+    /**
+     * Returns whether the form is completed and the next-button can be
+     * displayed.
+     */
     virtual bool isComplete() const;
 
 
+    /**
+     * Stores all entered data in the database. Assures that all provided files
+     * really exist.
+     */
     virtual bool validatePage();
 
 
 protected slots:
+    /**
+     * Reloads the participants information from the database.
+     */
     void on_tbReload_clicked();
 
 

@@ -23,13 +23,24 @@ public:
     DBSetupParticipantsWidget(QWidget *parent);
 
 
+    /**
+     * Returns whether the form is completed and the next-button can be
+     * displayed.
+     */
     virtual bool isComplete() const;
 
 
 protected slots:
+    /**
+     * Event-handler for the `Add participant'-button. Adds a participant ;-)
+     */
     void on_tbAddParticipant_clicked();
 
 
+    /**
+     * Event-handler for the `Remove selected'-button. Removes all selected
+     * participants.
+     */
     void on_tbRemoveSelected_clicked();
 
 

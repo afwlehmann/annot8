@@ -19,6 +19,7 @@ SOURCES = ChooseParticipantDlg.cpp \
           main.cpp
 
 HEADERS = AboutDlg.h \
+          Attributes.h \
           ChooseParticipantDlg.h \
           DBController.h \
           DBSetupMoviesWidget.h \

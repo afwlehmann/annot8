@@ -15,7 +15,17 @@ struct Attributes {
     bool speaking;
     bool laughing;
 
-    // TODO: Constructor
+    Attributes() :
+        speaking(false),
+        laughing(false)
+    {
+    }
+    
+    Attributes(bool aSpeaking, bool aLaughing) :
+        speaking(aSpeaking),
+        laughing(aLaughing)
+    {
+    }
 };
 
 
