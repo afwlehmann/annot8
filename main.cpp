@@ -17,9 +17,6 @@
 #include <QFile>
 
 
-#define DB_FILENAME "experiment.sql"
-
-
 using namespace hiwi;
 using namespace std;
 
