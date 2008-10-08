@@ -194,7 +194,25 @@ protected:
     virtual void keyPressEvent(QKeyEvent *);
 
 
-private:
+    /**
+     * Selects the previous movie of the movie tabwidget.
+     */
+    void selectPreviousMovie();
+
+
+    /**
+     * Selects the next movie of the movie tabwidget.
+     */
+    void selectNextMovie();
+
+
+    /**
+     * Swaps between the current and the last selected movie of the movie
+     * tabwidget.
+     */
+    void swapMovies();
+
+
     /**
      * Gets the available movies and provides the ui with corresponding movie
      * widgets.
@@ -267,12 +285,23 @@ private:
     void clearAnnotations();
 
 
+    /**
+     * Load all annotations for the current frame. If `takeAlong' is specified
+     * as true, then only reset and/or load the annotations as long as
+     * annotations are available for the current frame.
+     * @param  takeAlong        whether to take along the current annotations
+     */
     void loadAnnotations(bool takeAlong = false);
 
 
+    /**
+     * Go to the given frame.
+     * @param  frame            the number of the new frame
+     */
     void goToFrame(int frame);
 
 
+private:
     Ui::MainWindow          _ui;
     std::vector<Movie *>    _movies;
     Participant             *_participant;
@@ -281,6 +310,11 @@ private:
     bool                    _playing;
     bool                    _flipping;
     bool                    _takeAlong;
+
+    // The following array is used as a ringbuffer to distinguish between the
+    // current and the former selected movie index.
+    int                     _lastSelectedMovieIdx[2];
+    int                     _lastSelectedMovieIdxPos;
 };
 
 

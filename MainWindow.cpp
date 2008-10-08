@@ -39,10 +39,14 @@ MainWindow::MainWindow(int participantID, bool takeAlong) :
     _pbThread(0),
     _playing(false),
     _flipping(false),
-    _takeAlong(takeAlong)
+    _takeAlong(takeAlong),
+    _lastSelectedMovieIdxPos(0)
 {
     _ui.setupUi(this);
     _ui.twMovies->removeTab(0);
+
+    _lastSelectedMovieIdx[0] = 0;
+    _lastSelectedMovieIdx[1] = 0;
 
     setupMovies();
     setupParticipants(participantID);
@@ -206,6 +210,10 @@ void MainWindow::on_twMovies_currentChanged(int index)
     // index < 0 seemingly happens during Qt's initialization?!
     if (index < 0)
         return;
+
+    // Remember the selected movie.
+    _lastSelectedMovieIdxPos = (_lastSelectedMovieIdxPos + 1) % 2;
+    _lastSelectedMovieIdx[_lastSelectedMovieIdxPos] = index;
 
     // Assure that the newly selected movie's position gets updated as well,
     // i.e. delegate this task to the horizontal slider as (almost) everybody
@@ -533,6 +541,18 @@ void MainWindow::keyPressEvent(QKeyEvent *ev)
         on_pbSaveAndContinue_clicked();
         ev->accept();
         break;
+
+    case Qt::Key_F8:
+        swapMovies();
+        break;
+
+    case Qt::Key_F9:
+        selectPreviousMovie();
+        break;
+
+    case Qt::Key_F10:
+        selectNextMovie();
+        break;
     }
 
     QMainWindow::keyPressEvent(ev);
@@ -591,6 +611,29 @@ void MainWindow::goToFrame(int frame)
 {
     MovieWidget *mw = static_cast<MovieWidget *>(_ui.twMovies->currentWidget());
     mw->setPosition(positionForValue(frame));
+}
+
+
+void MainWindow::selectPreviousMovie()
+{
+    _ui.twMovies->setCurrentIndex(
+        qMax(_ui.twMovies->currentIndex() - 1, 0)
+    );
+}
+
+
+void MainWindow::selectNextMovie()
+{
+    _ui.twMovies->setCurrentIndex(
+        qMin(_ui.twMovies->currentIndex() + 1, _ui.twMovies->count())
+    );
+}
+
+
+void MainWindow::swapMovies()
+{
+    int newIndex = _lastSelectedMovieIdx[(_lastSelectedMovieIdxPos + 1) % 2];
+    _ui.twMovies->setCurrentIndex(newIndex);
 }
 
 
