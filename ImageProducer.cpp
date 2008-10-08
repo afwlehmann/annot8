@@ -93,12 +93,14 @@ void ImageProducer::run()
                << ji->movie->suffix;
             // Load and check the image.
             QImage *newImage = new QImage(QString::fromStdString(os.str()));
-            if (!newImage)
+            if (!newImage) {
                 throw std::runtime_error("Not enough memory while loading "
                         "'" + os.str() + "'!");
+            }
             if (newImage->isNull()) {
                 delete newImage;
                 newImage = 0;
+                throw std::runtime_error("Missing '" + os.str() + "'!");
             }
             // Store the image.
             ji->images->insert(ji->frame, newImage);

@@ -7,6 +7,7 @@
 #include "MovieWidget.h"
 #include "ImageProducer.h"
 #include <QPainter>
+#include <QFile>
 #include <cassert>
 #include <sstream>
 #include <iomanip>
@@ -29,7 +30,23 @@ MovieWidget::MovieWidget(Movie *movie) :
     // A small sanity check...
     assert(_movie->firstFrame >= 0);
     assert(_movie->firstFrame < _movie->lastFrame);
-    assert(_movie->numDigits > 0);
+    assert(_movie->numDigits> 0);
+
+    // See if all images are available
+    const QString formatStr =
+        QString("%1%2%3d%4")
+            .arg(QString::fromStdString(_movie->prefix),
+                 "%0",
+                 QString::number(_movie->numDigits),
+                 QString::fromStdString(_movie->suffix));
+    for (int i = _movie->firstFrame; i <= _movie->lastFrame; i++) {
+        QString fileName;
+        fileName.sprintf(formatStr.toAscii(), i);
+        if (!QFile::exists(fileName)) {
+            QString errStr = tr("Missing '%1'!").arg(fileName);
+            throw std::runtime_error(errStr.toStdString());
+        }
+    }
 
     // Acquire access on the image producer thread.
     _imageProducer = ImageProducer::acquireInstance();

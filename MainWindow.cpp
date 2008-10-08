@@ -109,8 +109,8 @@ void MainWindow::setupMovies()
     }
 
     // Update the range of the current-frame horizontal slider.
-    _ui.hsCurrentFrame->setRange(0, lengthCheck);
-    _ui.spbCurrentFrame->setRange(0, lengthCheck);
+    _ui.hsCurrentFrame->setRange(0, lengthCheck - 1);
+    _ui.spbCurrentFrame->setRange(0, lengthCheck - 1);
 }
 
 

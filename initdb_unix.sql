@@ -55,12 +55,12 @@ INSERT INTO SAMPLES (participant_id, filename) VALUES ((SELECT ID FROM participa
 INSERT INTO SAMPLES (participant_id, filename) VALUES ((SELECT ID FROM participants WHERE number = 29), '/usr/local/Experiment/Samples/teiln29_000138.wav');
 
 DELETE FROM movies;
-INSERT INTO movies VALUES ('/usr/local/Experiment/Einzelbilder/Camcorder_Matthias/Camcorder_Matthias_', '.jpg', 0, 3600, 500, 5, 'Camcorder Matthias');
-INSERT INTO movies VALUES ('/usr/local/Experiment/Einzelbilder/Camcorder_Alex/Camcorder_Alex_', '.jpg', 0, 3600, 500, 5, 'Camcorder Alex');
-INSERT INTO movies VALUES ('/usr/local/Experiment/Einzelbilder/Grosse_Kamera/Grosse_Kamera_', '.jpg', 0, 3600, 500, 5, 'Grosse Kamera');
-INSERT INTO movies VALUES ('/usr/local/Experiment/Einzelbilder/Mobile_Kamera/Mobile_Kamera_', '.jpg', 0, 3600, 500, 5, 'Mobile Kamera');
-INSERT INTO movies VALUES ('/usr/local/Experiment/Einzelbilder/Webcam_Georg/Webcam_Georg_', '.jpg', 0, 3600, 500, 5, 'Webcam Georg');
-INSERT INTO movies VALUES ('/usr/local/Experiment/Einzelbilder/Bruegge/Bruegge_', '.jpg', 0, 3600, 500, 5, 'Kamera am Lehrstuhl Bruegge');
+INSERT INTO movies VALUES ('/usr/local/Experiment/Einzelbilder/Camcorder_Matthias/Camcorder_Matthias_', '.jpg', 0, 3599, 500, 5, 'Camcorder Matthias');
+INSERT INTO movies VALUES ('/usr/local/Experiment/Einzelbilder/Camcorder_Alex/Camcorder_Alex_', '.jpg', 0, 3599, 500, 5, 'Camcorder Alex');
+INSERT INTO movies VALUES ('/usr/local/Experiment/Einzelbilder/Grosse_Kamera/Grosse_Kamera_', '.jpg', 0, 3599, 500, 5, 'Grosse Kamera');
+INSERT INTO movies VALUES ('/usr/local/Experiment/Einzelbilder/Mobile_Kamera/Mobile_Kamera_', '.jpg', 0, 3599, 500, 5, 'Mobile Kamera');
+INSERT INTO movies VALUES ('/usr/local/Experiment/Einzelbilder/Webcam_Georg/Webcam_Georg_', '.jpg', 0, 3599, 500, 5, 'Webcam Georg');
+INSERT INTO movies VALUES ('/usr/local/Experiment/Einzelbilder/Bruegge/Bruegge_', '.jpg', 0, 3599, 500, 5, 'Kamera am Lehrstuhl Bruegge');
 
 DELETE FROM sender;
 DELETE FROM attributes;
