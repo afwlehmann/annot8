@@ -1,0 +1,56 @@
+#!/bin/bash
+#
+# finalize_app
+# (c) by Alexander Lehmann <lehmanna@in.tum.de>
+#
+# $Id$
+#
+
+
+if [ "`uname -o`" != "Darwin" ]
+then
+    echo This script is intended for use on Mac OS X only.
+    exit 1
+fi
+
+if [ $# -ne 1 ]
+then
+   echo "Syntax: `basename $0` <path-to-app-bundle>"
+   exit 1 
+fi
+
+if [ ! -x ./get_deps ]
+then
+    echo "Missing the executable script ./get_deps!"
+    exit 1
+fi
+
+BUNDLE_PATH="$1"
+FRAMEWORKS="${BUNDLE_PATH}/Contents/Frameworks"
+EXECUTABLE_PATH="$1/Contents/MacOS/annot8"
+PLUGINS_PATH="$1/Contents/Resources/plugins"
+
+if [ ! -x "$EXECUTABLE_PATH" ]
+then
+    echo "Missing executable $EXECUTABLE_PATH."
+    exit 1
+fi
+
+mkdir -p "$FRAMEWORKS"
+find "$FRAMEWORKS" -type f -print0 | xargs -0 rm -f
+install -m 755 -t "$FRAMEWORKS" `./get_deps "$EXECUTABLE_PATH"`
+for i in $FRAMEWORKS/*
+do
+    OLDINSTALLNAME=`otool -XD "$i"`
+    NEWINSTALLNAME=`basename "$OLDINSTALLNAME"`
+    install_name_tool -id "$NEWINSTALLNAME" "$i"
+    install_name_tool \
+        -change "$OLDINSTALLNAME" "@executable_path/../Frameworks/$NEWINSTALLNAME" \
+        "$EXECUTABLE_PATH"
+    for j in $FRAMEWORKS/* $PLUGINS_PATH/imageformats/*
+    do
+        install_name_tool \
+            -change "$OLDINSTALLNAME" "@executable_path/../Frameworks/$NEWINSTALLNAME" \
+            "$j"
+    done
+done

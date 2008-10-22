@@ -1,3 +1,8 @@
+#
+# $Id$
+#
+
+
 Building from source on Windows
 ===============================
 
@@ -28,23 +33,14 @@ Building from source on OS X
 1) # qmake CONFIG-=debug
 2) # make
 3) # cp res/unix/experiment.sql build/release/annot8.app/Contents/Resources/.
+4) # ./finalize_app build/release/annot8.app
 
 eventually, if desired:
 
 4) # mv build/release/annot8.app /Applications/.
 
-For the time being, you have to manually resolve the neccessary library
-dependencies for the built executable. You may want to use "otool -L" and
-"install_name_tool" for this purpose. Please refer to Apple's documentation for
-this issue.
-
 
 Dependencies
 ============
 
-You'll need at least the following libraries:
-    - libQtCore,
-    - libQtGui,
-    - libQtSql,
-    - libSDL and
-    - libSDL_sound.
+Besides Qt 4.4.2+ you'll also need SDL and SDL_sound.

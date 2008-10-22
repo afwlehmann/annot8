@@ -14,7 +14,6 @@
 
 #include <QApplication>
 #include <QMessageBox>
-#include <QFile>
 
 
 using namespace hiwi;
@@ -71,8 +70,9 @@ int main(int argc, char *argv[])
 #ifndef OSX_APP_BUNDLE
         if (!DBController::instance()->connect("experiment.sql")) {
 #else
-        QString fileName =
-            QString("%1/../Resources/experiment.sql").arg(qApp->applicationDirPath());
+        const QString path = app.applicationDirPath();
+        app.addLibraryPath(QString("%1/../Resources/plugins").arg(path));
+        QString fileName = QString("%1/../Resources/experiment.sql").arg(path);
         if (!DBController::instance()->connect(fileName.toStdString())) {
 #endif
             QMessageBox::critical(0,
@@ -84,7 +84,7 @@ int main(int argc, char *argv[])
         // Parse the command-line arguments, but remove the first argument
         // beforehand because it is only the application's executable name.
         QList<QString> args = app.arguments();
-        args.pop_front();
+        if (!args.empty()) args.pop_front();
         parseCmdLine(args, &takeAlong);
 
         // Let the user choose a participant.

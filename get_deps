@@ -1,0 +1,49 @@
+#!/usr/bin/python
+#
+# get_deps.py
+# (c) by Alexander Lehmann <lehmanna@in.tum.de>
+#
+# $Id$
+#
+
+
+import os, sys, re
+
+
+OTOOL_PATH="/usr/bin/otool"
+
+
+def getDeps(execFileName):
+    negExpr = re.compile("^\s*(/usr/lib|/System).*$")
+    libExpr = re.compile("^\s+(/[^\s]+lib[^\s]+).*$")
+
+    deps = { execFileName : 1 }
+    while True:
+        newDeps = deps.copy()
+        for fileName in deps.keys():
+            pipe = os.popen("%s -L %s" % (OTOOL_PATH, fileName))
+            for line in pipe.readlines():
+                tmp = libExpr.match(line)
+                if tmp and (not negExpr.match(line)):
+                    newDeps[tmp.group(1)] = 1
+            pipe.close()
+
+        if deps == newDeps:
+            break
+        deps.update(newDeps)
+
+    deps.pop(execFileName)
+    return deps.keys()
+                
+
+if __name__ == "__main__":
+    if sys.platform != "darwin":
+        print "This script is intended for use only on Mac OS X."
+        sys.exit(1)
+
+    if len(sys.argv) != 2:
+        print "Syntax: python get_deps.py <executable>"
+        sys.exit(1)
+
+    for dep in getDeps(sys.argv[1]):
+        print dep
