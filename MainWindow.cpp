@@ -15,6 +15,7 @@
 #include <stdexcept>
 #include <cmath>
 #include <cassert>
+#include <ctime>
 
 #include <QMessageBox>
 #include <QListWidgetItem>
@@ -676,12 +677,14 @@ void MainWindow::keyPressEvent(QKeyEvent *ev)
 
     case Qt::Key_F7:
         // Play sound for exactly two seconds.
-        on_pbPlay_clicked();
-        time_t startTime = time(NULL);
-        while (time(NULL) < startTime + 2) {
-            // Wait
+        {
+            on_pbPlay_clicked();
+            time_t startTime = time(NULL);
+            while (time(NULL) < startTime + 2) {
+                // Wait
+            }
+            on_pbPlay_clicked();
         }
-        on_pbPlay_clicked();
         break;
 
     case Qt::Key_F8:
