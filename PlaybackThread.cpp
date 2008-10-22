@@ -29,7 +29,7 @@ PlaybackThread::PlaybackThread(audio::Samples *samples, QObject *parent) :
     _audioSpec->freq     = PlaybackThread::DefaultFrequency;
     _audioSpec->format   = AUDIO_S16SYS;
     _audioSpec->channels = 1;
-    _audioSpec->samples  = PlaybackThread::DefaultFrequency;
+    _audioSpec->samples  = 4096;
     _audioSpec->callback = pbCallback;
     _audioSpec->userdata = this;
     if (SDL_OpenAudio(_audioSpec, NULL) != 0) {
@@ -39,6 +39,8 @@ PlaybackThread::PlaybackThread(audio::Samples *samples, QObject *parent) :
         _mutex.unlock();
         throw audio::AudioException(SDL_GetError());
     }
+
+    SDL_PauseAudio(0);
 }
 
 
@@ -94,11 +96,8 @@ void PlaybackThread::setPlaybackState(PlaybackState state)
     SDL_LockAudio();
     if (state == Play) {
         // Start playing.
-        SDL_PauseAudio(0);
         if (!isRunning())
             start();
-    } else if (state == Pause) {
-        SDL_PauseAudio(1);
     }
     // Eventually update the _state and unlock the callback function.
     _state = state;
@@ -130,19 +129,24 @@ void PlaybackThread::pbCallback(void *user, Uint8 *buf, int size)
     PlaybackThread *pbt = static_cast<PlaybackThread *>(user);
     pbt->_mutex.lock();
 
-    // We must pay attention to the fact that our samples are stored as 16-bit
-    // signed shorts whereas the callback function's buffer deals with bytes.
-    size_t bytesToCopy =
-        min<size_t>((pbt->_samples->numSamples - pbt->_pos) * sizeof(short),
-                    size);
-    if (bytesToCopy) {
-        memcpy(buf, (short *)pbt->_samples->ss->buffer + pbt->_pos, bytesToCopy);
-        pbt->_pos += bytesToCopy / sizeof(short);
-    }
+    if (pbt->_state == PlaybackThread::Play) {
+        // We must pay attention to the fact that our samples are stored as 16-bit
+        // signed shorts whereas the callback function's buffer deals with bytes.
+        size_t bytesToCopy =
+            min<size_t>((pbt->_samples->numSamples - pbt->_pos) * sizeof(short),
+                        size);
+        if (bytesToCopy) {
+            memcpy(buf, (short *)pbt->_samples->ss->buffer + pbt->_pos, bytesToCopy);
+            pbt->_pos += bytesToCopy / sizeof(short);
+        }
 
-    // Fill the possibly remaining space with silence.
-    if (bytesToCopy < (size_t)size)
-        memset(buf + bytesToCopy, pbt->_audioSpec->silence, size - bytesToCopy);
+        // Fill the possibly remaining space with silence.
+        if (bytesToCopy < (size_t)size)
+            memset(buf + bytesToCopy, pbt->_audioSpec->silence, size - bytesToCopy);
+    } else {
+        // Fill the whole buffer with silence.
+        memset(buf, pbt->_audioSpec->silence, size);
+    }
 
     pbt->_mutex.unlock();
 }
