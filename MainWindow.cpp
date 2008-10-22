@@ -509,37 +509,49 @@ void MainWindow::on_pbFlipbook_clicked()
 
 void MainWindow::keyPressEvent(QKeyEvent *ev)
 {
-    ev->ignore();
+    QMainWindow::keyPressEvent(ev);
+
+    // During Flipbook-mode no keypresses shall be allowed.
+    if (_flipping)
+        return;
+
+    // Also, during sound playback only pausing the playback shall be allowed.
+    if (_playing && ev->key() != Qt::Key_F2)
+        return;
 
     switch (ev->key()) {
     case Qt::Key_F1:
         on_tbSyncSamples_clicked();
-        ev->accept();
         break;
 
-    case Qt::Key_F2:
+    case Qt::Key_F2: // If you change this, change the if-clause above as well.
         on_pbPlay_clicked();
-        ev->accept();
         break;
 
     case Qt::Key_F3:
         on_tbPrev_clicked();
-        ev->accept();
         break;
 
     case Qt::Key_F4:
         on_tbNext_clicked();
-        ev->accept();
         break;
 
     case Qt::Key_F5:
         update();
-        ev->accept();
         break;
 
     case Qt::Key_F6:
         on_pbSaveAndContinue_clicked();
-        ev->accept();
+        break;
+
+    case Qt::Key_F7:
+        // Play sound for exactly two seconds.
+        on_pbPlay_clicked();
+        time_t startTime = time(NULL);
+        while (time(NULL) < startTime + 2) {
+            // Wait
+        }
+        on_pbPlay_clicked();
         break;
 
     case Qt::Key_F8:
@@ -554,8 +566,6 @@ void MainWindow::keyPressEvent(QKeyEvent *ev)
         selectNextMovie();
         break;
     }
-
-    QMainWindow::keyPressEvent(ev);
 }
 
 
@@ -616,17 +626,17 @@ void MainWindow::goToFrame(int frame)
 
 void MainWindow::selectPreviousMovie()
 {
-    _ui.twMovies->setCurrentIndex(
-        qMax(_ui.twMovies->currentIndex() - 1, 0)
-    );
+    int newIndex = _ui.twMovies->currentIndex() - 1;
+    if (newIndex < 0)
+        newIndex = _ui.twMovies->count() - 1;
+    _ui.twMovies->setCurrentIndex(newIndex);
 }
 
 
 void MainWindow::selectNextMovie()
 {
-    _ui.twMovies->setCurrentIndex(
-        qMin(_ui.twMovies->currentIndex() + 1, _ui.twMovies->count())
-    );
+    int newIndex = (_ui.twMovies->currentIndex() + 1) % _ui.twMovies->count();
+    _ui.twMovies->setCurrentIndex(newIndex);
 }
 
 

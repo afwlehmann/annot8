@@ -27,15 +27,18 @@ public:
 
 
     /**
-     * Constructs an instance of PlaybackThread for the given samples.
+     * Constructs an instance of PlaybackThread for the given samples and opens
+     * the audio device.
      * @param  samples          a pointer to a Samples object
      * @param  parent           a pointer to the parent object
+     * @throw                   audio::AudioException
      */
     PlaybackThread(Samples *samples, QObject *parent = 0);
 
 
     /**
      * Destructs an instance of PlaybackThread, thus stopping the playback.
+     * Closes the audio device.
      */
     virtual ~PlaybackThread();
 

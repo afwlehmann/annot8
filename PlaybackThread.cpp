@@ -24,6 +24,21 @@ PlaybackThread::PlaybackThread(audio::Samples *samples, QObject *parent) :
     _pos(0),
     _state(PlaybackThread::Pause)
 {
+    // Open the audio device.
+    _audioSpec = new SDL_AudioSpec;
+    _audioSpec->freq     = PlaybackThread::DefaultFrequency;
+    _audioSpec->format   = AUDIO_S16SYS;
+    _audioSpec->channels = 1;
+    _audioSpec->samples  = 16384;
+    _audioSpec->callback = pbCallback;
+    _audioSpec->userdata = this;
+    if (SDL_OpenAudio(_audioSpec, NULL) != 0) {
+        delete _audioSpec;
+        _audioSpec = 0;
+        SDL_UnlockAudio();
+        _mutex.unlock();
+        throw audio::AudioException(SDL_GetError());
+    }
 }
 
 
@@ -35,7 +50,7 @@ PlaybackThread::~PlaybackThread()
     // SDL_AudioSpec, we must lock the audio device to assure that our
     // callback function doesn't interfere with this.
     SDL_LockAudio();
-    if (_audioSpec) {
+    {
         SDL_PauseAudio(1);
         SDL_CloseAudio();
         delete _audioSpec;
@@ -55,12 +70,11 @@ void PlaybackThread::run()
         _mutex.lock();
         if (_state == Pause || playbackPos() >= 1) {
             _mutex.unlock();
-            SDL_UnlockAudio();
             break;
         }
         emit playbackPosChanged(playbackPos());
         _mutex.unlock();
-        // 125ms gives a refresh rate of 8Hz.
+        // 125ms gives a refresh rate of (theoretically) 8Hz.
         msleep(125);
     }
     // Qt emits the QThread::finished() signal right after run() has terminated.
@@ -79,31 +93,12 @@ void PlaybackThread::setPlaybackState(PlaybackState state)
     // Lock out the callback function.
     SDL_LockAudio();
     if (state == Play) {
-        // Open the audio device.
-        assert(!_audioSpec);
-        _audioSpec = new SDL_AudioSpec;
-        _audioSpec->freq     = PlaybackThread::DefaultFrequency;
-        _audioSpec->format   = AUDIO_S16SYS;
-        _audioSpec->channels = 1;
-        _audioSpec->samples  = 16384;
-        _audioSpec->callback = pbCallback;
-        _audioSpec->userdata = this;
-        if (SDL_OpenAudio(_audioSpec, NULL) != 0) {
-            delete _audioSpec;
-            _audioSpec = 0;
-            SDL_UnlockAudio();
-            _mutex.unlock();
-            throw audio::AudioException(SDL_GetError());
-        }
         // Start playing.
         SDL_PauseAudio(0);
         if (!isRunning())
             start();
     } else if (state == Pause) {
         SDL_PauseAudio(1);
-        SDL_CloseAudio();
-        delete _audioSpec;
-        _audioSpec = 0;
     }
     // Eventually update the _state and unlock the callback function.
     _state = state;
