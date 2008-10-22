@@ -80,6 +80,118 @@ MainWindow::~MainWindow()
 }
 
 
+void MainWindow::on_actionAbout_triggered()
+{
+    AboutDlg(this).exec();
+}
+
+
+void MainWindow::on_actionQuit_triggered()
+{
+    // Don't argue!
+    close();
+}
+
+
+void MainWindow::on_twMovies_currentChanged(int index)
+{
+    // index < 0 seemingly happens during Qt's initialization?!
+    if (index < 0)
+        return;
+
+    // Remember the selected movie.
+    _lastSelectedMovieIdxPos = (_lastSelectedMovieIdxPos + 1) % 2;
+    _lastSelectedMovieIdx[_lastSelectedMovieIdxPos] = index;
+
+    // Assure that the newly selected movie's position gets updated as well,
+    // i.e. delegate this task to the horizontal slider as (almost) everybody
+    // else does.
+    on_hsCurrentFrame_valueChanged(currentFrame());
+}
+
+
+void MainWindow::on_hsCurrentFrame_valueChanged(int value)
+{
+    // Since the associated signal is already emitted during Qt's `startup' we
+    // must introduce a little safety check at this point:
+    if (!_participant)
+        return;
+
+    // Go to the desired frame.
+    setCurrentFrame(value);
+
+    // Update the annotations.
+    loadAnnotations();
+
+    if (!_flipping) {
+        // Adapt the samples position.
+        _pbThread->setPlaybackPos(positionForValue(value));
+    }
+}
+
+
+void MainWindow::on_tbPrev_clicked()
+{
+    // Delegate the task to the current frame slider.
+    if (currentFrame() > 0)
+        _ui.hsCurrentFrame->setValue(currentFrame() - 1);
+}
+
+
+void MainWindow::on_tbNext_clicked()
+{
+    if (currentFrame() >= _ui.hsCurrentFrame->maximum())
+        return;
+
+    // Block the current-frame slider and spinbox signals in order to suppress
+    // unwanted event handling.
+    _ui.hsCurrentFrame->blockSignals(true);
+    _ui.spbCurrentFrame->blockSignals(true);
+
+    // Go to the desired frame.
+    const int nextFrame = currentFrame() + 1;
+    setCurrentFrame(nextFrame);
+
+    // Adapt the current-frame slider and the spinbox.
+    _ui.hsCurrentFrame->setValue(nextFrame);
+    _ui.spbCurrentFrame->setValue(nextFrame);
+
+    // Adapt the samples position.
+    _pbThread->setPlaybackPos(positionForValue(nextFrame));
+
+    // Take along the annotations iff desired.
+    loadAnnotations(_takeAlong);
+
+    // Unblock the current-frame slider and spinbox signals again.
+    _ui.hsCurrentFrame->blockSignals(false);
+    _ui.spbCurrentFrame->blockSignals(false);
+}
+
+
+void MainWindow::on_pbReset_clicked()
+{
+    // (Re)load the corresponding annotations.
+    loadAnnotations();
+}
+
+
+void MainWindow::on_pbSave_clicked()
+{
+    saveAnnotations();
+    // Reflect the changes by adapting the groupbox labels.
+    adaptGroupBoxLabels(false);
+}
+
+
+void MainWindow::on_pbSaveAndContinue_clicked()
+{
+    // Let "The Others" do the rest ;-)
+    on_pbSave_clicked();
+    on_tbNext_clicked();
+    on_tbSyncSamples_clicked();
+}
+
+
 void MainWindow::setupMovies()
 {
     // Get the available movies.
@@ -191,117 +303,6 @@ void MainWindow::setupSamples()
 }
 
 
-void MainWindow::on_actionAbout_triggered()
-{
-    AboutDlg(this).exec();
-}
-
-
-void MainWindow::on_actionQuit_triggered()
-{
-    // Don't argue!
-    close();
-}
-
-
-void MainWindow::on_twMovies_currentChanged(int index)
-{
-    // index < 0 seemingly happens during Qt's initialization?!
-    if (index < 0)
-        return;
-
-    // Remember the selected movie.
-    _lastSelectedMovieIdxPos = (_lastSelectedMovieIdxPos + 1) % 2;
-    _lastSelectedMovieIdx[_lastSelectedMovieIdxPos] = index;
-
-    // Assure that the newly selected movie's position gets updated as well,
-    // i.e. delegate this task to the horizontal slider as (almost) everybody
-    // else does.
-    on_hsCurrentFrame_valueChanged(currentFrame());
-}
-
-
-void MainWindow::on_hsCurrentFrame_valueChanged(int value)
-{
-    // Since the associated signal is already emitted during Qt's `startup' we
-    // must introduce a little safety check at this point:
-    if (!_participant)
-        return;
-
-    // Go to the desired frame.
-    goToFrame(value);
-
-    if (!_flipping) {
-        // Adapt the samples position.
-        _pbThread->setPlaybackPos(positionForValue(value));
-        // Update the annotations.
-        loadAnnotations();
-    }
-}
-
-
-void MainWindow::on_tbPrev_clicked()
-{
-    // Delegate the task to the current frame slider.
-    if (currentFrame() > 0)
-        _ui.hsCurrentFrame->setValue(currentFrame() - 1);
-}
-
-
-void MainWindow::on_tbNext_clicked()
-{
-    if (currentFrame() >= _ui.hsCurrentFrame->maximum())
-        return;
-
-    // Block the current-frame slider and spinbox signals in order to suppress
-    // unwanted event handling.
-    _ui.hsCurrentFrame->blockSignals(true);
-    _ui.spbCurrentFrame->blockSignals(true);
-
-    // Go to the desired frame.
-    const int nextFrame = currentFrame() + 1;
-    goToFrame(nextFrame);
-
-    // Adapt the current-frame slider and the spinbox.
-    _ui.hsCurrentFrame->setValue(nextFrame);
-    _ui.spbCurrentFrame->setValue(nextFrame);
-
-    // Adapt the samples position.
-    _pbThread->setPlaybackPos(positionForValue(nextFrame));
-
-    // Take along the annotations iff desired.
-    loadAnnotations(_takeAlong);
-
-    // Unblock the current-frame slider and spinbox signals again.
-    _ui.hsCurrentFrame->blockSignals(false);
-    _ui.spbCurrentFrame->blockSignals(false);
-}
-
-
-void MainWindow::on_pbReset_clicked()
-{
-    // (Re)load the corresponding annotations.
-    loadAnnotations();
-}
-
-
-void MainWindow::on_pbSave_clicked()
-{
-    saveAnnotations();
-    // Reflect the changes by adapting the groupbox labels.
-    adaptGroupBoxLabels(false);
-}
-
-
-void MainWindow::on_pbSaveAndContinue_clicked()
-{
-    // Let "The Others" do the rest ;-)
-    on_pbSave_clicked();
-    on_tbNext_clicked();
-    on_tbSyncSamples_clicked();
-}
-
-
 float MainWindow::positionForValue(int value) const
 {
     return (float)value / (float)_ui.hsCurrentFrame->maximum();
@@ -325,6 +326,158 @@ int MainWindow::currentTimestamp() const
 int MainWindow::currentFrame() const
 {
     return _ui.hsCurrentFrame->value();
+}
+
+
+void MainWindow::setCurrentFrame(int frame)
+{
+    MovieWidget *mw = static_cast<MovieWidget *>(_ui.twMovies->currentWidget());
+    mw->setPosition(positionForValue(frame));
+}
+
+
+void MainWindow::updateScrollBarRange()
+{
+    int steps = (int)ceilf(1.0 / (_ui.spvCanvas->max() - _ui.spvCanvas->min())) - 1;
+    _ui.hsbSamples->blockSignals(true);
+    _ui.hsbSamples->setValue(min<int>(steps, _ui.hsbSamples->value() + 1));
+    _ui.hsbSamples->setRange(0, steps);
+    _ui.hsbSamples->blockSignals(false);
+}
+
+
+void MainWindow::enableUI(bool playing)
+{
+    _ui.twMovies->setEnabled(!playing);
+    _ui.tbPrev->setEnabled(!playing);
+    _ui.tbNext->setEnabled(!playing);
+    _ui.tbSyncMovie->setEnabled(!playing);
+    _ui.hsCurrentFrame->setEnabled(!playing);
+    _ui.pbFlipbook->setEnabled(!playing);
+    _ui.spbCurrentFrame->setEnabled(!playing);
+    _ui.pbReset->setEnabled(!playing);
+    _ui.pbSave->setEnabled(!playing);
+    _ui.pbSaveAndContinue->setEnabled(!playing);
+    _ui.tbSyncSamples->setEnabled(!playing);
+    _ui.groupBoxReceivers->setEnabled(!playing);
+    _ui.groupBoxAdditionalInfo->setEnabled(!playing);
+}
+
+
+void MainWindow::adaptGroupBoxLabels(bool takeAlong) {
+    if (takeAlong) {
+        _ui.groupBoxReceivers->setTitle(tr("Receivers (proposed)"));
+        _ui.groupBoxAdditionalInfo->setTitle(tr("Additional information (proposed)"));
+    } else {
+        _ui.groupBoxReceivers->setTitle(tr("Receivers"));
+        _ui.groupBoxAdditionalInfo->setTitle(tr("Additional information"));
+    }
+}
+
+
+void MainWindow::clearAnnotations()
+{
+    for (int i = 0; i < _ui.lwReceivers->count(); i++)
+        _ui.lwReceivers->item(i)->setCheckState(Qt::Unchecked);
+
+    _ui.cbSpeaking->setChecked(false);
+    _ui.cbLaughing->setChecked(false);
+}
+
+
+void MainWindow::saveAnnotations()
+{
+    // Retrieve the current annotations
+    vector<int> selectedReceiverIDs;
+    Attributes attributes;
+    getCurrentAnnotations(&selectedReceiverIDs, &attributes);
+
+    // Store everything in the database.
+    DBController::instance()->storeAnnotation(
+            currentTimestamp(),
+            _participant->id,
+            selectedReceiverIDs,
+            attributes
+    );
+
+}
+
+
+void MainWindow::loadAnnotations(bool takeAlong)
+{
+    vector<int> selectedReceiverIDs;
+    Attributes attributes;
+
+    // First get the annotations for this frame.
+    const bool hasAnnotations = DBController::instance()->getAnnotation(
+            currentTimestamp(),
+            _participant->id,
+            &selectedReceiverIDs,
+            &attributes
+    );
+
+    // If no annotations have been stored for the current frame and the
+    // takeAlong flag is set, simply return and leave everything untouched.
+    if (takeAlong && !hasAnnotations) {
+        adaptGroupBoxLabels(true);
+        return;
+    } else
+        adaptGroupBoxLabels(false);
+
+    // Update the user interface.
+    setCurrentAnnotations(selectedReceiverIDs, attributes);
+}
+
+
+void MainWindow::copyAnnotations()
+{
+    getCurrentAnnotations(&_clipboard.receiverIDs, &_clipboard.attributes);
+}
+
+
+void MainWindow::pasteAnnotations()
+{
+    setCurrentAnnotations(_clipboard.receiverIDs, _clipboard.attributes);
+}
+
+
+void MainWindow::getCurrentAnnotations(vector<int> *receiverIDs,
+                                       Attributes *attributes)
+{
+    receiverIDs->clear();
+    for (int i = 0; i < _ui.lwReceivers->count(); i++) {
+        QListWidgetItem *lwi = _ui.lwReceivers->item(i);
+        if (lwi->checkState() == Qt::Checked)
+            receiverIDs->push_back(lwi->data(Qt::UserRole).toInt());
+    }
+    *attributes = Attributes(_ui.cbSpeaking->isChecked(),
+                             _ui.cbLaughing->isChecked());
+}
+
+
+void MainWindow::setCurrentAnnotations(const vector<int> &receiverIDs,
+                                       const Attributes &attributes)
+{
+    // Reset the checked/unchecked state of the receivers.
+    for (int i = 0; i < _ui.lwReceivers->count(); i++) {
+        QListWidgetItem *lwi = _ui.lwReceivers->item(i);
+        lwi->setCheckState(Qt::Unchecked);
+        for (vector<int>::const_iterator it = receiverIDs.begin();
+            it != receiverIDs.end(); it++)
+        {
+            if (lwi->data(Qt::UserRole).toInt() == *it) {
+                lwi->setCheckState(Qt::Checked);
+                break;
+            }
+        }
+    }
+
+    // Adapt the check/unchecked state of the `laughing' checkbox.
+    _ui.cbSpeaking->setChecked(attributes.speaking);
+    _ui.cbLaughing->setChecked(attributes.laughing);
+
+    // Adapt the groupbox labels.
+    adaptGroupBoxLabels(false);
 }
 
 
@@ -359,16 +512,6 @@ void MainWindow::on_tbZoomOut_clicked()
 }
 
 
-void MainWindow::updateScrollBarRange()
-{
-    int steps = (int)ceilf(1.0 / (_ui.spvCanvas->max() - _ui.spvCanvas->min())) - 1;
-    _ui.hsbSamples->blockSignals(true);
-    _ui.hsbSamples->setValue(min<int>(steps, _ui.hsbSamples->value() + 1));
-    _ui.hsbSamples->setRange(0, steps);
-    _ui.hsbSamples->blockSignals(false);
-}
-
-
 void MainWindow::on_hsbSamples_valueChanged(int value)
 {
     float window = _ui.spvCanvas->max() - _ui.spvCanvas->min();
@@ -395,24 +538,6 @@ void MainWindow::on_pbPlay_clicked()
     }
 
     _playing = !_playing;
-}
-
-
-void MainWindow::enableUI(bool playing)
-{
-    _ui.twMovies->setEnabled(!playing);
-    _ui.tbPrev->setEnabled(!playing);
-    _ui.tbNext->setEnabled(!playing);
-    _ui.tbSyncMovie->setEnabled(!playing);
-    _ui.hsCurrentFrame->setEnabled(!playing);
-    _ui.pbFlipbook->setEnabled(!playing);
-    _ui.spbCurrentFrame->setEnabled(!playing);
-    _ui.pbReset->setEnabled(!playing);
-    _ui.pbSave->setEnabled(!playing);
-    _ui.pbSaveAndContinue->setEnabled(!playing);
-    _ui.tbSyncSamples->setEnabled(!playing);
-    _ui.groupBoxReceivers->setEnabled(!playing);
-    _ui.groupBoxAdditionalInfo->setEnabled(!playing);
 }
 
 
@@ -486,6 +611,29 @@ void MainWindow::on_pbFlipbook_clicked()
     }
 
     _flipping = !_flipping;
+}
+
+
+void MainWindow::selectPreviousMovie()
+{
+    int newIndex = _ui.twMovies->currentIndex() - 1;
+    if (newIndex < 0)
+        newIndex = _ui.twMovies->count() - 1;
+    _ui.twMovies->setCurrentIndex(newIndex);
+}
+
+
+void MainWindow::selectNextMovie()
+{
+    int newIndex = (_ui.twMovies->currentIndex() + 1) % _ui.twMovies->count();
+    _ui.twMovies->setCurrentIndex(newIndex);
+}
+
+
+void MainWindow::swapMovies()
+{
+    int newIndex = _lastSelectedMovieIdx[(_lastSelectedMovieIdxPos + 1) % 2];
+    _ui.twMovies->setCurrentIndex(newIndex);
 }
 
 
@@ -563,153 +711,6 @@ void MainWindow::keyPressEvent(QKeyEvent *ev)
             pasteAnnotations();
         break;
     }
-}
-
-
-void MainWindow::clearAnnotations()
-{
-    for (int i = 0; i < _ui.lwReceivers->count(); i++)
-        _ui.lwReceivers->item(i)->setCheckState(Qt::Unchecked);
-
-    _ui.cbSpeaking->setChecked(false);
-    _ui.cbLaughing->setChecked(false);
-}
-
-
-void MainWindow::saveAnnotations()
-{
-    // Retrieve the current annotations
-    vector<int> selectedReceiverIDs;
-    Attributes attributes;
-    getCurrentAnnotations(&selectedReceiverIDs, &attributes);
-
-    // Store everything in the database.
-    DBController::instance()->storeAnnotation(
-            currentTimestamp(),
-            _participant->id,
-            selectedReceiverIDs,
-            attributes
-    );
-
-}
-
-
-void MainWindow::loadAnnotations(bool takeAlong)
-{
-    vector<int> selectedReceiverIDs;
-    Attributes attributes;
-
-    // First get the annotations for this frame.
-    const bool hasAnnotations = DBController::instance()->getAnnotation(
-            currentTimestamp(),
-            _participant->id,
-            &selectedReceiverIDs,
-            &attributes
-    );
-
-    // If no annotations have been stored for the current frame and the
-    // takeAlong flag is set, simply return and leave everything untouched.
-    if (takeAlong && !hasAnnotations) {
-        adaptGroupBoxLabels(true);
-        return;
-    } else
-        adaptGroupBoxLabels(false);
-
-    // Update the user interface.
-    setCurrentAnnotations(selectedReceiverIDs, attributes);
-}
-
-
-void MainWindow::goToFrame(int frame)
-{
-    MovieWidget *mw = static_cast<MovieWidget *>(_ui.twMovies->currentWidget());
-    mw->setPosition(positionForValue(frame));
-}
-
-
-void MainWindow::selectPreviousMovie()
-{
-    int newIndex = _ui.twMovies->currentIndex() - 1;
-    if (newIndex < 0)
-        newIndex = _ui.twMovies->count() - 1;
-    _ui.twMovies->setCurrentIndex(newIndex);
-}
-
-
-void MainWindow::selectNextMovie()
-{
-    int newIndex = (_ui.twMovies->currentIndex() + 1) % _ui.twMovies->count();
-    _ui.twMovies->setCurrentIndex(newIndex);
-}
-
-
-void MainWindow::swapMovies()
-{
-    int newIndex = _lastSelectedMovieIdx[(_lastSelectedMovieIdxPos + 1) % 2];
-    _ui.twMovies->setCurrentIndex(newIndex);
-}
-
-
-void MainWindow::adaptGroupBoxLabels(bool takeAlong) {
-    if (takeAlong) {
-        _ui.groupBoxReceivers->setTitle(tr("Receivers (proposed)"));
-        _ui.groupBoxAdditionalInfo->setTitle(tr("Additional information (proposed)"));
-    } else {
-        _ui.groupBoxReceivers->setTitle(tr("Receivers"));
-        _ui.groupBoxAdditionalInfo->setTitle(tr("Additional information"));
-    }
-}
-
-
-void MainWindow::copyAnnotations()
-{
-    getCurrentAnnotations(&_clipboard.receiverIDs, &_clipboard.attributes);
-}
-
-
-void MainWindow::pasteAnnotations()
-{
-    setCurrentAnnotations(_clipboard.receiverIDs, _clipboard.attributes);
-}
-
-
-void MainWindow::getCurrentAnnotations(vector<int> *receiverIDs,
-                                       Attributes *attributes)
-{
-    receiverIDs->clear();
-    for (int i = 0; i < _ui.lwReceivers->count(); i++) {
-        QListWidgetItem *lwi = _ui.lwReceivers->item(i);
-        if (lwi->checkState() == Qt::Checked)
-            receiverIDs->push_back(lwi->data(Qt::UserRole).toInt());
-    }
-    *attributes = Attributes(_ui.cbSpeaking->isChecked(),
-                             _ui.cbLaughing->isChecked());
-}
-
-
-void MainWindow::setCurrentAnnotations(const vector<int> &receiverIDs,
-                                       const Attributes &attributes)
-{
-    // Reset the checked/unchecked state of the receivers.
-    for (int i = 0; i < _ui.lwReceivers->count(); i++) {
-        QListWidgetItem *lwi = _ui.lwReceivers->item(i);
-        lwi->setCheckState(Qt::Unchecked);
-        for (vector<int>::const_iterator it = receiverIDs.begin();
-            it != receiverIDs.end(); it++)
-        {
-            if (lwi->data(Qt::UserRole).toInt() == *it) {
-                lwi->setCheckState(Qt::Checked);
-                break;
-            }
-        }
-    }
-
-    // Adapt the check/unchecked state of the `laughing' checkbox.
-    _ui.cbSpeaking->setChecked(attributes.speaking);
-    _ui.cbLaughing->setChecked(attributes.laughing);
-
-    // Adapt the groupbox labels.
-    adaptGroupBoxLabels(false);
 }
 
 

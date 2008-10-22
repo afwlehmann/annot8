@@ -95,6 +95,10 @@ protected slots:
     void on_tbSyncMovie_clicked();
 
 
+    /**
+     * Event-handler for the 'Flipbook' button. Starts and stops the flipbook-
+     * mode.
+     */
     void on_pbFlipbook_clicked();
 
 
@@ -190,31 +194,6 @@ protected slots:
 
 protected:
     /**
-     * Invoked whenever the user presses a key.
-     */
-    virtual void keyPressEvent(QKeyEvent *);
-
-
-    /**
-     * Selects the previous movie of the movie tabwidget.
-     */
-    void selectPreviousMovie();
-
-
-    /**
-     * Selects the next movie of the movie tabwidget.
-     */
-    void selectNextMovie();
-
-
-    /**
-     * Swaps between the current and the last selected movie of the movie
-     * tabwidget.
-     */
-    void swapMovies();
-
-
-    /**
      * Gets the available movies and provides the ui with corresponding movie
      * widgets.
      * Only called during construction.
@@ -262,6 +241,13 @@ protected:
 
 
     /**
+     * Go to the given frame.
+     * @param  frame            the number of the new frame
+     */
+    void setCurrentFrame(int frame);
+
+
+    /**
      * Invoked when, for example, another movie is selected. Although actually
      * the same length of all movies is ensured during construction of the
      * main window, this function makes sure that the frame-related horizontal
@@ -277,6 +263,14 @@ protected:
      * playback state.
      */
     void enableUI(bool playing);
+
+
+    /**
+     * Adapts the labels of the `Receivers' and `Additional information'
+     * groupboxes in order to reflect whether the current choices are from the
+     * database or have been taken along from the previous frame.
+     */
+    void adaptGroupBoxLabels(bool takeAlong);
 
 
     /**
@@ -299,21 +293,6 @@ protected:
      * @param  takeAlong        whether to take along the current annotations
      */
     void loadAnnotations(bool takeAlong = false);
-
-
-    /**
-     * Go to the given frame.
-     * @param  frame            the number of the new frame
-     */
-    void goToFrame(int frame);
-
-
-    /**
-     * Adapts the labels of the `Receivers' and `Additional information'
-     * groupboxes in order to reflect whether the current choices are from the
-     * database or have been taken along from the previous frame.
-     */
-    void adaptGroupBoxLabels(bool takeAlong);
 
 
     /**
@@ -344,6 +323,31 @@ protected:
      */
     void setCurrentAnnotations(const std::vector<int> &receiverIDs,
                                const Attributes &attributes);
+
+
+    /**
+     * Selects the previous movie of the movie tabwidget.
+     */
+    void selectPreviousMovie();
+
+
+    /**
+     * Selects the next movie of the movie tabwidget.
+     */
+    void selectNextMovie();
+
+
+    /**
+     * Swaps between the current and the last selected movie of the movie
+     * tabwidget.
+     */
+    void swapMovies();
+
+
+    /**
+     * Invoked whenever the user presses a key.
+     */
+    virtual void keyPressEvent(QKeyEvent *);
 
 
 private:
