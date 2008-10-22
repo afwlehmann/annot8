@@ -27,7 +27,7 @@
 #include <QWidget>
 
 
-namespace hiwi {
+namespace annot8 {
 
 
 class SamplesPreviewCanvas : public QWidget
@@ -171,7 +171,7 @@ private:
 };
 
 
-} // namespace hiwi
+} // namespace annot8
 
 
 #endif

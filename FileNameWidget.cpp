@@ -25,7 +25,7 @@
 #include <QFile>
 
 
-namespace hiwi {
+namespace annot8 {
 
 
 FileNameWidget::FileNameWidget(QWidget *parent, const QString &filter) :
@@ -63,4 +63,4 @@ void FileNameWidget::on_tbGetFileName_clicked()
 }
 
 
-} // namespace hiwi
+} // namespace annot8

@@ -35,7 +35,7 @@
 class QImage;
 
 
-namespace hiwi {
+namespace annot8 {
 
 
 // Forward declaration
@@ -116,7 +116,7 @@ private:
 };
 
 
-} // namespace hiwi
+} // namespace annot8
 
 
 #endif

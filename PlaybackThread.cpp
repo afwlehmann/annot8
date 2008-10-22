@@ -29,7 +29,7 @@
 using std::min;
 
 
-namespace hiwi {
+namespace annot8 {
 
 namespace audio {
 
@@ -167,4 +167,4 @@ void PlaybackThread::pbCallback(void *user, Uint8 *buf, int size)
 
 } // namespace audio
 
-} // namespace hiwi
+} // namespace annot8

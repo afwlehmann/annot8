@@ -27,7 +27,7 @@
 #include "ui_FileNameWidget.h"
 
 
-namespace hiwi {
+namespace annot8 {
 
 
 class FileNameWidget : public QWidget
@@ -58,7 +58,7 @@ private:
 };
 
 
-} // namespace hiwi
+} // namespace annot8
 
 
 #endif

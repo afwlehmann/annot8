@@ -28,7 +28,7 @@
 #include "ui_DBSetupParticipantsWidget.h"
 
 
-namespace hiwi {
+namespace annot8 {
 
 
 class DBSetupParticipantsWidget : public QWizardPage
@@ -65,7 +65,7 @@ private:
 };
 
 
-} // namespace hiwi
+} // namespace annot8
 
 
 #endif

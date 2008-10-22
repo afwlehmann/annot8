@@ -27,7 +27,7 @@
 #include <set>
 
 
-namespace hiwi {
+namespace annot8 {
 
 
 DBSetupParticipantsWidget::DBSetupParticipantsWidget(QWidget *parent) :
@@ -119,4 +119,4 @@ void DBSetupParticipantsWidget::on_tbRemoveSelected_clicked()
 }
 
 
-} // namespace hiwi
+} // namespace annot8

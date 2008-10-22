@@ -27,7 +27,7 @@
 #include <QItemDelegate>
 
 
-namespace hiwi {
+namespace annot8 {
 
 
 class FileNameDelegate : public QItemDelegate
@@ -62,7 +62,7 @@ private:
 };
 
 
-} // namespace hiwi
+} // namespace annot8
 
 
 #endif

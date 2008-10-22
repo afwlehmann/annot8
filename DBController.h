@@ -29,7 +29,7 @@
 #include <map>
 
 
-namespace hiwi
+namespace annot8
 {
 
 
@@ -162,7 +162,7 @@ private:
 };
 
 
-} // namespace hiwi
+} // namespace annot8
 
 
 #endif

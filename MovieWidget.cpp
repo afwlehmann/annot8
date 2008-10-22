@@ -33,7 +33,7 @@
 #define MAX_IMAGES_FIFO_SIZE    10
 
 
-namespace hiwi
+namespace annot8
 {
 
 
@@ -155,4 +155,4 @@ void MovieWidget::initialize()
 }
 
 
-} // namespace hiwi
+} // namespace annot8

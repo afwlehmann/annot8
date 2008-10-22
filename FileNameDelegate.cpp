@@ -24,7 +24,7 @@
 #include "FileNameWidget.h"
 
 
-namespace hiwi {
+namespace annot8 {
 
 FileNameDelegate::FileNameDelegate(QObject *parent, const QString &filter) :
     QItemDelegate(parent),
@@ -61,4 +61,4 @@ void FileNameDelegate::setModelData(QWidget *editor, QAbstractItemModel *model,
 }
 
 
-} // namespace hiwi
+} // namespace annot8

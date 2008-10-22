@@ -28,7 +28,7 @@
 #include "Attributes.h"
 
 
-namespace hiwi
+namespace annot8
 {
 
 
@@ -390,7 +390,7 @@ private:
 };
 
 
-} // namespace hiwi
+} // namespace annot8
 
 
 #endif

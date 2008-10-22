@@ -26,7 +26,7 @@
 #include <SDL/SDL_sound.h>
 
 
-namespace hiwi {
+namespace annot8 {
 
 namespace audio {
 
@@ -104,4 +104,4 @@ Samples::~Samples()
 
 } // namespace audio
 
-} // namespace hiwi
+} // namespace annot8

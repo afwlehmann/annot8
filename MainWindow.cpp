@@ -43,11 +43,11 @@
 #define ZOOM_FACTOR 1.5f
 
 
-using namespace hiwi::audio;
+using namespace annot8::audio;
 using namespace std;
 
 
-namespace hiwi {
+namespace annot8 {
 
 
 MainWindow::MainWindow(int participantID, bool takeAlong) :
@@ -733,4 +733,4 @@ void MainWindow::keyPressEvent(QKeyEvent *ev)
 }
 
 
-} // namespace hiwi
+} // namespace annot8

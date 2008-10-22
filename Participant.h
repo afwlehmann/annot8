@@ -27,7 +27,7 @@
 #include <string>
 
 
-namespace hiwi {
+namespace annot8 {
 
 
 struct Participant {
@@ -49,7 +49,7 @@ struct Participant {
 };
 
 
-} // namespace hiwi
+} // namespace annot8
 
 
 #endif

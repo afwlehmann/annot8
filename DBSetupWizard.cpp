@@ -26,7 +26,7 @@
 #include "DBSetupSamplesWidget.h"
 
 
-namespace hiwi {
+namespace annot8 {
 
 
 DBSetupWizard::DBSetupWizard(QWidget *parent) : QWizard(parent)
@@ -46,4 +46,4 @@ DBSetupWizard::DBSetupWizard(QWidget *parent) : QWizard(parent)
 }
 
 
-} // namespace hiwi
+} // namespace annot8

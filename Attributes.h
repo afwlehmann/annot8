@@ -24,7 +24,7 @@
 #define __ATTRIBUTES_H__
 
 
-namespace hiwi {
+namespace annot8 {
 
 
 struct Attributes {
@@ -45,7 +45,7 @@ struct Attributes {
 };
 
 
-} // namespace hiwi
+} // namespace annot8
 
 
 #endif

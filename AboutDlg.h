@@ -27,7 +27,7 @@
 #include "ui_AboutDlg.h"
 
 
-namespace hiwi {
+namespace annot8 {
 
 
 class AboutDlg : public QDialog
@@ -46,7 +46,7 @@ private:
 
 
 
-} // namespace hiwi
+} // namespace annot8
 
 
 #endif

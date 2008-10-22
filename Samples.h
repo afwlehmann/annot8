@@ -37,7 +37,7 @@
 #include <string>
 
 
-namespace hiwi {
+namespace annot8 {
 
 namespace audio {
 
@@ -72,7 +72,7 @@ struct Samples
 
 } // namespace audio
 
-} // namespace hiwi
+} // namespace annot8
 
 
 #endif

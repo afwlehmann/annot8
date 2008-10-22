@@ -27,7 +27,7 @@
 #include <stdexcept>
 
 
-namespace hiwi {
+namespace annot8 {
 
 namespace audio {
 
@@ -74,14 +74,14 @@ bool isInitialized();
  */
 #define ASSERT_AUDIO_INITIALIZED \
     { \
-        if (!hiwi::audio::isInitialized()) \
+        if (!annot8::audio::isInitialized()) \
             throw AudioNotInitializedException(); \
     }
 
 
 } // namespace audio
 
-} // namespace hiwi
+} // namespace annot8
 
 
 

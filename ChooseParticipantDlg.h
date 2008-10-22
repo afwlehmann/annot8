@@ -27,7 +27,7 @@
 #include "ui_ChooseParticipantDlg.h"
 
 
-namespace hiwi {
+namespace annot8 {
 
 
 class ChooseParticipantDlg : public QDialog
@@ -50,7 +50,7 @@ private:
 
 
 
-} // namespace hiwi
+} // namespace annot8
 
 
 #endif

@@ -32,7 +32,7 @@
 using namespace std;
 
 
-namespace hiwi {
+namespace annot8 {
 
 
 DBSetupSamplesWidget::DBSetupSamplesWidget(QWidget *parent) :
@@ -149,4 +149,4 @@ void DBSetupSamplesWidget::on_tbReload_clicked()
 }
 
 
-} // namespace hiwi
+} // namespace annot8

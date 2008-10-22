@@ -28,7 +28,7 @@
 #include "ui_DBSetupMoviesWidget.h"
 
 
-namespace hiwi {
+namespace annot8 {
 
 
 class DBSetupMoviesWidget : public QWizardPage
@@ -65,7 +65,7 @@ private:
 };
 
 
-} // namespace hiwi
+} // namespace annot8
 
 
 #endif

@@ -29,7 +29,7 @@
 #include <QMutex>
 
 
-namespace hiwi {
+namespace annot8 {
 
 namespace audio {
 
@@ -124,7 +124,7 @@ private:
 
 } // namespace audio
 
-} // namespace hiwi
+} // namespace annot8
 
 
 #endif

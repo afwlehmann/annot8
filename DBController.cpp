@@ -33,7 +33,7 @@
 using namespace std;
 
 
-namespace hiwi
+namespace annot8
 {
 
 
@@ -542,4 +542,4 @@ bool DBController::getAnnotation(int timestamp, int senderID,
 }
 
 
-} // namespace hiwi
+} // namespace annot8

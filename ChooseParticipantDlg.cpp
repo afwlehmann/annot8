@@ -28,7 +28,7 @@
 #include <QListWidgetItem>
 
 
-namespace hiwi {
+namespace annot8 {
 
 
 ChooseParticipantDlg::ChooseParticipantDlg(QWidget *parent) : QDialog(parent)
@@ -72,4 +72,4 @@ int ChooseParticipantDlg::getParticipantID() const
 }
 
 
-} // namespace hiwi
+} // namespace annot8

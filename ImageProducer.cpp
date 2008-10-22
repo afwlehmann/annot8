@@ -28,7 +28,7 @@
 #include <stdexcept>
 
 
-namespace hiwi {
+namespace annot8 {
 
 
 ImageProducer* ImageProducer::_instance = 0;
@@ -154,4 +154,4 @@ void ImageProducer::retrieve(const Movie *movie,
 }
 
 
-} // namespace hiwi
+} // namespace annot8

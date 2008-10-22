@@ -27,7 +27,7 @@
 #include <set>
 
 
-namespace hiwi {
+namespace annot8 {
 
 
 DBSetupMoviesWidget::DBSetupMoviesWidget(QWidget *parent) :
@@ -116,4 +116,4 @@ void DBSetupMoviesWidget::on_tbRemoveSelected_clicked()
 }
 
 
-} // namespace hiwi
+} // namespace annot8

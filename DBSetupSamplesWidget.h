@@ -32,7 +32,7 @@
 class QSqlRecord;
 
 
-namespace hiwi {
+namespace annot8 {
 
 
 class DBSetupSamplesWidget : public QWizardPage
@@ -70,7 +70,7 @@ private:
 };
 
 
-} // namespace hiwi
+} // namespace annot8
 
 
 #endif

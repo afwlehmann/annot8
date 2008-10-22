@@ -27,7 +27,7 @@
 #include <cmath>
 
 
-namespace hiwi {
+namespace annot8 {
 
 
 SamplesPreviewCanvas::SamplesPreviewCanvas(QWidget *parent) :
@@ -227,4 +227,4 @@ void SamplesPreviewCanvas::updateMarker()
 }
 
 
-} // namespace hiwi
+} // namespace annot8

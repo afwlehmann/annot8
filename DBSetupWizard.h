@@ -27,7 +27,7 @@
 #include <QWizard>
 
 
-namespace hiwi {
+namespace annot8 {
 
 
 class DBSetupWizard : public QWizard
@@ -37,6 +37,6 @@ public:
 };
 
 
-} // namespace hiwi
+} // namespace annot8
 
 #endif

@@ -32,7 +32,7 @@
 #include <QMessageBox>
 
 
-using namespace hiwi;
+using namespace annot8;
 using namespace std;
 
 

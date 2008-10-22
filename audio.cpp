@@ -26,7 +26,7 @@
 #include <cstdlib>
 
 
-namespace hiwi {
+namespace annot8 {
 
 namespace audio {
 
@@ -85,5 +85,5 @@ bool isInitialized() {
 
 } // namespace audio
 
-} // namespace hiwi
+} // namespace annot8
 
