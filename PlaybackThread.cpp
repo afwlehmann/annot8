@@ -29,7 +29,7 @@ PlaybackThread::PlaybackThread(audio::Samples *samples, QObject *parent) :
     _audioSpec->freq     = PlaybackThread::DefaultFrequency;
     _audioSpec->format   = AUDIO_S16SYS;
     _audioSpec->channels = 1;
-    _audioSpec->samples  = 4096;
+    _audioSpec->samples  = 4096; // Higher values cause time lags on Windows!
     _audioSpec->callback = pbCallback;
     _audioSpec->userdata = this;
     if (SDL_OpenAudio(_audioSpec, NULL) != 0) {
@@ -39,8 +39,6 @@ PlaybackThread::PlaybackThread(audio::Samples *samples, QObject *parent) :
         _mutex.unlock();
         throw audio::AudioException(SDL_GetError());
     }
-
-    SDL_PauseAudio(0);
 }
 
 
@@ -48,19 +46,17 @@ PlaybackThread::~PlaybackThread()
 {
     _mutex.lock();
 
-    // Before closing SDL's audio device and deleting the associated
-    // SDL_AudioSpec, we must lock the audio device to assure that our
-    // callback function doesn't interfere with this.
+    // Lock out the callback function, stop playback and unlock the
+    // callback function again.
     SDL_LockAudio();
-    {
-        SDL_PauseAudio(1);
-        SDL_CloseAudio();
-        delete _audioSpec;
-        _audioSpec = 0;
-    }
+    SDL_PauseAudio(1);
     SDL_UnlockAudio();
-
     _state = PlaybackThread::Pause;
+
+    // Now close the audio device and get rid of the allocated AudioSpec.
+    SDL_CloseAudio();
+    delete _audioSpec;
+    _audioSpec = 0;
 
     _mutex.unlock();
 }
@@ -94,13 +90,18 @@ void PlaybackThread::setPlaybackState(PlaybackState state)
 
     // Lock out the callback function.
     SDL_LockAudio();
-    if (state == Play) {
-        // Start playing.
-        if (!isRunning())
-            start();
+    {
+        if (state == Play) {
+            SDL_PauseAudio(0);
+            // Start playing.
+            if (!isRunning())
+                start();
+        } else
+            SDL_PauseAudio(1);
+        // Eventually update the _state.
+        _state = state;
     }
-    // Eventually update the _state and unlock the callback function.
-    _state = state;
+    // Unlock the callback function.
     SDL_UnlockAudio();
 
     _mutex.unlock();
@@ -129,24 +130,19 @@ void PlaybackThread::pbCallback(void *user, Uint8 *buf, int size)
     PlaybackThread *pbt = static_cast<PlaybackThread *>(user);
     pbt->_mutex.lock();
 
-    if (pbt->_state == PlaybackThread::Play) {
-        // We must pay attention to the fact that our samples are stored as 16-bit
-        // signed shorts whereas the callback function's buffer deals with bytes.
-        size_t bytesToCopy =
-            min<size_t>((pbt->_samples->numSamples - pbt->_pos) * sizeof(short),
-                        size);
-        if (bytesToCopy) {
-            memcpy(buf, (short *)pbt->_samples->ss->buffer + pbt->_pos, bytesToCopy);
-            pbt->_pos += bytesToCopy / sizeof(short);
-        }
-
-        // Fill the possibly remaining space with silence.
-        if (bytesToCopy < (size_t)size)
-            memset(buf + bytesToCopy, pbt->_audioSpec->silence, size - bytesToCopy);
-    } else {
-        // Fill the whole buffer with silence.
-        memset(buf, pbt->_audioSpec->silence, size);
+    // We must pay attention to the fact that our samples are stored as 16-bit
+    // signed shorts whereas the callback function's buffer deals with bytes.
+    size_t bytesToCopy =
+        min<size_t>((pbt->_samples->numSamples - pbt->_pos) * sizeof(short),
+                    size);
+    if (bytesToCopy) {
+        memcpy(buf, (short *)pbt->_samples->ss->buffer + pbt->_pos, bytesToCopy);
+        pbt->_pos += bytesToCopy / sizeof(short);
     }
+
+    // Fill the possibly remaining space with silence.
+    if (bytesToCopy < (size_t)size)
+        memset(buf + bytesToCopy, pbt->_audioSpec->silence, size - bytesToCopy);
 
     pbt->_mutex.unlock();
 }
