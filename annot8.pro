@@ -81,6 +81,7 @@ mac {
         MY_BUNDLE_PLUGINS.path = Contents/Resources/plugins/imageformats
         QMAKE_BUNDLE_DATA += MY_BUNDLE_RESOURCES MY_BUNDLE_PLUGINS
     }
+    ICON = res/mac/annot8.icns
 }
 
 win32 {
