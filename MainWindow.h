@@ -9,6 +9,7 @@
 
 
 #include "ui_MainWindow.h"
+#include "Attributes.h"
 
 
 namespace hiwi
@@ -286,6 +287,12 @@ protected:
 
 
     /**
+     * Saves all annotations for the current frame.
+     */
+    void saveAnnotations();
+
+
+    /**
      * Load all annotations for the current frame. If `takeAlong' is specified
      * as true, then only reset and/or load the annotations as long as
      * annotations are available for the current frame.
@@ -299,6 +306,44 @@ protected:
      * @param  frame            the number of the new frame
      */
     void goToFrame(int frame);
+
+
+    /**
+     * Adapts the labels of the `Receivers' and `Additional information'
+     * groupboxes in order to reflect whether the current choices are from the
+     * database or have been taken along from the previous frame.
+     */
+    void adaptGroupBoxLabels(bool takeAlong);
+
+
+    /**
+     * Copies the current annotations to the clipboard.
+     */
+    void copyAnnotations();
+
+
+    /**
+     * Restores the annotations from the clipboard.
+     */
+    void pasteAnnotations();
+
+
+    /**
+     * Retrieves the current annotations.
+     * @param  receiverIDs      a pointer to a list of the receiver ids
+     * @param  attributes       a pointer to the attributes
+     */
+    void getCurrentAnnotations(std::vector<int> *receiverIDs,
+                               Attributes *attributes);
+
+
+    /**
+     * Set the current annotations according to the provided data.
+     * @param  receiverIDs      a list of the receiver ids
+     * @param  attributes       the attributes
+     */
+    void setCurrentAnnotations(const std::vector<int> &receiverIDs,
+                               const Attributes &attributes);
 
 
 private:
@@ -315,6 +360,13 @@ private:
     // current and the former selected movie index.
     int                     _lastSelectedMovieIdx[2];
     int                     _lastSelectedMovieIdxPos;
+
+    // The following struct allows the storage and retrieval of a particular
+    // annotation.
+    struct {
+        std::vector<int> receiverIDs;
+        Attributes attributes;
+    } _clipboard;
 };
 
 

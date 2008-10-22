@@ -11,7 +11,6 @@
 #include "PlaybackThread.h"
 #include "Samples.h"
 #include "AboutDlg.h"
-#include "Attributes.h"
 
 #include <stdexcept>
 #include <cmath>
@@ -288,26 +287,9 @@ void MainWindow::on_pbReset_clicked()
 
 void MainWindow::on_pbSave_clicked()
 {
-    // First determine the ids of the checked receivers.
-    vector<int> selectedReceiverIDs;
-    for (int i = 0; i < _ui.lwReceivers->count(); i++) {
-        QListWidgetItem *lwi = _ui.lwReceivers->item(i);
-        if (lwi->checkState() == Qt::Checked)
-            selectedReceiverIDs.push_back(lwi->data(Qt::UserRole).toInt());
-    }
-
-    // Then determine the attributes.
-    Attributes attributes;
-    attributes.speaking = _ui.cbSpeaking->isChecked();
-    attributes.laughing = _ui.cbLaughing->isChecked();
-
-    // Store those ids in conjunction with the `laughing' attribute.
-    DBController::instance()->storeAnnotation(
-            currentTimestamp(),
-            _participant->id,
-            selectedReceiverIDs,
-            attributes
-    );
+    saveAnnotations();
+    // Reflect the changes by adapting the groupbox labels.
+    adaptGroupBoxLabels(false);
 }
 
 
@@ -565,6 +547,21 @@ void MainWindow::keyPressEvent(QKeyEvent *ev)
     case Qt::Key_F10:
         selectNextMovie();
         break;
+
+    case Qt::Key_X:
+        if (ev->modifiers() & Qt::ControlModifier)
+            clearAnnotations();
+        break;
+
+    case Qt::Key_C:
+        if (ev->modifiers() & Qt::ControlModifier)
+            copyAnnotations();
+        break;
+
+    case Qt::Key_V:
+        if (ev->modifiers() & Qt::ControlModifier)
+            pasteAnnotations();
+        break;
     }
 }
 
@@ -576,6 +573,24 @@ void MainWindow::clearAnnotations()
 
     _ui.cbSpeaking->setChecked(false);
     _ui.cbLaughing->setChecked(false);
+}
+
+
+void MainWindow::saveAnnotations()
+{
+    // Retrieve the current annotations
+    vector<int> selectedReceiverIDs;
+    Attributes attributes;
+    getCurrentAnnotations(&selectedReceiverIDs, &attributes);
+
+    // Store everything in the database.
+    DBController::instance()->storeAnnotation(
+            currentTimestamp(),
+            _participant->id,
+            selectedReceiverIDs,
+            attributes
+    );
+
 }
 
 
@@ -594,26 +609,14 @@ void MainWindow::loadAnnotations(bool takeAlong)
 
     // If no annotations have been stored for the current frame and the
     // takeAlong flag is set, simply return and leave everything untouched.
-    if (takeAlong && !hasAnnotations)
+    if (takeAlong && !hasAnnotations) {
+        adaptGroupBoxLabels(true);
         return;
+    } else
+        adaptGroupBoxLabels(false);
 
-    // Reset the checked/unchecked state of the receivers.
-    for (int i = 0; i < _ui.lwReceivers->count(); i++) {
-        QListWidgetItem *lwi = _ui.lwReceivers->item(i);
-        lwi->setCheckState(Qt::Unchecked);
-        for (vector<int>::const_iterator it = selectedReceiverIDs.begin();
-            it != selectedReceiverIDs.end(); it++)
-        {
-            if (lwi->data(Qt::UserRole).toInt() == *it) {
-                lwi->setCheckState(Qt::Checked);
-                break;
-            }
-        }
-    }
-
-    // Adapt the check/unchecked state of the `laughing' checkbox.
-    _ui.cbSpeaking->setChecked(attributes.speaking);
-    _ui.cbLaughing->setChecked(attributes.laughing);
+    // Update the user interface.
+    setCurrentAnnotations(selectedReceiverIDs, attributes);
 }
 
 
@@ -644,6 +647,69 @@ void MainWindow::swapMovies()
 {
     int newIndex = _lastSelectedMovieIdx[(_lastSelectedMovieIdxPos + 1) % 2];
     _ui.twMovies->setCurrentIndex(newIndex);
+}
+
+
+void MainWindow::adaptGroupBoxLabels(bool takeAlong) {
+    if (takeAlong) {
+        _ui.groupBoxReceivers->setTitle(tr("Receivers (proposed)"));
+        _ui.groupBoxAdditionalInfo->setTitle(tr("Additional information (proposed)"));
+    } else {
+        _ui.groupBoxReceivers->setTitle(tr("Receivers"));
+        _ui.groupBoxAdditionalInfo->setTitle(tr("Additional information"));
+    }
+}
+
+
+void MainWindow::copyAnnotations()
+{
+    getCurrentAnnotations(&_clipboard.receiverIDs, &_clipboard.attributes);
+}
+
+
+void MainWindow::pasteAnnotations()
+{
+    setCurrentAnnotations(_clipboard.receiverIDs, _clipboard.attributes);
+}
+
+
+void MainWindow::getCurrentAnnotations(vector<int> *receiverIDs,
+                                       Attributes *attributes)
+{
+    receiverIDs->clear();
+    for (int i = 0; i < _ui.lwReceivers->count(); i++) {
+        QListWidgetItem *lwi = _ui.lwReceivers->item(i);
+        if (lwi->checkState() == Qt::Checked)
+            receiverIDs->push_back(lwi->data(Qt::UserRole).toInt());
+    }
+    *attributes = Attributes(_ui.cbSpeaking->isChecked(),
+                             _ui.cbLaughing->isChecked());
+}
+
+
+void MainWindow::setCurrentAnnotations(const vector<int> &receiverIDs,
+                                       const Attributes &attributes)
+{
+    // Reset the checked/unchecked state of the receivers.
+    for (int i = 0; i < _ui.lwReceivers->count(); i++) {
+        QListWidgetItem *lwi = _ui.lwReceivers->item(i);
+        lwi->setCheckState(Qt::Unchecked);
+        for (vector<int>::const_iterator it = receiverIDs.begin();
+            it != receiverIDs.end(); it++)
+        {
+            if (lwi->data(Qt::UserRole).toInt() == *it) {
+                lwi->setCheckState(Qt::Checked);
+                break;
+            }
+        }
+    }
+
+    // Adapt the check/unchecked state of the `laughing' checkbox.
+    _ui.cbSpeaking->setChecked(attributes.speaking);
+    _ui.cbLaughing->setChecked(attributes.laughing);
+
+    // Adapt the groupbox labels.
+    adaptGroupBoxLabels(false);
 }
 
 
