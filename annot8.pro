@@ -69,17 +69,20 @@ mac {
         MY_BUNDLE_RESOURCES.files = res/unix/experiment.sql
         MY_BUNDLE_RESOURCES.path = Contents/Resources
         CONFIG(debug, debug|release) {
-            MY_BUNDLE_PLUGINS.files = $$[QT_INSTALL_PLUGINS]/imageformats/libqgif_debug.dylib \
-                                      $$[QT_INSTALL_PLUGINS]/imageformats/libqjpeg_debug.dylib \
-                                      $$[QT_INSTALL_PLUGINS]/imageformats/libqtiff_debug.dylib
+            IMF_PLUGINS.files = $$[QT_INSTALL_PLUGINS]/imageformats/libqgif_debug.dylib \
+                                $$[QT_INSTALL_PLUGINS]/imageformats/libqjpeg_debug.dylib \
+                                $$[QT_INSTALL_PLUGINS]/imageformats/libqtiff_debug.dylib
+            SQL_PLUGINS.files = $$[QT_INSTALL_PLUGINS]/sqldrivers/libqsqlite_debug.dylib
         }
         CONFIG(release, debug|release) {
-            MY_BUNDLE_PLUGINS.files = $$[QT_INSTALL_PLUGINS]/imageformats/libqgif.dylib \
-                                      $$[QT_INSTALL_PLUGINS]/imageformats/libqjpeg.dylib \
-                                      $$[QT_INSTALL_PLUGINS]/imageformats/libqtiff.dylib
+            IMF_PLUGINS.files = $$[QT_INSTALL_PLUGINS]/imageformats/libqgif.dylib \
+                                $$[QT_INSTALL_PLUGINS]/imageformats/libqjpeg.dylib \
+                                $$[QT_INSTALL_PLUGINS]/imageformats/libqtiff.dylib
+            SQL_PLUGINS.files = $$[QT_INSTALL_PLUGINS]/sqldrivers/libqsqlite.dylib
         }
-        MY_BUNDLE_PLUGINS.path = Contents/Resources/plugins/imageformats
-        QMAKE_BUNDLE_DATA += MY_BUNDLE_RESOURCES MY_BUNDLE_PLUGINS
+        IMF_PLUGINS.path = Contents/Resources/plugins/imageformats
+        SQL_PLUGINS.path = Contents/Resources/plugins/sqldrivers
+        QMAKE_BUNDLE_DATA += MY_BUNDLE_RESOURCES IMF_PLUGINS SQL_PLUGINS
     }
     ICON = res/mac/annot8.icns
 }

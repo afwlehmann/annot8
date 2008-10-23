@@ -13,7 +13,7 @@ then
     exit 1
 fi
 
-if [ $# -ne 1 ]
+if [ $# -ne 1 ] || [ ! -d "$1" ]
 then
    echo "Syntax: `basename $0` <path-to-app-bundle>"
    exit 1 
@@ -47,7 +47,7 @@ do
     install_name_tool \
         -change "$OLDINSTALLNAME" "@executable_path/../Frameworks/$NEWINSTALLNAME" \
         "$EXECUTABLE_PATH"
-    for j in $FRAMEWORKS/* $PLUGINS_PATH/imageformats/*
+    for j in $FRAMEWORKS/* $PLUGINS_PATH/imageformats/* $PLUGINS_PATH/sqldrivers/*
     do
         install_name_tool \
             -change "$OLDINSTALLNAME" "@executable_path/../Frameworks/$NEWINSTALLNAME" \
