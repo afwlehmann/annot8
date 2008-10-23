@@ -1,24 +1,42 @@
 #!/bin/bash
 #
 # finalize_app
-# (c) by Alexander Lehmann <lehmanna@in.tum.de>
-#
 # $Id$
 #
+# Copyright 2008 by Alexander Lehmann <lehmanna@in.tum.de>
+#
+# This file is part of annot8.
+# 
+# annot8 is free software: you can redistribute it and/or modify it under the
+# terms of the GNU General Public License as published by the Free Software
+# Foundation, either version 3 of the License, or (at your option) any later
+# version.
+# 
+# annot8 is distributed in the hope that it will be useful, but WITHOUT ANY
+# WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+# PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+# 
+# You should have received a copy of the GNU General Public License along with
+# annot8.  If not, see <http://www.gnu.org/licenses/>.
+#
 
 
+# Runs only on OS X...
 if [ "`uname -o`" != "Darwin" ]
 then
     echo This script is intended for use on Mac OS X only.
     exit 1
 fi
 
+# Must have exactly one argument and that must be the location of annot8's
+# application bundle.
 if [ $# -ne 1 ] || [ ! -d "$1" ]
 then
    echo "Syntax: `basename $0` <path-to-app-bundle>"
    exit 1 
 fi
 
+# Depends on ./get_deps.
 if [ ! -x ./get_deps ]
 then
     echo "Missing the executable script ./get_deps!"
@@ -30,17 +48,24 @@ FRAMEWORKS="${BUNDLE_PATH}/Contents/Frameworks"
 EXECUTABLE_PATH="$1/Contents/MacOS/annot8"
 PLUGINS_PATH="$1/Contents/Resources/plugins"
 
+# Should be there, but who knows...
 if [ ! -x "$EXECUTABLE_PATH" ]
 then
     echo "Missing executable $EXECUTABLE_PATH."
     exit 1
 fi
 
+# Strip superflous symbols.
 strip "$EXECUTABLE_PATH"
 
+# Create the Frameworks subdirectory and copy the neccessary
+# dependencies (libraries) to that directory.
 mkdir -p "$FRAMEWORKS"
 find "$FRAMEWORKS" -type f -print0 | xargs -0 rm -f
 install -m 755 -t "$FRAMEWORKS" `./get_deps "$EXECUTABLE_PATH"`
+
+# Update the install names of the libraries as well as the executable's
+# dependencies.
 for i in $FRAMEWORKS/*
 do
     OLDINSTALLNAME=`otool -XD "$i"`
@@ -56,3 +81,6 @@ do
             "$j"
     done
 done
+
+# Done.
+echo "Done."
