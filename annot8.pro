@@ -73,12 +73,14 @@ mac {
                                 $$[QT_INSTALL_PLUGINS]/imageformats/libqjpeg_debug.dylib \
                                 $$[QT_INSTALL_PLUGINS]/imageformats/libqtiff_debug.dylib
             SQL_PLUGINS.files = $$[QT_INSTALL_PLUGINS]/sqldrivers/libqsqlite_debug.dylib
+            QMAKE_POST_LINK += "./finalize_app build/debug/annot8.app"
         }
         CONFIG(release, debug|release) {
             IMF_PLUGINS.files = $$[QT_INSTALL_PLUGINS]/imageformats/libqgif.dylib \
                                 $$[QT_INSTALL_PLUGINS]/imageformats/libqjpeg.dylib \
                                 $$[QT_INSTALL_PLUGINS]/imageformats/libqtiff.dylib
             SQL_PLUGINS.files = $$[QT_INSTALL_PLUGINS]/sqldrivers/libqsqlite.dylib
+            QMAKE_POST_LINK += "./finalize_app build/release/annot8.app"
         }
         IMF_PLUGINS.path = Contents/Resources/plugins/imageformats
         SQL_PLUGINS.path = Contents/Resources/plugins/sqldrivers

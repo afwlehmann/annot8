@@ -36,6 +36,8 @@ then
     exit 1
 fi
 
+strip "$EXECUTABLE_PATH"
+
 mkdir -p "$FRAMEWORKS"
 find "$FRAMEWORKS" -type f -print0 | xargs -0 rm -f
 install -m 755 -t "$FRAMEWORKS" `./get_deps "$EXECUTABLE_PATH"`
