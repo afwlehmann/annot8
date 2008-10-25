@@ -13,14 +13,6 @@
    <string>annot8[*]</string>
   </property>
   <widget class="QWidget" name="centralwidget" >
-   <property name="geometry" >
-    <rect>
-     <x>0</x>
-     <y>22</y>
-     <width>1024</width>
-     <height>724</height>
-    </rect>
-   </property>
    <layout class="QGridLayout" >
     <item rowspan="2" row="0" column="0" >
      <widget class="QTabWidget" name="twMovies" >
@@ -34,14 +26,6 @@
        <number>0</number>
       </property>
       <widget class="QWidget" name="tab" >
-       <property name="geometry" >
-        <rect>
-         <x>0</x>
-         <y>0</y>
-         <width>629</width>
-         <height>429</height>
-        </rect>
-       </property>
        <attribute name="title" >
         <string>Tab 1</string>
        </attribute>
@@ -352,18 +336,19 @@ p, li { white-space: pre-wrap; }
     <addaction name="separator" />
     <addaction name="actionQuit" />
    </widget>
+   <widget class="QMenu" name="menuEdit" >
+    <property name="title" >
+     <string>Edit</string>
+    </property>
+    <addaction name="actionClear_annotations" />
+    <addaction name="separator" />
+    <addaction name="actionCopy_annotations" />
+    <addaction name="actionPaste_annotations" />
+   </widget>
    <addaction name="menuAnnot8" />
+   <addaction name="menuEdit" />
   </widget>
-  <widget class="QStatusBar" name="statusbar" >
-   <property name="geometry" >
-    <rect>
-     <x>0</x>
-     <y>746</y>
-     <width>1024</width>
-     <height>22</height>
-    </rect>
-   </property>
-  </widget>
+  <widget class="QStatusBar" name="statusbar" />
   <action name="actionQuit" >
    <property name="text" >
     <string>Quit annot8</string>
@@ -377,6 +362,30 @@ p, li { white-space: pre-wrap; }
   <action name="actionPreferences" >
    <property name="text" >
     <string>Preferences</string>
+   </property>
+  </action>
+  <action name="actionClear_annotations" >
+   <property name="text" >
+    <string>Clear annotations</string>
+   </property>
+   <property name="shortcut" >
+    <string>Ctrl+X</string>
+   </property>
+  </action>
+  <action name="actionCopy_annotations" >
+   <property name="text" >
+    <string>Copy annotations</string>
+   </property>
+   <property name="shortcut" >
+    <string>Ctrl+C</string>
+   </property>
+  </action>
+  <action name="actionPaste_annotations" >
+   <property name="text" >
+    <string>Paste annotations</string>
+   </property>
+   <property name="shortcut" >
+    <string>Ctrl+V</string>
    </property>
   </action>
  </widget>
