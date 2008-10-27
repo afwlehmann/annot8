@@ -87,8 +87,10 @@ protected slots:
     /**
      * Event-handler for the current-frame slider. Invoked whenever the value
      * of the slider changes and thus a new frame ought to be selected.
+     * @param  value            the slider's new value
+     * @param  ldAnnotations    whether to load the annotations or leave them be
      */
-    void on_hsCurrentFrame_valueChanged(int value);
+    void xx_on_hsCurrentFrame_valueChanged(int value, bool ldAnnotations = true);
 
 
     /**

@@ -61,6 +61,8 @@ MainWindow::MainWindow(int participantID, bool takeAlong) :
     _ui.setupUi(this);
     _ui.twMovies->removeTab(0);
 
+    connect(_ui.hsCurrentFrame, SIGNAL(valueChanged(int)),
+            SLOT(xx_on_hsCurrentFrame_valueChanged(int)));
     connect(_ui.actionClear_annotations,
             SIGNAL(triggered(bool)), SLOT(clearAnnotations()));
     connect(_ui.actionCopy_annotations,
@@ -129,12 +131,12 @@ void MainWindow::on_twMovies_currentChanged(int index)
 
     // Assure that the newly selected movie's position gets updated as well,
     // i.e. delegate this task to the horizontal slider as (almost) everybody
-    // else does.
-    on_hsCurrentFrame_valueChanged(currentFrame());
+    // else does. However, don't mess with the annotations.
+    xx_on_hsCurrentFrame_valueChanged(currentFrame(), false);
 }
 
 
-void MainWindow::on_hsCurrentFrame_valueChanged(int value)
+void MainWindow::xx_on_hsCurrentFrame_valueChanged(int value, bool ldAnnotations)
 {
     // Since the associated signal is already emitted during Qt's `startup' we
     // must introduce a little safety check at this point:
@@ -145,7 +147,8 @@ void MainWindow::on_hsCurrentFrame_valueChanged(int value)
     setCurrentFrame(value);
 
     // Update the annotations.
-    loadAnnotations();
+    if (ldAnnotations)
+        loadAnnotations();
 
     if (!_flipping) {
         // Adapt the samples position.
