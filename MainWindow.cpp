@@ -579,12 +579,17 @@ void MainWindow::on_spvCanvas_posClicked(float pos)
 
 void MainWindow::xx_on_pbThread_playbackPosChanged(float pos)
 {
-    // Track the marker while in playback or flipbook mode.
-    if (pos > _ui.spvCanvas->max() && (_flipping || _playing)) {
+    // Track the marker while in playback or flipbook mode iff it is currently
+    // within the visible area of the samples preview widget.
+    if (pos > _ui.spvCanvas->max() &&
+        (_flipping || _playing) &&
+        _ui.spvCanvas->markerPos() >= _ui.spvCanvas->min() &&
+        _ui.spvCanvas->markerPos() <= _ui.spvCanvas->max())
+    {
         _ui.hsbSamples->setValue(
                 qMin(_ui.hsbSamples->value() + 1, _ui.hsbSamples->maximum()));
     }
-    // Update the marker.
+    // Update the marker position.
     _ui.spvCanvas->setMarkerPos(pos);
 
     if (_flipping)
@@ -602,15 +607,7 @@ void MainWindow::xx_on_pbThread_finished()
 
 void MainWindow::on_tbSyncSamples_clicked()
 {
-    float window = _ui.spvCanvas->max() - _ui.spvCanvas->min();
-    float newMin = max<float>(0.0, _ui.spvCanvas->markerPos() - window / 2.0);
-    float newMax = newMin + window;
-    if (newMax > 1.0) {
-        newMax = 1.0;
-        newMin = newMax - window;
-    }
-    _ui.spvCanvas->setMinMax(newMin, newMax);
-
+    ensureSamplesMarkerVisible();
     _pbThread->setPlaybackPos(currentPosition());
 }
 
@@ -645,6 +642,8 @@ void MainWindow::on_pbFlipbook_clicked()
         // button's `enabled' state has to be manually reset to true.
         _ui.pbFlipbook->setEnabled(true);
         _ui.pbPlay->setEnabled(false);
+        // Lastly, make sure that the samples marker is visible.
+        ensureSamplesMarkerVisible();
     }
 
     _flipping = !_flipping;
@@ -735,6 +734,34 @@ void MainWindow::keyPressEvent(QKeyEvent *ev)
         selectNextMovie();
         break;
     }
+}
+
+
+void MainWindow::ensureSamplesMarkerVisible()
+{
+    // If the marker's visibility has been turned off, there's nothing to do at
+    // this point.
+    if (!_ui.spvCanvas->markerVisible())
+        return;
+
+    // Also, if the marker is inside the visible area already, do nothing and
+    // return to the caller.
+    if (_ui.spvCanvas->markerPos() >= _ui.spvCanvas->min() &&
+        _ui.spvCanvas->markerPos() <= _ui.spvCanvas->max())
+    {
+        return;
+    }
+
+    // The marker's visibility is turned on, yet the marker isn't within the
+    // visible area. Hence we adapt it as follows:
+    float window = _ui.spvCanvas->max() - _ui.spvCanvas->min();
+    float newMin = max<float>(0.0, _ui.spvCanvas->markerPos() - window / 2.0);
+    float newMax = newMin + window;
+    if (newMax > 1.0) {
+        newMax = 1.0;
+        newMin = newMax - window;
+    }
+    _ui.spvCanvas->setMinMax(newMin, newMax);
 }
 
 

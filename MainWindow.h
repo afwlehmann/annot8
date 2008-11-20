@@ -368,6 +368,14 @@ protected:
     virtual void keyPressEvent(QKeyEvent *);
 
 
+    /**
+     * If the samples preview widget's audio marker isn't currently visible
+     * the visible area will be adapted such that it contains the marker
+     * position.
+     */
+    void ensureSamplesMarkerVisible();
+
+
 private:
     Ui::MainWindow          _ui;
     std::vector<Movie *>    _movies;
