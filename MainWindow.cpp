@@ -576,7 +576,14 @@ void MainWindow::on_spvCanvas_posClicked(float pos)
 
 void MainWindow::xx_on_pbThread_playbackPosChanged(float pos)
 {
+    // Track the marker while in playback or flipbook mode.
+    if (pos > _ui.spvCanvas->max() && (_flipping || _playing)) {
+        _ui.hsbSamples->setValue(
+                qMin(_ui.hsbSamples->value() + 1, _ui.hsbSamples->maximum()));
+    }
+    // Update the marker.
     _ui.spvCanvas->setMarkerPos(pos);
+
     if (_flipping)
         _ui.hsCurrentFrame->setValue(pos * _ui.hsCurrentFrame->maximum());
 }
