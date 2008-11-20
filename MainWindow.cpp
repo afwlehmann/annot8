@@ -248,6 +248,7 @@ void MainWindow::setupMovies()
         _ui.twMovies->addTab(mw, QString::fromStdString(mw->getDescription()));
         mw->initialize();
         progDlg.setValue(progDlg.value() + 1);
+        QApplication::processEvents();
     }
 
     // Update the range of the current-frame horizontal slider.
@@ -311,6 +312,7 @@ void MainWindow::setupSamples()
         throw std::runtime_error("No samples stored for the given participant.");
 
     progDlg.setValue(1);
+    QApplication::processEvents();
 
     // Initialize the samples preview as well as the corresponding slider.
     _ui.spvCanvas->setSamples(_samples->samplesAsFloat, _samples->numSamples);
@@ -318,6 +320,7 @@ void MainWindow::setupSamples()
     _ui.hsbSamples->setRange(0, 0);
 
     progDlg.setValue(2);
+    QApplication::processEvents();
 
     // Create and connect to the neccessary playback thread.
     _pbThread = new PlaybackThread(_samples);
