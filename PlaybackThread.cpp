@@ -46,7 +46,7 @@ PlaybackThread::PlaybackThread(audio::Samples *samples, QObject *parent) :
     _audioSpec->freq     = PlaybackThread::DefaultFrequency;
     _audioSpec->format   = AUDIO_S16SYS;
     _audioSpec->channels = 1;
-    _audioSpec->samples  = 4096; // Higher values cause time lags on Windows!
+    _audioSpec->samples  = 2048; // Values > 4096 cause time lags on Windows!
     _audioSpec->callback = pbCallback;
     _audioSpec->userdata = this;
     if (SDL_OpenAudio(_audioSpec, NULL) != 0) {
