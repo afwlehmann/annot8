@@ -5,7 +5,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>335</width>
+    <width>493</width>
     <height>24</height>
    </rect>
   </property>
@@ -16,14 +16,15 @@
    <property name="spacing" >
     <number>0</number>
    </property>
-   <property name="sizeConstraint" >
-    <enum>QLayout::SetNoConstraint</enum>
-   </property>
    <property name="margin" >
     <number>0</number>
    </property>
    <item>
-    <widget class="QLineEdit" name="leFileName" />
+    <widget class="QLineEdit" name="leFileName" >
+     <property name="frame" >
+      <bool>false</bool>
+     </property>
+    </widget>
    </item>
    <item>
     <widget class="QToolButton" name="tbGetFileName" >

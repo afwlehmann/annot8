@@ -5,16 +5,16 @@
 // Copyright 2008 by Alexander Lehmann <lehmanna@in.tum.de>
 //
 // This file is part of annot8.
-// 
+//
 // annot8 is free software: you can redistribute it and/or modify it under the
 // terms of the GNU General Public License as published by the Free Software
 // Foundation, either version 3 of the License, or (at your option) any later
 // version.
-// 
+//
 // annot8 is distributed in the hope that it will be useful, but WITHOUT ANY
 // WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
 // PARTICULAR PURPOSE.  See the GNU General Public License for more details.
-// 
+//
 // You should have received a copy of the GNU General Public License along with
 // annot8.  If not, see <http://www.gnu.org/licenses/>.
 //
@@ -189,11 +189,12 @@ void DBController::setupTriggers()
         }
 
         // Determine the respective foreign key constraints and create the
-        // corresponding INSERT- and UPDATE-triggers. See the SQLite
+        // corresponding INSERT- and UPDATE-triggers for the children. Also,
+        // create DELETE- and UPDATE-triggers for the parents. See the SQLite
         // documentation for further explanations of the PRAGMA directive.
-        map<string, string> cascades;
+        map<string, string> parentDeletes, parentUpdates;
         for (vector<string>::const_iterator it = tables.begin();
-            it != tables.end(); it++)
+             it != tables.end(); it++)
         {
             ostringstream qs(ios_base::app | ios_base::ate);
             qs << "PRAGMA foreign_key_list(" << *it << ");";
@@ -223,27 +224,46 @@ void DBController::setupTriggers()
             qs << *it << "_after_delete";
             if (!query.exec(QString::fromStdString(qs.str())))
                 break;
+            qs.str("DROP TRIGGER IF EXISTS ");
+            qs << *it << "_after_update";
+            if (!query.exec(QString::fromStdString(qs.str())))
+                break;
 
             if (dest.empty())
                 continue;
 
             // Prepare the SELECT statements for the INSERT- and UPDATE-triggers
-            // and build the cascades map for the DELETE-trigger.
+            // of the children and build the map containing the DELETE- and
+            // UPDATE-triggers of the parents.
             stringstream ss;
             for (unsigned int i = 0; i < dest.size(); ++i) {
+                // The following SQL statement will be used to assure that
+                // children only refer to valid parent columns on INSERT and
+                // UPDATE.
                 ss << "SELECT RAISE(ROLLBACK, 'Invalid " << from.at(i) << ".') "
                    << "WHERE (SELECT " << to.at(i) << " FROM " << dest.at(i)
                    << " WHERE " << to.at(i) << " = NEW." << from.at(i) << ") "
                    << "IS NULL;";
 
-                stringstream cs(cascades[dest.at(i)],
-                                ios_base::out | ios_base::app | ios_base::ate);
-                cs << "DELETE FROM " << *it
+                // The following SQL statement will be used to assure deletion
+                // of children on parent DELETE.
+                stringstream pdss(parentDeletes[dest.at(i)],
+                                  ios_base::out | ios_base::app | ios_base::ate);
+                pdss << "DELETE FROM " << *it
                    << " WHERE " << from.at(i) << " = OLD." << to.at(i) << ";";
-                cascades[dest.at(i)] = cs.str();
+                parentDeletes[dest.at(i)] = pdss.str();
+
+                // The following SQL statement will be used to update children
+                // columns accordingly on parent UPDATE.
+                stringstream puss(parentUpdates[dest.at(i)],
+                                  ios_base::out | ios_base::app | ios_base::ate);
+                puss << "UPDATE " << *it
+                     << " SET " << from.at(i) << " = NEW." << to.at(i)
+                     << " WHERE " << from.at(i) << " = OLD." << to.at(i) << ";";
+                parentUpdates[dest.at(i)] = puss.str();
             }
 
-            // Create the INSERT- and UPDATE-triggers.
+            // Create the children INSERT- and UPDATE-triggers.
             qs.str("CREATE TRIGGER IF NOT EXISTS ");
             qs << *it << "_before_insert BEFORE INSERT ON " << *it
                << " FOR EACH ROW BEGIN " << ss.str() << " END;";
@@ -258,13 +278,27 @@ void DBController::setupTriggers()
         if (query.lastError().isValid())
             break;
 
-        // Create the DELETE-triggers.
-        for (map<string, string>::const_iterator it = cascades.begin();
-            it != cascades.end(); it++)
+        // Create the parents' DELETE-triggers.
+        for (map<string, string>::const_iterator it = parentDeletes.begin();
+            it != parentDeletes.end(); it++)
         {
             ostringstream qs;
             qs << "CREATE TRIGGER IF NOT EXISTS " << it->first << "_after_delete "
                << "AFTER DELETE ON " << it->first << " FOR EACH ROW BEGIN "
+               << it->second << " END;";
+            if (!query.exec(QString::fromStdString(qs.str())))
+                break;
+        }
+        if (query.lastError().isValid())
+            break;
+
+        // Create the parents' UPDATE-triggers.
+        for (map<string, string>::const_iterator it = parentUpdates.begin();
+            it != parentUpdates.end(); it++)
+        {
+            ostringstream qs;
+            qs << "CREATE TRIGGER IF NOT EXISTS " << it->first << "_after_update "
+               << "AFTER UPDATE ON " << it->first << " FOR EACH ROW BEGIN "
                << it->second << " END;";
             if (!query.exec(QString::fromStdString(qs.str())))
                 break;
