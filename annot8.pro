@@ -1,4 +1,4 @@
-CONFIG += qt thread resources
+CONFIG += qt thread resources x86
 QT += sql gui
 
 SOURCES = ChooseParticipantDlg.cpp \
@@ -69,10 +69,14 @@ mac {
         MY_BUNDLE_RESOURCES.files = res/unix/experiment.sql
         MY_BUNDLE_RESOURCES.path = Contents/Resources
         CONFIG(debug, debug|release) {
-            IMF_PLUGINS.files = $$[QT_INSTALL_PLUGINS]/imageformats/libqgif_debug.dylib \
-                                $$[QT_INSTALL_PLUGINS]/imageformats/libqjpeg_debug.dylib \
-                                $$[QT_INSTALL_PLUGINS]/imageformats/libqtiff_debug.dylib
-            SQL_PLUGINS.files = $$[QT_INSTALL_PLUGINS]/sqldrivers/libqsqlite_debug.dylib
+            IMF_PLUGINS.files = $$[QT_INSTALL_PLUGINS]/imageformats/libqgif.dylib \
+                                $$[QT_INSTALL_PLUGINS]/imageformats/libqjpeg.dylib \
+                                $$[QT_INSTALL_PLUGINS]/imageformats/libqtiff.dylib
+            SQL_PLUGINS.files = $$[QT_INSTALL_PLUGINS]/sqldrivers/libqsqlite.dylib
+            # IMF_PLUGINS.files = $$[QT_INSTALL_PLUGINS]/imageformats/libqgif_debug.dylib \
+            #                     $$[QT_INSTALL_PLUGINS]/imageformats/libqjpeg_debug.dylib \
+            #                     $$[QT_INSTALL_PLUGINS]/imageformats/libqtiff_debug.dylib
+            # SQL_PLUGINS.files = $$[QT_INSTALL_PLUGINS]/sqldrivers/libqsqlite_debug.dylib
             QMAKE_POST_LINK += "./finalize_app build/debug/annot8.app"
         }
         CONFIG(release, debug|release) {
